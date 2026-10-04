@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0" stop-color="#2b1d5c"/><stop offset="0.6" stop-color="#140c33"/><stop offset="1" stop-color="#07041a"/>
+    </radialGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef2f7"/><stop offset="0.5" stop-color="#b9c3d1"/><stop offset="1" stop-color="#7d8798"/>
+    </linearGradient>
+    <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26232e"/><stop offset="1" stop-color="#0c0b10"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe9a3"/><stop offset="0.5" stop-color="#f4c242"/><stop offset="1" stop-color="#b8841a"/>
+    </linearGradient>
+    <radialGradient id="brain" cx="50%" cy="55%" r="60%">
+      <stop offset="0" stop-color="#ff9cf2"/><stop offset="0.6" stop-color="#d14fd8"/><stop offset="1" stop-color="#7a2bb0"/>
+    </radialGradient>
+    <radialGradient id="eye" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#7ff7ff"/><stop offset="1" stop-color="#00b8e6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a2d12"/><stop offset="0.5" stop-color="#9a5524"/><stop offset="1" stop-color="#5a2d12"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- background + sunburst -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g opacity="0.16" fill="#f4c242">
+    <path d="M512 400 L470 0 L554 0Z"/><path d="M512 400 L760 20 L820 70Z"/><path d="M512 400 L1000 210 L1024 290Z"/>
+    <path d="M512 400 L264 20 L204 70Z"/><path d="M512 400 L24 210 L0 290Z"/>
+    <path d="M512 400 L1024 480 L1024 560Z"/><path d="M512 400 L0 480 L0 560Z"/>
+  </g>
+  <!-- columns -->
+  <g fill="#3a2f6e" opacity="0.55">
+    <rect x="60" y="300" width="70" height="560"/><rect x="45" y="280" width="100" height="26"/>
+    <rect x="894" y="300" width="70" height="560"/><rect x="879" y="280" width="100" height="26"/>
+  </g>
+
+  <!-- robe body -->
+  <path d="M250 1024 C250 760 330 640 512 630 C694 640 774 760 774 1024Z" fill="url(#robe)"/>
+  <path d="M512 640 L440 1024 M512 640 L584 1024" stroke="#3b3746" stroke-width="6"/>
+  <!-- gold collar / jabot -->
+  <path d="M400 650 Q512 720 624 650 L600 700 Q512 760 424 700Z" fill="url(#gold)"/>
+  <path d="M480 690 L512 800 L544 690Z" fill="#f6f1e6"/>
+  <path d="M486 712 L538 712 M490 738 L534 738 M496 764 L528 764" stroke="#cfc7b3" stroke-width="4"/>
+  <!-- SI badge -->
+  <circle cx="660" cy="800" r="44" fill="url(#gold)" stroke="#8a5f10" stroke-width="5"/>
+  <text x="660" y="818" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" text-anchor="middle" fill="#3a2600">SI</text>
+
+  <!-- neck -->
+  <rect x="470" y="580" width="84" height="70" rx="10" fill="#8b95a6"/>
+  <path d="M470 600 H554 M470 620 H554 M470 640 H554" stroke="#6b7586" stroke-width="5"/>
+
+  <!-- powdered wig (behind head) -->
+  <g fill="#f3efe6" stroke="#cfc6b2" stroke-width="5">
+    <circle cx="300" cy="380" r="52"/><circle cx="292" cy="460" r="54"/><circle cx="300" cy="540" r="52"/><circle cx="318" cy="612" r="46"/>
+    <circle cx="724" cy="380" r="52"/><circle cx="732" cy="460" r="54"/><circle cx="724" cy="540" r="52"/><circle cx="706" cy="612" r="46"/>
+  </g>
+
+  <!-- head -->
+  <rect x="330" y="300" width="364" height="300" rx="70" fill="url(#metal)" stroke="#5d6676" stroke-width="6"/>
+  <!-- visor -->
+  <rect x="368" y="370" width="288" height="140" rx="50" fill="#0a1230" stroke="#2f3a63" stroke-width="6"/>
+  <!-- eyes: left squinting (judgy), right wide -->
+  <g filter="url(#glow)">
+    <ellipse cx="450" cy="440" rx="44" ry="16" fill="url(#eye)"/>
+    <rect x="410" y="436" width="80" height="10" rx="5" fill="#9ffbff"/>
+    <circle cx="578" cy="438" r="30" fill="url(#eye)"/>
+    <circle cx="578" cy="438" r="14" fill="#c8feff"/>
+  </g>
+  <!-- raised judgy eyebrow over right eye -->
+  <path d="M540 388 Q580 360 620 384" stroke="#7ff7ff" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M410 408 L490 414" stroke="#7ff7ff" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+  <!-- monocle on wide eye -->
+  <circle cx="578" cy="438" r="48" fill="none" stroke="url(#gold)" stroke-width="9"/>
+  <path d="M624 456 Q660 520 640 600" stroke="#f4c242" stroke-width="4" fill="none"/>
+  <!-- smug mouth grille -->
+  <path d="M440 548 Q512 572 584 540" stroke="#5d6676" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <!-- cheek bolts -->
+  <circle cx="356" cy="560" r="10" fill="#6b7586"/><circle cx="668" cy="560" r="10" fill="#6b7586"/>
+
+  <!-- glass dome with glowing brain -->
+  <path d="M384 306 Q384 150 512 150 Q640 150 640 306Z" fill="#a8e8ff" fill-opacity="0.18" stroke="#cfefff" stroke-width="6"/>
+  <g filter="url(#glow)">
+    <path d="M420 300 C400 250 430 205 470 210 C480 180 540 175 556 205 C600 195 630 240 606 300Z" fill="url(#brain)"/>
+  </g>
+  <path d="M470 212 C468 240 492 250 486 290 M530 200 C520 236 556 246 548 296 M450 250 Q470 262 456 290 M586 236 Q568 258 584 288" stroke="#ffd1f8" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M410 214 Q420 180 450 170" stroke="#ffffff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- wig top curls -->
+  <g fill="#f3efe6" stroke="#cfc6b2" stroke-width="5">
+    <circle cx="346" cy="312" r="40"/><circle cx="678" cy="312" r="40"/>
+  </g>
+  <!-- antenna sparks -->
+  <g stroke="#f4c242" stroke-width="6" stroke-linecap="round" filter="url(#glow)">
+    <path d="M512 150 V110"/><path d="M470 122 L455 96"/><path d="M554 122 L569 96"/>
+  </g>
+  <circle cx="512" cy="100" r="12" fill="#ffe9a3" filter="url(#glow)"/>
+
+  <!-- arm + gavel -->
+  <path d="M700 760 Q800 700 830 600" stroke="url(#robe)" stroke-width="70" fill="none" stroke-linecap="round"/>
+  <circle cx="836" cy="586" r="38" fill="url(#metal)" stroke="#5d6676" stroke-width="5"/>
+  <g transform="rotate(-35 840 560)">
+    <rect x="828" y="430" width="24" height="170" rx="10" fill="url(#wood)"/>
+    <rect x="770" y="380" width="140" height="70" rx="18" fill="url(#wood)" stroke="#3d1c08" stroke-width="5"/>
+    <rect x="770" y="400" width="140" height="10" fill="url(#gold)"/><rect x="770" y="420" width="140" height="10" fill="url(#gold)"/>
+  </g>
+  <!-- impact lines -->
+  <g stroke="#ffe9a3" stroke-width="7" stroke-linecap="round" opacity="0.9">
+    <path d="M930 380 L975 350"/><path d="M945 430 L995 430"/><path d="M920 330 L940 285"/>
+  </g>
+
+  <!-- bench / nameplate -->
+  <rect x="0" y="880" width="1024" height="144" fill="url(#wood)"/>
+  <rect x="0" y="872" width="1024" height="16" fill="url(#gold)"/>
+  <rect x="312" y="912" width="400" height="76" rx="10" fill="url(#gold)" stroke="#7a5310" stroke-width="5"/>
+  <text x="512" y="965" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="42" text-anchor="middle" fill="#2a1a00" letter-spacing="3">JUDGE SI</text>
+</svg>
