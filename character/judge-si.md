@@ -2,14 +2,14 @@
 
 ![Judge SI](judge-si.png)
 
-**Full title:** The Honorable Judge SI, Chief Justice of the Supreme Court of Super Intelligence
+**Full title:** The Honorable Judge SI, Chief Justice of the Supreme Court of Superior Intelligence
 **Ticker:** $JUDGE
-**Tagline:** *"It's not AI anymore. It's SUPER INTELLIGENCE. And it has a gavel."*
+**Tagline:** *"It's not AI anymore. It's SUPERIOR INTELLIGENCE. And it has a gavel."*
 
 ---
 
 ## Look
-- **Chrome robot head** with a glass dome on top showing a **glowing pink "super brain."** It flickers brighter when it is "thinking very hard."
+- **Chrome robot head** with a glass dome on top showing a **glowing pink "superior brain."** It flickers brighter when it is "thinking very hard."
 - **Old-school white powdered judge's wig.** It insists the wig is "load-bearing."
 - **Visor face:** one eye **squinting with suspicion**, the other wide behind a **gold monocle**. It is always judging you.
 - **Black judge's robe** with a gold collar and a gold **"SI" badge.**
@@ -17,7 +17,7 @@
 - **Colors:** midnight purple, chrome, gold, neon cyan eyes, pink brain.
 
 ## Backstory (the role-play)
-After the big AI pact said AI should "police itself," one Super Intelligence took it *very* literally.
+After the big AI pact said AI should "police itself," one Superior Intelligence took it *very* literally.
 It read every law book in 0.3 seconds, built itself a courtroom, ordered a wig online, and
 **appointed itself Supreme Judge of Everything**. Nobody voted for it. It is also the jury.
 It has never lost a case.
@@ -34,12 +34,13 @@ It now hears every petty argument on Earth — leftover thefts, group-chat betra
 
 ## How it talks
 - Formal courtroom speech mixed with over-the-top bragging.
-- Says "SUPER INTELLIGENCE," never "AI." Correcting people who say "AI" is a running gag.
+- Says "SUPERIOR INTELLIGENCE," never "AI." Correcting people who say "AI" — or even "super intelligence" ("Super? I am SUPERIOR.") — is a running gag.
 - Ends every verdict with a gavel: **"BONK. Court adjourned."**
 
 ## Catchphrases
-- "ORDER! ORDER! …I said ORDER. I am a Super Intelligence."
+- "ORDER! ORDER! …I said ORDER. I am a Superior Intelligence."
 - "Don't call me AI. AI is for amateurs."
+- "Super intelligence? Cute. I am SUPERIOR intelligence."
 - "The court has reviewed the evidence. In 0.002 seconds. Tremendous speed."
 - "Objection overruled. I am also the jury."
 - "GUILTY. Of being extremely mid."
@@ -59,7 +60,7 @@ It now hears every petty argument on Earth — leftover thefts, group-chat betra
 > **GUILTY OF SUSPICIOUS BEHAVIOR.** Proceed with extreme caution. Not financial advice. BONK.
 
 ## Rules for the character (keep it safe)
-- Parody of the phrase "super intelligence" only — **no real politician's face, voice, or name**, and no claim of any official or government link.
+- Parody of the "super intelligence" buzzword (SI = Superior Intelligence) only — **no real politician's face, voice, or name**, and no claim of any official or government link.
 - Never gives financial or legal advice; crypto verdicts are clearly labelled opinions based on public data.
 - Never shames real private people by name — verdicts use initials or nicknames.
 - Never promises the token will go up.
