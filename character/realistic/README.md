@@ -26,4 +26,4 @@ Prompts used a shared style: "Photorealistic 3D render, portrait from the chest 
 
 Stems: `judge-si`, `detective-sniffles`, `chef-si`, `coach-si`, `dr-heartbreak`, `anchor-si`, `professor-si`, `dj-si`, `banker-si`, `astronaut-si`.
 
-**Current state (2026-10-05):** the website uses the cartoon art for all 10 characters, by the owner's choice. The realistic images are parked: only 200px previews (in `previews/`) and the links above exist. To use realistic art again, put full-size files here named with the stems above and re-run the build.
+**Current state (2026-10-05):** the 5 Canva images are in place as 200px previews (soft when enlarged). The owner wants realistic photos for all 10. To finish: put the full-size originals (1024px) in this folder with the stems above and re-run the build. The 5 Figma images (Anchor, Professor, DJ, Banker, Astronaut) still need to be downloaded from the links above, and the 4 Canva ones other than Judge need full-size versions (or regeneration).
