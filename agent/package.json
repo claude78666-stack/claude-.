@@ -1,0 +1,14 @@
+{
+  "name": "si-coin-check-agent",
+  "version": "0.1.0",
+  "description": "Read-only Solana token checker (Detective Sniffles SI). No dependencies, no keys required.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "check": "node src/cli.js",
+    "serve": "node src/server.js",
+    "test": "node --test test/*.test.js",
+    "smoke": "node scripts/smoke.js"
+  }
+}
