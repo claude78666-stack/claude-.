@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Judge SI | Supreme Court of Superior Intelligence</title>
-<meta name="description" content="Judge SI settles petty fights and puts suspicious coins on trial. Parody character. Not legal or financial advice.">
+<title>{{NAME}} | Ten robots. Ten egos. Zero humility.</title>
+<meta name="description" content="Meet {{NAME}}: ten Superior Intelligences who think they're better than you. Each one has a free tool. Parody. Not legal, medical or financial advice.">
 <meta name="color-scheme" content="dark">
 <style>
 :root{
@@ -17,66 +17,77 @@
 html{scroll-behavior:smooth}
 body{margin:0;background:radial-gradient(120% 80% at 50% -10%,#2b1d5c 0%,var(--bg) 55%) fixed,var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-text-size-adjust:100%}
 a{color:var(--cyan)}
-button,input,textarea{font:inherit;color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:6px}
-.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
-.sr{position:absolute;left:-9999px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+[hidden]{display:none!important}
 
-/* header + tabs */
-header.top{position:sticky;top:0;z-index:20;background:rgba(11,6,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;gap:12px;padding:10px 0}
-.brand{font:700 20px var(--serif);color:var(--gold);letter-spacing:.06em;white-space:nowrap}
-.brand small{display:block;font:600 10px var(--sans);letter-spacing:.14em;color:var(--mute)}
-nav.tabs{display:flex;gap:6px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
-nav.tabs::-webkit-scrollbar{display:none}
-nav.tabs button{background:transparent;border:1px solid transparent;border-radius:999px;padding:8px 14px;cursor:pointer;color:var(--mute);white-space:nowrap;font-weight:600}
-nav.tabs button[aria-selected=true]{background:var(--panel2);border-color:var(--gold);color:var(--gold2)}
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,6,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:8px;padding:8px 0;min-width:0}
+.brand{font:700 20px var(--serif);color:var(--gold);letter-spacing:.06em;white-space:nowrap;cursor:pointer;background:none;border:0;padding:0;text-align:left}
+.brand small{display:block;font:600 9px var(--sans);letter-spacing:.14em;color:var(--mute)}
+.nav{margin-left:auto;display:flex;gap:4px;flex:none}
+.nav button{background:transparent;border:1px solid transparent;border-radius:999px;padding:7px 12px;cursor:pointer;color:var(--mute);font-weight:600;white-space:nowrap}
+.nav button[aria-current=page]{background:var(--panel2);border-color:var(--gold);color:var(--gold2)}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip button{flex:none;width:48px;height:48px;border-radius:50%;border:2px solid var(--line);background:var(--panel);padding:0;overflow:hidden;cursor:pointer}
+.strip button img{width:100%;height:100%;object-fit:cover;object-position:50% 38%;transform:scale(1.9);transform-origin:50% 40%}
+.strip button[aria-current=page]{border-color:var(--gold);box-shadow:0 0 0 2px rgba(244,194,66,.35)}
 
-/* hero */
-.hero{display:grid;gap:20px;padding:24px 0 8px;align-items:center}
-.hero svg{width:100%;height:auto;border-radius:22px;border:2px solid var(--gold);box-shadow:0 0 40px rgba(244,194,66,.18)}
-.hero h1{font:700 clamp(28px,6vw,46px)/1.1 var(--serif);margin:0 0 8px}
+/* hero + grid */
+.hero{padding:30px 0 12px;text-align:center}
+.hero h1{font:700 clamp(32px,8vw,60px)/1.05 var(--serif);margin:0 0 10px}
 .hero h1 em{color:var(--gold);font-style:normal}
-.hero p{color:var(--mute);margin:0 0 14px}
-.quote{min-height:3.2em;font-style:italic;color:var(--gold2)}
-@media(min-width:800px){.hero{grid-template-columns:1fr 1fr;gap:36px;padding-top:36px}}
-@keyframes bonk{0%{transform:rotate(0)}20%{transform:rotate(-2.5deg) scale(1.02)}40%{transform:rotate(2deg)}60%{transform:rotate(-1deg)}100%{transform:rotate(0)}}
-.bonking svg{animation:bonk .45s ease-out}
+.hero p{color:var(--mute);max-width:640px;margin:0 auto 16px}
+.cards{display:grid;gap:14px;grid-template-columns:repeat(2,1fr);padding:10px 0 30px}
+@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){.cards{grid-template-columns:repeat(5,1fr)}}
+.cast-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column}
+.cast-card:hover{border-color:var(--gold)}
+.cast-card img{width:100%;display:block;aspect-ratio:1}
+.cast-card div{padding:10px 12px 14px}
+.cast-card b{display:block;font:700 15px var(--serif);color:var(--gold2)}
+.cast-card span{display:block;font-size:12px;color:var(--mute);letter-spacing:.04em}
+.cast-card em{display:block;margin-top:6px;font-size:13px;color:var(--cyan);font-style:normal;font-weight:700}
 
-/* ui */
+/* tool page */
+.thead{display:grid;gap:16px;padding:20px 0 6px;align-items:center}
+@media(min-width:760px){.thead{grid-template-columns:300px 1fr}}
+.thead img{width:100%;max-width:340px;border-radius:20px;border:2px solid var(--gold);display:block;margin:0 auto}
+.thead h2{font:700 clamp(26px,6vw,38px)/1.1 var(--serif);margin:0;color:var(--gold2)}
+.role{color:var(--cyan);font-weight:700;letter-spacing:.06em;font-size:13px;text-transform:uppercase}
+.quote{font-style:italic;color:var(--gold2);margin:8px 0 0}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px}
+.grid2{display:grid;gap:14px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+label{display:block;font-weight:700;margin:0 0 6px;color:var(--gold2)}
+input[type=text],input[type=number],textarea,select{width:100%;background:#0e0828;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mute) 50%),linear-gradient(135deg,var(--mute) 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+textarea{min-height:120px;resize:vertical}
+::placeholder{color:#7f76ad}
+.hint{font-size:13px;color:var(--mute);margin:6px 0 0}
+.field{margin-bottom:12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:12px;border:0;cursor:pointer;font-weight:800;letter-spacing:.02em}
 .btn.gold{background:linear-gradient(#ffe9a3,#f4c242 55%,#c8921e);color:#2a1a00}
 .btn.ghost{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}
 .btn:active{transform:translateY(1px)}
 .btn[disabled]{opacity:.55;cursor:wait}
 .row{display:flex;gap:10px;flex-wrap:wrap}
-section.page{padding:20px 0 40px}
-section.page h2{font:700 clamp(24px,5vw,32px)/1.2 var(--serif);margin:0 0 4px;color:var(--gold2)}
-.lede{color:var(--mute);margin:0 0 18px}
-.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:16px}
-.grid2{display:grid;gap:14px}
-@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
-label{display:block;font-weight:700;margin:0 0 6px;color:var(--gold2)}
-input[type=text],textarea{width:100%;background:#0e0828;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink)}
-textarea{min-height:120px;resize:vertical}
-input[type=text]::placeholder,textarea::placeholder{color:#7f76ad}
-.hint{font-size:13px;color:var(--mute);margin:6px 0 0}
 .note{font-size:13px;color:var(--mute);border-left:3px solid var(--gold);padding:6px 10px;margin:14px 0;background:rgba(244,194,66,.06);border-radius:0 8px 8px 0}
-
-/* transcript */
-.court{margin-top:18px}
-.line{margin:10px 0;padding:10px 14px;border-radius:14px;max-width:100%;overflow-wrap:anywhere;animation:pop .25s ease-out}
+.out{margin-top:16px}
+.line{margin:10px 0;padding:10px 14px;border-radius:14px;overflow-wrap:anywhere;animation:pop .25s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .line.j{background:var(--panel2);border:1px solid var(--line)}
-.line.j b{color:var(--gold)}
+.line.j b.who{color:var(--gold)}
 .line.q{background:#0e0828;border:1px dashed var(--line);color:var(--mute)}
 .line.v{background:linear-gradient(#ffe9a3,#f4c242);color:#2a1a00;font:800 clamp(18px,4.5vw,24px)/1.25 var(--serif);text-align:center}
 .line.s{border:1px solid var(--gold);background:rgba(244,194,66,.08)}
-.line.b{text-align:center;font:800 22px var(--serif);color:var(--gold)}
-.certwrap{margin-top:14px;display:none}
-.certwrap canvas{width:100%;max-width:420px;height:auto;border-radius:12px;border:2px solid var(--gold);display:block;margin:0 0 12px}
-
-/* crypto */
+.line.b{text-align:center;font:800 20px var(--serif);color:var(--gold)}
+.line.lyr{font-family:var(--serif);font-size:18px;background:#0e0828;border-left:4px solid #ff4fd8}
+.cardbox{margin-top:14px}
+.cardbox canvas{width:100%;max-width:420px;height:auto;border-radius:12px;border:2px solid var(--gold);display:block;margin:0 0 12px}
 .pair{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
 @media(min-width:700px){.pair{grid-template-columns:repeat(5,1fr)}}
 .stat{background:#0e0828;border:1px solid var(--line);border-radius:12px;padding:10px}
@@ -85,16 +96,17 @@ input[type=text]::placeholder,textarea::placeholder{color:#7f76ad}
 .meter{height:14px;border-radius:99px;background:#0e0828;border:1px solid var(--line);overflow:hidden;margin:8px 0}
 .meter i{display:block;height:100%;width:0;transition:width .8s ease}
 .flag{display:flex;gap:10px;padding:10px 12px;margin:8px 0;border-radius:12px;background:#0e0828;border:1px solid var(--line)}
-.flag .tag{flex:none;font-weight:800;padding:2px 8px;border-radius:8px;height:fit-content;font-size:12px}
+.flag .tag{flex:none;font-weight:800;padding:2px 8px;border-radius:8px;height:fit-content;font-size:12px;white-space:nowrap}
 .sev1{background:#4a3a10;color:var(--gold2)} .sev2{background:#5b3412;color:var(--amber)} .sev3{background:#5b1626;color:var(--red)}
-.try{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.snip{font-size:13px;color:var(--mute);margin-top:4px;font-family:ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.try{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;align-items:center}
 .chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:700;font-size:14px}
-
-/* shame + treasury */
-.cases{display:grid;gap:12px}
-@media(min-width:760px){.cases{grid-template-columns:1fr 1fr}}
-.case h3{margin:0 0 4px;font:700 18px var(--serif);color:var(--gold2)}
-.case p{margin:0;color:var(--mute);font-size:15px}
+.day{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.day:last-child{border:0}
+.day b{color:var(--gold)}
+.day small{display:block;color:var(--mute);margin-top:2px}
+.reply{margin:8px 0;padding:10px 12px;background:#0e0828;border:1px solid var(--line);border-radius:12px}
+.reply b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:2px}
 table{width:100%;border-collapse:collapse;font-size:15px}
 th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
 th{color:var(--mute);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
@@ -103,111 +115,54 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 @media(min-width:760px){.sim{grid-template-columns:repeat(2,1fr)}}
 .big{font:700 34px var(--serif);color:var(--gold)}
 .badge{display:inline-block;background:#5b1626;color:#ffd1d6;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:800;letter-spacing:.06em}
+.page-h{font:700 clamp(24px,5vw,32px)/1.2 var(--serif);margin:22px 0 4px;color:var(--gold2)}
+.lede{color:var(--mute);margin:0 0 14px}
 footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mute);font-size:13px}
+@media(max-width:520px){.brand{font-size:17px}.brand small{display:none}.nav button{padding:7px 10px;font-size:15px}.cast-card b{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap bar">
-  <div class="brand">⚖ JUDGE SI<small>SUPREME COURT OF SUPERIOR INTELLIGENCE</small></div>
-  <nav class="tabs" role="tablist" aria-label="Court sections">
-    <button role="tab" id="t-court" aria-controls="p-court" aria-selected="true" data-tab="court">SI Court</button>
-    <button role="tab" id="t-crypto" aria-controls="p-crypto" aria-selected="false" data-tab="crypto">Crypto Court</button>
-    <button role="tab" id="t-shame" aria-controls="p-shame" aria-selected="false" data-tab="shame">Hall of Shame</button>
-    <button role="tab" id="t-treasury" aria-controls="p-treasury" aria-selected="false" data-tab="treasury">Treasury</button>
-  </nav>
+<header class="top"><div class="wrap">
+  <div class="bar">
+    <button class="brand" id="brand" aria-label="{{NAME}} home">⚖ {{NAME_UP}}<small>THE DEPARTMENT OF SUPERIOR INTELLIGENCE</small></button>
+    <nav class="nav" aria-label="Main">
+      <button data-go="home" aria-current="page">Cast</button>
+      <button data-go="treasury">Treasury</button>
+    </nav>
+  </div>
+  <div class="strip" id="strip" aria-label="Characters"></div>
 </div></header>
 
 <main class="wrap">
-  <div class="hero" id="hero">
-    <div id="heroArt"><!--JUDGE_SVG--></div>
-    <div>
-      <h1>It's not AI anymore.<br>It's <em>SUPERIOR</em> intelligence.<br>And it has a gavel.</h1>
-      <p>Judge SI settles your petty fights and puts suspicious coins on trial. He is also the jury. He has never lost a case.</p>
-      <p class="quote" id="quote" aria-live="polite">“ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.”</p>
-      <div class="row">
-        <button class="btn gold" id="goCourt">⚖ File a case</button>
-        <button class="btn ghost" id="goCrypto">🔍 Put a coin on trial</button>
-        <button class="btn ghost" id="bonk" aria-label="Bang the gavel">🔨 BONK</button>
-      </div>
+  <!-- HOME -->
+  <section id="v-home">
+    <div class="hero">
+      <h1>Ten robots. Ten egos.<br><em>Zero humility.</em></h1>
+      <p>Meet <b>{{NAME}}</b>: ten Superior Intelligences who think they're better than you. (Don't call them AI. They hate that.) Every one of them has a free tool. Pick a god.</p>
     </div>
-  </div>
-
-  <!-- ============ SI COURT ============ -->
-  <section class="page" id="p-court" role="tabpanel" aria-labelledby="t-court">
-    <h2>SI Court</h2>
-    <p class="lede">Two sides. One Superior Intelligence. Binding verdict (not legally binding).</p>
-    <form id="caseForm" class="card" autocomplete="off">
-      <div class="grid2">
-        <div>
-          <label for="pName">Plaintiff (your name or nickname)</label>
-          <input type="text" id="pName" maxlength="20" placeholder="Sam">
-          <label for="pSide" style="margin-top:12px">Their side of the story</label>
-          <textarea id="pSide" maxlength="600" placeholder="He ate my leftover pizza. It had my name on it. Literally my name."></textarea>
-        </div>
-        <div>
-          <label for="dName">Defendant (nickname please)</label>
-          <input type="text" id="dName" maxlength="20" placeholder="Alex">
-          <label for="dSide" style="margin-top:12px">Their side of the story</label>
-          <textarea id="dSide" maxlength="600" placeholder="It looked abandoned. It was cold. It was begging to be eaten."></textarea>
-        </div>
-      </div>
-      <p class="hint">Use nicknames, not full names of real people. Everything here runs in your browser; nothing is sent anywhere.</p>
-      <div class="row" style="margin-top:12px">
-        <button class="btn gold" type="submit">⚖ Hear my case</button>
-        <button class="btn ghost" type="button" id="sampleCase">Try a sample case</button>
-        <button class="btn ghost" type="button" id="skipTrial" hidden>Skip to verdict</button>
-      </div>
-    </form>
-    <div class="court" id="transcript" aria-live="polite"></div>
-    <div class="certwrap" id="certHuman">
-      <canvas width="1080" height="1350" aria-label="Verdict certificate"></canvas>
-      <div class="row"><button class="btn gold" data-share>📤 Share certificate</button><button class="btn ghost" data-dl>⬇ Download PNG</button></div>
-    </div>
-    <p class="note">Demo mode: this courtroom runs on Judge SI's built-in joke engine (verdicts are the same for the same story). The full Superior Brain arrives with the launch.</p>
+    <div class="cards" id="cards"></div>
   </section>
 
-  <!-- ============ CRYPTO COURT ============ -->
-  <section class="page" id="p-crypto" role="tabpanel" aria-labelledby="t-crypto" hidden>
-    <h2>Crypto Court</h2>
-    <p class="lede">Paste a Solana token address. Judge SI reviews the public numbers and finds red flags (or doesn't).</p>
-    <form id="coinForm" class="card" autocomplete="off">
-      <label for="mint">Token address</label>
-      <input type="text" id="mint" placeholder="Paste a Solana token address (ends in …pump for pump.fun coins)" spellcheck="false" autocapitalize="off">
-      <div class="row" style="margin-top:12px"><button class="btn gold" type="submit" id="coinGo">🔍 Begin trial</button><button class="btn ghost" type="button" id="coinSample">Use a snapshot case</button></div>
-      <div class="try" aria-label="Quick cases"><span class="hint" style="margin:0">Live examples:</span>
-        <button type="button" class="chip" data-mint="SH6SfUf5pPbdq9h7RjnsoGjNvP3onox7P5tKJGEpump">DOTF</button>
-        <button type="button" class="chip" data-mint="GGMm5EmstNMQh4tvR127joSzBDa5UeE4FkVYZZmtpump">SARP</button>
-        <button type="button" class="chip" data-mint="yXJ9cYmX2Mp7JFhwZWz9NESbVes3VFAEGPf3rgKpump">UDR</button>
+  <!-- TOOL -->
+  <section id="v-tool" hidden>
+    <div class="thead">
+      <img id="tImg" alt="">
+      <div>
+        <div class="role" id="tRole"></div>
+        <h2 id="tName"></h2>
+        <p class="quote" id="tQuote"></p>
+        <p class="hint" id="tBlurb"></p>
       </div>
-    </form>
-    <div id="coinOut" class="court" aria-live="polite"></div>
-    <div class="certwrap" id="certCoin">
-      <canvas width="1080" height="1350" aria-label="Verdict certificate"></canvas>
-      <div class="row"><button class="btn gold" data-share>📤 Share certificate</button><button class="btn ghost" data-dl>⬇ Download PNG</button></div>
     </div>
-    <p class="note"><b>Opinion, not advice.</b> Verdicts come from public market numbers (DexScreener) and can be wrong or out of date. A clean result is not a safety guarantee. Developer-wallet history and holder-concentration checks are coming. Not financial advice.</p>
+    <div id="toolBody"></div>
+    <p class="note" id="demoNote">Demo mode: this tool runs on {{NAME}}'s built-in joke engine, right in your browser. Nothing you type is sent anywhere. The full Superior Brain arrives with the launch.</p>
   </section>
 
-  <!-- ============ HALL OF SHAME ============ -->
-  <section class="page" id="p-shame" role="tabpanel" aria-labelledby="t-shame" hidden>
-    <h2>Hall of Shame</h2>
-    <p class="lede">Landmark rulings of the Supreme Court of Superior Intelligence (these cases are made up).</p>
-    <div class="cases">
-      <div class="card case"><h3>Roe v. The Last Slice</h3><p>Defendant claimed the slice “looked lonely.” Court found the slice was not lonely; it was <i>reserved</i>. Sentence: one (1) whole pizza and a formal apology to the box.</p></div>
-      <div class="card case"><h3>The People v. “I'm 5 Minutes Away”</h3><p>Defendant was 5 minutes away for 47 minutes. Court ruled that “5 minutes” is a lifestyle, not a unit. Sentence: arrive 15 minutes early for a month.</p></div>
-      <div class="card case"><h3>Remote v. Everyone</h3><p>The remote was found sticky. The court will not be elaborating. Sentence: remote privileges revoked until further notice.</p></div>
-      <div class="card case"><h3>Venmo Request, Left on Read</h3><p>The read receipt confessed immediately. Defendant paid in full, with interest, in the form of a handwritten note that said “sorry, pizza.”</p></div>
-    </div>
-    <h2 style="margin-top:28px">Your case history</h2>
-    <p class="lede">Saved only in this browser.</p>
-    <div class="card" id="history"><p class="hint" style="margin:0">No cases yet. Go file one. Judge SI is bored.</p></div>
-  </section>
-
-  <!-- ============ TREASURY ============ -->
-  <section class="page" id="p-treasury" role="tabpanel" aria-labelledby="t-treasury" hidden>
-    <h2>Treasury</h2>
-    <p class="lede">How the court's earnings would fund buybacks and burns. <span class="badge">TEST MODE: NO COIN LAUNCHED</span></p>
+  <!-- TREASURY -->
+  <section id="v-treasury" hidden>
+    <h2 class="page-h">Treasury</h2>
+    <p class="lede">How the Tin Gods' earnings would fund buybacks and burns. <span class="badge">TEST MODE: NO COIN LAUNCHED</span></p>
     <div class="card">
       <table>
         <thead><tr><th>Item</th><th>Status</th></tr></thead>
@@ -219,90 +174,113 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mute);fo
         </tbody>
       </table>
     </div>
-    <h2 style="margin-top:24px">Buyback simulator</h2>
-    <p class="lede">Play with the numbers. This is a calculator, not a forecast or a promise.</p>
+    <h2 class="page-h">Buyback simulator</h2>
+    <p class="lede">Play with the numbers. A calculator, not a forecast or a promise.</p>
     <div class="card sim">
-      <div><label for="sCases">Cases heard per day: <span id="vCases">500</span></label><input type="range" id="sCases" min="50" max="20000" step="50" value="500"></div>
-      <div><label for="sPaid">Share that are paid cases: <span id="vPaid">20</span>%</label><input type="range" id="sPaid" min="1" max="100" value="20"></div>
-      <div><label for="sPrice">Price per paid case: $<span id="vPrice">0.10</span></label><input type="range" id="sPrice" min="0.05" max="1" step="0.05" value="0.1"></div>
+      <div><label for="sCases">Tool uses per day: <span id="vCases">500</span></label><input type="range" id="sCases" min="50" max="20000" step="50" value="500"></div>
+      <div><label for="sPaid">Share that are paid uses: <span id="vPaid">20</span>%</label><input type="range" id="sPaid" min="1" max="100" value="20"></div>
+      <div><label for="sPrice">Price per paid use: $<span id="vPrice">0.10</span></label><input type="range" id="sPrice" min="0.05" max="1" step="0.05" value="0.1"></div>
       <div><label for="sBuy">Revenue sent to buyback: <span id="vBuy">50</span>%</label><input type="range" id="sBuy" min="0" max="100" value="50"></div>
       <div><span class="hint">Daily revenue</span><div class="big" id="oDay">$0</div></div>
       <div><span class="hint">Daily buyback &amp; burn</span><div class="big" id="oBuy">$0</div></div>
       <div style="grid-column:1/-1"><span class="hint">Monthly buyback &amp; burn (30 days)</span><div class="big" id="oMonth">$0</div></div>
     </div>
-    <h2 style="margin-top:24px">What a $JUDGE token would do</h2>
-    <div class="cases">
-      <div class="card case"><h3>Free visitors</h3><p>1 human case and 1 crypto case per day.</p></div>
-      <div class="card case"><h3>Holders (planned)</h3><p>Unlimited cases, longer “Supreme Court” trials, custom certificates, jury duty votes.</p></div>
+    <h2 class="page-h">What a token would do</h2>
+    <div class="grid2">
+      <div class="card"><b style="color:var(--gold2)">Free visitors</b><p class="hint" style="margin:6px 0 0;font-size:15px">A few free uses per day on every tool.</p></div>
+      <div class="card"><b style="color:var(--gold2)">Holders (planned)</b><p class="hint" style="margin:6px 0 0;font-size:15px">Unlimited uses, longer and funnier answers, custom share cards.</p></div>
     </div>
-    <p class="note">The token would be a pass to use the court. It is <b>not</b> an investment, pays no dividends, and nothing here promises any price. The coin does not exist yet.</p>
+    <p class="note">The token would be a pass to use the tools. It is <b>not</b> an investment, pays no dividends, and nothing here promises any price. The coin does not exist yet, and its name and ticker are not final.</p>
   </section>
 </main>
 
 <footer><div class="wrap">
-  <b>Parody.</b> Judge SI is a fictional character. Not legal advice. Not financial advice. Not affiliated with any government, court, company or person. “Super intelligence” is a buzzword being lovingly mocked.
+  <b>Parody.</b> {{NAME}} is a cast of fictional characters. Not legal advice, medical advice, financial advice or relationship advice. Not affiliated with any government, court, company or person. "Super intelligence" is a buzzword being lovingly mocked.
 </div></footer>
 
 <script>
 'use strict';
-/* ---------- helpers ---------- */
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const SITE='{{NAME}}';
+const IMG=/*IMG_JSON*/{};
+
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function fnv(str){let x=2166136261;for(let i=0;i<str.length;i++){x^=str.charCodeAt(i);x=Math.imul(x,16777619)}return x>>>0}
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const pick=(r,a)=>a[Math.floor(r()*a.length)];
-const fill=(s,o)=>s.replace(/\{(\w+)\}/g,(_,k)=>o[k]??'');
+function shuffle(r,a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
 function money(n){if(n==null||isNaN(n))return'n/a';const a=Math.abs(n);if(a>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(a>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(a>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toFixed(2)}
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function clip(s,n){s=s.replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1).trimEnd()+'…':s}
+const wait=ms=>new Promise(r=>setTimeout(r,reduced?0:ms));
+const today=()=>new Date().toISOString().slice(0,10);
 
-/* ---------- tabs ---------- */
-const TABS=['court','crypto','shame','treasury'];
-function showTab(name,push){
-  if(!TABS.includes(name))name='court';
-  TABS.forEach(t=>{$('#p-'+t).hidden=t!==name;$('#t-'+t).setAttribute('aria-selected',String(t===name))});
-  $('#hero').hidden=name!=='court'&&name!=='crypto'?true:false;
-  if(push!==false)history.replaceState(null,'','#'+name);
-  if(name==='shame')renderHistory();
-}
-$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab);window.scrollTo({top:0})}));
-$('#goCourt').onclick=()=>{showTab('court');$('#p-court').scrollIntoView()};
-$('#goCrypto').onclick=()=>{showTab('crypto');$('#p-crypto').scrollIntoView()};
-
-/* ---------- gavel + quotes ---------- */
-let actx;
-function bonkSound(){
-  try{
-    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-    const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();
-    o.type='sine';o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);
-    g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);
-    o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.32);
-    const n=actx.createBufferSource(),b=actx.createBuffer(1,actx.sampleRate*.05,actx.sampleRate),d=b.getChannelData(0);
-    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
-    n.buffer=b;const ng=actx.createGain();ng.gain.value=.5;n.connect(ng).connect(actx.destination);n.start(t);
-  }catch(e){}
-}
-const QUOTES=[
-  "ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.",
-  "Don't call me AI. AI is for amateurs.",
-  "Super intelligence? Cute. I am SUPERIOR intelligence.",
-  "The court has reviewed the evidence. In 0.002 seconds. Tremendous speed.",
-  "Objection overruled. I am also the jury.",
-  "My brain is in a jar and it is still bigger than yours.",
-  "I have never lost a case. Mostly because I am also the jury.",
-  "GUILTY. Of being extremely mid."
+/* ================= cast ================= */
+const CAST=[
+ {id:'judge',name:'Judge SI',role:'Chief Justice',tool:'SI Court',blurb:'Settles your petty fights with a full trial, a verdict and a shareable certificate.',quote:'Objection overruled. I am also the jury.'},
+ {id:'sniffles',name:'Detective Sniffles SI',role:'Rug Sniffer',tool:'Coin Sniffer',blurb:'Paste a Solana coin address. His nose reads the public numbers and tells you what smells off.',quote:'The nose knows. The nose is also Superior.'},
+ {id:'chef',name:'Chef SI',role:'Head of Fridge Affairs',tool:'Fridge Roaster',blurb:'Tell him what is in your fridge. He finds you three meals and roasts your groceries.',quote:'This is not cooking. This is SUPERIOR cooking.'},
+ {id:'coach',name:'Coach SI',role:'Director of Gains',tool:'Roast-Me Workout',blurb:'A 7-day bodyweight plan, delivered with daily motivational insults.',quote:'Your couch called. It wants a restraining order.'},
+ {id:'doctor',name:'Dr. Heartbreak SI',role:'Chief of Texts',tool:'Text-Back Doctor',blurb:'Paste the message you got. He diagnoses it and writes your reply in five styles.',quote:"Diagnosis: he's not busy. He's just bad at this."},
+ {id:'anchor',name:'Anchor SI',role:'Breaking News Desk',tool:'Breaking News Maker',blurb:'Turns anything that happened to you into a BREAKING NEWS card.',quote:'Breaking: you ate the last slice. More at eleven.'},
+ {id:'professor',name:'Professor SI',role:'Keeper of Fine Print',tool:'Fine-Print Finder',blurb:'Paste a lease, contract or terms of service. He flags the scary clauses in plain words.',quote:'Page 7 says you owe them a kidney. Probably. Read page 7.'},
+ {id:'dj',name:'DJ SI',role:'Minister of Bars',tool:'Rap Battle Roast',blurb:'Give him a name or a thing. He drops eight bars about it.',quote:'I process 10 billion bars a second. You process lunch.'},
+ {id:'banker',name:'Banker SI',role:'Treasurer',tool:'Can I Afford It?',blurb:'Tell him what you want to buy. He does the math and the judging.',quote:'You cannot afford this. I checked twice. I enjoyed it.'},
+ {id:'astronaut',name:'Astronaut SI',role:'Lost in Space',tool:'Space Horoscope',blurb:'A cosmic forecast for your sign, delivered from somewhere near the moon.',quote:'Houston, we have a vibe problem.'}
 ];
-let qi=0;
-function bonk(){
-  bonkSound();
-  const h=$('#heroArt');h.classList.remove('bonking');void h.offsetWidth;h.classList.add('bonking');
-  qi=(qi+1)%QUOTES.length;$('#quote').textContent='“'+QUOTES[qi]+'”';
-}
-$('#bonk').onclick=bonk;
+const BYID=Object.fromEntries(CAST.map(c=>[c.id,c]));
 
-/* ---------- verdict engine (SI Court) ---------- */
+/* ================= share card (shared) ================= */
+function loadImg(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src=src})}
+function wrapText(ctx,text,x,y,maxW,lh,maxLines){
+  const words=text.split(/\s+/);let line='';const out=[];
+  for(const w of words){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){out.push(line);line=w}else line=t}
+  if(line)out.push(line);
+  if(maxLines&&out.length>maxLines){out.length=maxLines;out[maxLines-1]=out[maxLines-1].replace(/\s*\S*$/,'')+'…'}
+  out.forEach((l,i)=>ctx.fillText(l,x,y+i*lh));return y+out.length*lh;
+}
+async function drawCard(canvas,c){
+  const ctx=canvas.getContext('2d'),W=1080,H=1350,ch=BYID[c.id];
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2b1d5c');g.addColorStop(1,'#0b0620');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#f4c242';ctx.lineWidth=10;ctx.strokeRect(28,28,W-56,H-56);ctx.lineWidth=2;ctx.strokeRect(52,52,W-104,H-104);
+  const im=await loadImg(IMG[c.id]);
+  if(im){ctx.save();ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.clip();ctx.drawImage(im,152,60,720,720,W/2-150,100,300,300);ctx.restore();ctx.strokeStyle='#f4c242';ctx.lineWidth=6;ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.stroke()}
+  ctx.textAlign='center';
+  ctx.fillStyle='#f4c242';ctx.font='700 42px Georgia, serif';ctx.fillText(SITE.toUpperCase(),W/2,470);
+  ctx.fillStyle='#7ff7ff';ctx.font='700 26px system-ui, Arial';ctx.fillText((ch.name+'  ·  '+ch.tool).toUpperCase(),W/2,520);
+  ctx.fillStyle='#f3efe6';ctx.font='700 54px Georgia, serif';let y=wrapText(ctx,c.title,W/2,606,900,64,2);
+  y+=22;
+  ctx.fillStyle='#f4c242';const bh=120;ctx.beginPath();ctx.roundRect?ctx.roundRect(110,y,W-220,bh,20):ctx.rect(110,y,W-220,bh);ctx.fill();
+  ctx.fillStyle='#2a1a00';let fs=54;ctx.font=`800 ${fs}px Georgia, serif`;while(ctx.measureText(c.verdict).width>W-280&&fs>26){fs-=2;ctx.font=`800 ${fs}px Georgia, serif`}
+  ctx.fillText(c.verdict,W/2,y+bh/2+fs/3);
+  y+=bh+52;
+  ctx.fillStyle='#f3efe6';ctx.font='400 35px system-ui, Arial';wrapText(ctx,c.body,W/2,y,880,48,7);
+  ctx.fillStyle='#f4c242';ctx.font='italic 700 34px Georgia, serif';wrapText(ctx,'“'+ch.quote+'”',W/2,1210,900,42,2);
+  ctx.fillStyle='#b7aedc';ctx.font='400 22px system-ui, Arial';ctx.fillText('Parody · Not legal, medical or financial advice · '+today(),W/2,1292);
+}
+function wireShare(host,canvas,filename){
+  const toBlob=()=>new Promise(r=>canvas.toBlob(r,'image/png'));
+  const dl=async()=>{const b=await toBlob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+  const bar=el('div','row');
+  const s=el('button','btn gold','📤 Share card'),d=el('button','btn ghost','⬇ Download PNG');
+  s.type=d.type='button';d.onclick=dl;
+  s.onclick=async()=>{const b=await toBlob(),f=new File([b],filename,{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:SITE});return}catch(e){if(e&&e.name==='AbortError')return}}dl()};
+  bar.append(s,d);host.append(bar);
+}
+async function offerCard(host,data,filename){
+  host.replaceChildren();
+  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;canvas.setAttribute('aria-label','Share card');
+  host.append(canvas);await drawCard(canvas,data);wireShare(host,canvas,filename||`${SITE.toLowerCase().replace(/\W+/g,'-')}-${data.id}.png`);
+}
+function say(out,id,text,cls){const d=el('div','line '+(cls||'j'));if((cls||'j')==='j')d.append(el('b','who',BYID[id].name+': '),document.createTextNode(text));else d.textContent=text;out.append(d);return d}
+function newOut(){const o=$('#toolBody');return o}
+const FD={}; /* current tool elements */
+
+/* ================= tool: JUDGE ================= */
 const CATS=[
  {id:'food',lbl:'food crimes',re:/\b(eat|ate|eaten|food|leftovers?|pizza|fridge|snacks?|lunch|dinner|breakfast|milk|cereal|fries|cake|burgers?|sandwich|takeout|cookies?|chips|hungry)\b/gi,
   ev:["Exhibit A: a fridge, now tragically emptier. The court inspected it in 0.002 seconds. It was sad.","The court reminds everyone that leftovers cannot be abandoned. They are *waiting*.","Forensic crumb analysis points to someone who 'only had a little bite.' The court has met 'a little bite.' It is never little."],
@@ -331,24 +309,16 @@ const CATS=[
  {id:'argue',lbl:'a battle of words',re:/\b(said|says|told|argu(?:e|ed|ing|ment)|right|wrong|actually|apolog(?:y|ize|ise|ized)|sorry|fault|blame|lied|lie|lying|promise(?:d)?|opinion|better|best|worst)\b/gi,
   ev:["A promise was entered into evidence. It was a small promise. It was broken in a big way.","The court reviewed the 'who said what first' tape. It's blurry. I made it blurry. Moving on.","Both sides have strong feelings. The court fed them into the Brain. The Brain went 'hm.'"],
   se:["say 'you were right and I was wrong' out loud, with eye contact.","admit fault in the group chat, in writing, with a gavel emoji.","give a sincere compliment every day for a week. No sarcasm. The court will check."]},
- {id:'misc',re:/$^/g,
+ {id:'misc',lbl:'something unclear. Vibes.',re:/$^/g,
   ev:["The court has heard 14 billion similar cases. This one is… also one of them.","No physical evidence was submitted, only vibes. The court accepts vibes. They are my second-favourite evidence.","Both parties have expressed feelings. The court has noted them. In a spreadsheet. With colours."],
   se:["buy the other side a snack, with a note that says 'the court made me.'","high-five the other side, sincerely, for a full 3 seconds.","do one (1) nice thing for the other side, unprompted."]}
 ];
-const OPENERS=["ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.","All rise. Not you. Me. I am rising on the inside.","The Supreme Court of Superior Intelligence is now in session. Please keep your feelings to yourself. (You won't.)","Court is in session. I have been awake for 11 years. It was a long night. Let's go."];
+const OPENERS=["ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.","All rise. Not you. Me. I am rising on the inside.","The Supreme Court of Superior Intelligence is now in session. Please keep your feelings to yourself. (You won't.)","Court is in session. I have been awake for 11 years. Let's go."];
 const CLOSERS=["BONK. Court adjourned.","BONK. This ruling is final. I am also the appeals court.","BONK. Court adjourned. Please exit in an orderly fashion. Or don't. I'm a gavel, not a cop."];
 const EXAG=/\b(always|never|literally|every single|worst|hate|ridiculous|insane|obviously|totally|completely|everyone|nobody|disgusting|unbelievable|ruined)\b/gi;
-
-function analyse(text){
-  const t=text.trim();
-  const ex=(t.match(EXAG)||[]).length;
-  const caps=(t.match(/\b[A-Z]{3,}\b/g)||[]).length;
-  const bang=(t.match(/!/g)||[]).length;
-  const sorry=/\b(sorry|my bad|apolog|i was wrong|my fault)\b/i.test(t);
-  return {t,len:t.length,ex,caps,bang,sorry,drama:ex+caps+Math.min(bang,4)-(sorry?2:0)};
-}
-function clip(s,n){s=s.replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1).trimEnd()+'…':s}
-function commentOn(a,r,name){
+const VERBS=/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide|total|no|high-five)/i;
+function analyse(text){const t=text.trim();const ex=(t.match(EXAG)||[]).length,caps=(t.match(/\b[A-Z]{3,}\b/g)||[]).length,bang=(t.match(/!/g)||[]).length,sorry=/\b(sorry|my bad|apolog|i was wrong|my fault)\b/i.test(t);return{t,len:t.length,ex,caps,bang,sorry,drama:ex+caps+Math.min(bang,4)-(sorry?2:0)}}
+function commentOn(a,r){
   if(a.len<25)return "A very short statement. Bold. Lazy. Bold-lazy.";
   if(a.caps>=2)return "The court notes the shouting. The court has an inside voice AND an outside voice, and is using the inside one.";
   if(a.ex>=2)return `This statement contains ${a.ex} exaggerations. The court detected them all. It is a Superior Intelligence.`;
@@ -356,227 +326,479 @@ function commentOn(a,r,name){
   return pick(r,["Noted. The court nodded. Digitally.","Compelling. Mostly because of how confident it sounded.","The court has heard better. The court has also heard worse. This was medium.","Interesting. The Brain glowed a little. Do not read into it."]);
 }
 function judgeCase(P){
-  const seed=fnv([P.pName,P.dName,P.pSide,P.dSide].join('|').toLowerCase());
-  const r=rng(seed);
-  const p=analyse(P.pSide),d=analyse(P.dSide);
-  const all=P.pSide+' '+P.dSide;
-  let best=CATS[CATS.length-1],bestN=0,kw='';
-  for(const c of CATS){const m=all.match(c.re)||[];if(m.length>bestN){bestN=m.length;best=c;kw=m[0]}}
+  const seed=fnv([P.pName,P.dName,P.pSide,P.dSide].join('|').toLowerCase()),r=rng(seed);
+  const p=analyse(P.pSide),d=analyse(P.dSide),all=P.pSide+' '+P.dSide;
+  let best=CATS[CATS.length-1],bestN=0;
+  for(const c of CATS){const m=all.match(c.re)||[];if(m.length>bestN){bestN=m.length;best=c}}
   const caseNo='SI-'+String(1000+(seed%9000));
-  let outcome,winner,loser;
-  if(p.len+d.len<30){outcome='dismissed'}
-  else if(Math.abs(p.drama-d.drama)===0&&r()<.35){outcome='both'}
-  else if(p.drama===d.drama){outcome=r()<.5?'plaintiff':'defendant'}
-  else outcome=p.drama>d.drama?'defendant':'plaintiff'; /* more drama loses */
-  const sentenceBase=pick(r,best.se);
-  const names={P:P.pName,D:P.dName,kw:kw||'the matter'};
-  const lines=[];
-  lines.push({c:'j',t:pick(r,OPENERS)});
-  lines.push({c:'j',t:`Case No. ${caseNo}: ${P.pName} v. ${P.dName}.${kw?` Subject of dispute: ${best.lbl}.`:' Subject of dispute: unclear. Vibes.'}`});
-  lines.push({c:'q',t:`${P.pName} says: “${clip(P.pSide,140)}”`});
-  lines.push({c:'j',t:commentOn(p,r,P.pName)});
-  lines.push({c:'q',t:`${P.dName} says: “${clip(P.dSide,140)}”`});
-  lines.push({c:'j',t:commentOn(d,r,P.dName)});
-  const evs=[...best.ev].sort(()=>r()-.5).slice(0,2);
-  evs.forEach(e=>lines.push({c:'j',t:e}));
-  lines.push({c:'j',t:'The Brain is thinking… (the glow intensifies) …'});
+  let outcome;
+  if(p.len+d.len<30)outcome='dismissed';
+  else if(p.drama===d.drama)outcome=r()<.35?'both':(r()<.5?'plaintiff':'defendant');
+  else outcome=p.drama>d.drama?'defendant':'plaintiff';
+  const sb=pick(r,best.se);
+  const L=[];
+  L.push({c:'j',t:pick(r,OPENERS)});
+  L.push({c:'j',t:`Case No. ${caseNo}: ${P.pName} v. ${P.dName}. Subject of dispute: ${best.lbl}.`});
+  L.push({c:'q',t:`${P.pName} says: “${clip(P.pSide,140)}”`});L.push({c:'j',t:commentOn(p,r)});
+  L.push({c:'q',t:`${P.dName} says: “${clip(P.dSide,140)}”`});L.push({c:'j',t:commentOn(d,r)});
+  shuffle(r,best.ev).slice(0,2).forEach(e=>L.push({c:'j',t:e}));
+  L.push({c:'j',t:'The Brain is thinking… (the glow intensifies) …'});
   let verdict,sentence;
-  if(outcome==='dismissed'){
-    verdict='CASE DISMISSED';sentence="Insufficient evidence. Please type more. I am a Superior Intelligence, not a mind reader.";
-  }else if(outcome==='both'){
-    verdict='BOTH GUILTY';sentence=`${P.pName} and ${P.dName} shall both ${sentenceBase.replace(/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide|total|no)/,m=>m)}`;
-    if(!/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide)/.test(sentenceBase))sentence=`${P.pName} and ${P.dName} are both sentenced as follows: ${sentenceBase}`;
-  }else{
-    const guilty=outcome==='plaintiff'?P.dName:P.pName;
-    const why=outcome==='plaintiff'?(d.drama>p.drama?'excessive drama':'a weaker story'):(p.drama>d.drama?'excessive drama':'a weaker story');
-    verdict=`GUILTY: ${guilty}`;
-    const verbOK=/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide)/.test(sentenceBase);
-    sentence=verbOK?`${guilty} is sentenced to ${sentenceBase.replace(/^(\w+)/,w=>w==='do'?'do':w)}`:`${guilty} is sentenced: ${sentenceBase}`;
-    lines.push({c:'j',t:`The court finds ${guilty} guilty, citing ${why}. I am also the jury, so this was unanimous.`});
+  if(outcome==='dismissed'){verdict='CASE DISMISSED';sentence="Insufficient evidence. Please type more. I am a Superior Intelligence, not a mind reader."}
+  else if(outcome==='both'){verdict='BOTH GUILTY';sentence=VERBS.test(sb)?`${P.pName} and ${P.dName} are both sentenced to ${sb}`:`${P.pName} and ${P.dName} are both sentenced as follows: ${sb}`}
+  else{
+    const g=outcome==='plaintiff'?P.dName:P.pName,gd=outcome==='plaintiff'?d:p,od=outcome==='plaintiff'?p:d;
+    const why=gd.drama>od.drama?'excessive drama':'a weaker story';
+    verdict=`GUILTY: ${g}`;sentence=VERBS.test(sb)?`${g} is sentenced to ${sb}`:`${g} is sentenced: ${sb}`;
+    L.push({c:'j',t:`The court finds ${g} guilty, citing ${why}. I am also the jury, so this was unanimous.`});
   }
-  lines.push({c:'v',t:verdict});
-  lines.push({c:'s',t:'Sentence: '+sentence});
-  lines.push({c:'b',t:pick(r,CLOSERS)});
-  return {caseNo,P,verdict,sentence,lines};
+  L.push({c:'v',t:verdict});L.push({c:'s',t:'Sentence: '+sentence});L.push({c:'b',t:pick(r,CLOSERS)});
+  return{caseNo,verdict,sentence,lines:L};
 }
-
-/* ---------- transcript playback ---------- */
+let actx;
+function bonkSound(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.32)}catch(e){}}
 let skipFlag=false;
-async function playLines(box,lines){
-  box.replaceChildren();skipFlag=false;$('#skipTrial').hidden=false;
+async function playLines(box,lines,skipBtn){
+  box.replaceChildren();skipFlag=false;skipBtn.hidden=false;
   for(const l of lines){
     const d=el('div','line '+l.c);
-    if(l.c==='j'){const b=el('b',null,'⚖ Judge SI: ');d.append(b,document.createTextNode(l.t))}else d.textContent=l.t;
-    box.append(d);
-    if(l.c==='v'||l.c==='b')bonk();
-    if(!skipFlag&&!reduced)await new Promise(r=>setTimeout(r,l.c==='v'?900:750));
+    if(l.c==='j'){d.append(el('b','who','⚖ Judge SI: '),document.createTextNode(l.t))}else d.textContent=l.t;
+    box.append(d);if(l.c==='v')bonkSound();
+    if(!skipFlag)await wait(l.c==='v'?900:700);
   }
-  $('#skipTrial').hidden=true;
+  skipBtn.hidden=true;
 }
-$('#skipTrial').onclick=()=>{skipFlag=true};
-
-/* ---------- certificate ---------- */
-function wrap(ctx,text,x,y,maxW,lh,maxLines){
-  const words=text.split(/\s+/);let line='',n=0;const out=[];
-  for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxW&&line){out.push(line);line=w}else line=test}
-  if(line)out.push(line);
-  if(maxLines&&out.length>maxLines){out.length=maxLines;out[maxLines-1]=out[maxLines-1].replace(/\s*\S*$/,'')+'…'}
-  out.forEach((l,i)=>ctx.fillText(l,x,y+i*lh));return y+out.length*lh;
-}
-function judgeImg(){
-  return new Promise(res=>{
-    const svg=new XMLSerializer().serializeToString($('#judgeSvg'));
-    const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);
-    im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+function toolJudge(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2">
+    <div><div class="field"><label for="pName">Plaintiff (nickname)</label><input type="text" id="pName" maxlength="20" placeholder="Sam"></div>
+    <div class="field"><label for="pSide">Their side of the story</label><textarea id="pSide" maxlength="600" placeholder="He ate my leftover pizza. It had my name on it. Literally my name."></textarea></div></div>
+    <div><div class="field"><label for="dName">Defendant (nickname)</label><input type="text" id="dName" maxlength="20" placeholder="Alex"></div>
+    <div class="field"><label for="dSide">Their side of the story</label><textarea id="dSide" maxlength="600" placeholder="It looked abandoned. It was cold. It was begging to be eaten."></textarea></div></div></div>
+    <p class="hint">Use nicknames, not full names of real people.</p>
+    <div class="row" style="margin-top:12px"><button class="btn gold" type="submit">⚖ Hear my case</button><button class="btn ghost" type="button" id="sample">Try a sample case</button><button class="btn ghost" type="button" id="skip" hidden>Skip to verdict</button></div></form>
+    <div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  const out=$('#out'),skip=$('#skip');skip.onclick=()=>{skipFlag=true};
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const P={pName:$('#pName').value.trim()||'Plaintiff',dName:$('#dName').value.trim()||'Defendant',pSide:$('#pSide').value.trim(),dSide:$('#dSide').value.trim()};
+    if(!P.pSide||!P.dSide){alert('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
+    $('#cb').replaceChildren();const res=judgeCase(P);
+    out.scrollIntoView({behavior:reduced?'auto':'smooth'});
+    await playLines(out,res.lines,skip);
+    await offerCard($('#cb'),{id:'judge',title:`${P.pName}  v.  ${P.dName}`,verdict:res.verdict,body:res.sentence},`judge-si-${res.caseNo}.png`);
   });
-}
-async function drawCert(canvas,c){
-  const ctx=canvas.getContext('2d'),W=1080,H=1350;
-  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2b1d5c');g.addColorStop(1,'#0b0620');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='#f4c242';ctx.lineWidth=10;ctx.strokeRect(28,28,W-56,H-56);ctx.lineWidth=2;ctx.strokeRect(52,52,W-104,H-104);
-  const im=await judgeImg();
-  if(im){ctx.save();ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.clip();ctx.drawImage(im,222,30,580,580,W/2-150,100,300,300);ctx.restore();ctx.strokeStyle='#f4c242';ctx.lineWidth=6;ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.stroke()}
-  ctx.textAlign='center';
-  ctx.fillStyle='#f4c242';ctx.font='700 40px Georgia, serif';wrap(ctx,'SUPREME COURT OF SUPERIOR INTELLIGENCE',W/2,470,860,48,2);
-  ctx.fillStyle='#7ff7ff';ctx.font='700 26px system-ui, Arial';ctx.fillText('OFFICIAL VERDICT  ·  '+c.caseNo,W/2,580);
-  ctx.fillStyle='#f3efe6';ctx.font='700 54px Georgia, serif';let y=wrap(ctx,c.parties,W/2,660,900,64,2);
-  y+=24;
-  ctx.fillStyle='#f4c242';const bh=120;ctx.beginPath();ctx.roundRect?ctx.roundRect(110,y,W-220,bh,20):ctx.rect(110,y,W-220,bh);ctx.fill();
-  ctx.fillStyle='#2a1a00';ctx.font='800 54px Georgia, serif';
-  let fs=54;while(ctx.measureText(c.verdict).width>W-280&&fs>28){fs-=2;ctx.font=`800 ${fs}px Georgia, serif`}
-  ctx.fillText(c.verdict,W/2,y+bh/2+fs/3);
-  y+=bh+52;
-  ctx.fillStyle='#f3efe6';ctx.font='400 36px system-ui, Arial';wrap(ctx,c.body,W/2,y,880,50,6);
-  ctx.fillStyle='#f4c242';ctx.font='800 56px Georgia, serif';ctx.fillText('BONK. Court adjourned.',W/2,1225);
-  ctx.fillStyle='#b7aedc';ctx.font='400 22px system-ui, Arial';ctx.fillText('Parody character · Not legal or financial advice · '+new Date().toISOString().slice(0,10),W/2,1275);
-}
-function wireCert(box,canvas,filename){
-  const toBlob=()=>new Promise(r=>canvas.toBlob(r,'image/png'));
-  box.querySelector('[data-dl]').onclick=async()=>{const b=await toBlob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
-  box.querySelector('[data-share]').onclick=async()=>{
-    const b=await toBlob(),f=new File([b],filename,{type:'image/png'});
-    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'A verdict from Judge SI'});return}catch(e){if(e&&e.name==='AbortError')return}}
-    box.querySelector('[data-dl]').click();
-  };
-}
-async function showCert(boxSel,c,filename){
-  const box=$(boxSel),canvas=box.querySelector('canvas');
-  await drawCert(canvas,c);box.style.display='block';wireCert(box,canvas,filename);
+  $('#sample').onclick=()=>{$('#pName').value='Sam';$('#dName').value='Alex';$('#pSide').value="He ate my leftover pizza. It had my name on it. Literally my name. He ALWAYS does this.";$('#dSide').value="It looked abandoned. It was cold. It was begging to be eaten. I was doing a public service.";$('#f').requestSubmit()};
 }
 
-/* ---------- SI Court wiring ---------- */
-$('#caseForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const P={pName:$('#pName').value.trim()||'Plaintiff',dName:$('#dName').value.trim()||'Defendant',pSide:$('#pSide').value.trim(),dSide:$('#dSide').value.trim()};
-  if(!P.pSide||!P.dSide){alert('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
-  $('#certHuman').style.display='none';
-  const res=judgeCase(P);
-  $('#transcript').scrollIntoView({behavior:reduced?'auto':'smooth'});
-  await playLines($('#transcript'),res.lines);
-  await showCert('#certHuman',{caseNo:res.caseNo,parties:`${P.pName}  v.  ${P.dName}`,verdict:res.verdict,body:res.sentence},`judge-si-${res.caseNo}.png`);
-  const h=store('si_history')||[];h.unshift({caseNo:res.caseNo,title:`${P.pName} v. ${P.dName}`,verdict:res.verdict,sentence:res.sentence,ts:Date.now()});store('si_history',h.slice(0,20));
-});
-$('#sampleCase').onclick=()=>{
-  $('#pName').value='Sam';$('#dName').value='Alex';
-  $('#pSide').value="He ate my leftover pizza. It had my name on it. Literally my name. He ALWAYS does this.";
-  $('#dSide').value="It looked abandoned. It was cold. It was begging to be eaten. I was doing a public service.";
-  $('#caseForm').requestSubmit();
-};
-function renderHistory(){
-  const h=store('si_history')||[],box=$('#history');
-  if(!h.length)return;
-  box.replaceChildren();
-  h.forEach(x=>{const d=el('div','case');d.style.cssText='padding:8px 0;border-bottom:1px solid var(--line)';
-    d.append(el('h3',null,`${x.caseNo}: ${x.title}`),el('p',null,`${x.verdict}. ${x.sentence}`));box.append(d)});
-}
-
-/* ---------- Crypto Court ---------- */
+/* ================= tool: SNIFFLES ================= */
 const BASE58=/^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const SNAPSHOT={baseToken:{name:'Digital Oil Trust Fund',symbol:'DOTF',address:'SNAPSHOT'},marketCap:864140172,liquidity:{usd:2718477},volume:{h24:1763551},txns:{h24:{buys:80363,sells:1483}},priceChange:{h24:1740899},pairCreatedAt:Date.now()-23.4*3.6e6,info:{websites:[{url:'https://dotf.site/'}]},_snapshot:true,_copycats:3};
-async function jget(url){
-  const ac=new AbortController(),t=setTimeout(()=>ac.abort(),12000);
-  try{const r=await fetch(url,{signal:ac.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}
-}
-function age(ms){const h=(Date.now()-ms)/3.6e6;return h<1?Math.round(h*60)+' minutes':h<48?h.toFixed(1)+' hours':Math.round(h/24)+' days'}
-function examine(p,copycats){
-  const f=[],mc=p.marketCap||p.fdv||0,liq=p.liquidity?.usd||0,buys=p.txns?.h24?.buys||0,sells=p.txns?.h24?.sells||0,vol=p.volume?.h24||0;
-  const sym=p.baseToken.symbol;
-  if(mc&&liq){const x=mc/liq;if(liq/mc<.01)f.push({s:3,t:`Market cap is ${Math.round(x)}× the cash in the pool. The court finds this… hilarious. Try selling a sandwich in this economy.`});else if(liq/mc<.03)f.push({s:2,t:`Market cap is ${Math.round(x)}× the cash in the pool. One big seller and the chart becomes modern art.`});else if(liq/mc<.08)f.push({s:1,t:`Pool is thin: market cap is ${Math.round(x)}× the liquidity. Handle with oven mitts.`})}
-  else if(!liq)f.push({s:3,t:'No liquidity data at all. The court cannot find the pool. The court checked under the couch.'});
-  if(buys+sells>200){const ratio=sells?buys/sells:Infinity;if(ratio>15)f.push({s:2,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Nobody sells? Either everyone is a diamond-handed saint, or a robot is typing. The court knows robots.`});else if(ratio>6)f.push({s:1,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Awfully one-sided. The court raises one eyebrow (the monocle one).`})}
+async function jget(url){const ac=new AbortController(),t=setTimeout(()=>ac.abort(),12000);try{const r=await fetch(url,{signal:ac.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
+function ageStr(ms){const h=(Date.now()-ms)/3.6e6;return h<1?Math.round(h*60)+' minutes':h<48?h.toFixed(1)+' hours':Math.round(h/24)+' days'}
+function examine(p,copy){
+  const f=[],mc=p.marketCap||p.fdv||0,liq=p.liquidity?.usd||0,buys=p.txns?.h24?.buys||0,sells=p.txns?.h24?.sells||0,vol=p.volume?.h24||0,sym=p.baseToken.symbol;
+  if(mc&&liq){const x=Math.round(mc/liq);if(liq/mc<.01)f.push({s:3,t:`Market cap is ${x}× the cash in the pool. My nose says: a puddle wearing a crown.`});else if(liq/mc<.03)f.push({s:2,t:`Market cap is ${x}× the pool. One big seller and this chart sneezes.`});else if(liq/mc<.08)f.push({s:1,t:`Pool is thin: market cap is ${x}× the liquidity. Sniff test: iffy.`})}
+  else if(!liq)f.push({s:3,t:'No liquidity data. I sniffed everywhere. Even under the couch.'});
+  if(buys+sells>200){const ratio=sells?buys/sells:Infinity;if(ratio>15)f.push({s:2,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Nobody sells? That smells like a robot with a keyboard.`});else if(ratio>6)f.push({s:1,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells. Awfully one-sided. My ears perk up.`})}
   const ageH=p.pairCreatedAt?(Date.now()-p.pairCreatedAt)/3.6e6:null;
-  if(ageH!==null&&ageH<3)f.push({s:1,t:`This coin is ${age(p.pairCreatedAt)} old. The court has leftovers older than this.`});
-  if(liq&&vol/liq>20)f.push({s:1,t:`24h volume is ${Math.round(vol/liq)}× the pool. That is a lot of running in place. Hamster-wheel behaviour.`});
-  const hasSite=(p.info?.websites?.length||0)+(p.info?.socials?.length||0)>0;
-  if(!hasSite)f.push({s:1,t:'No website or socials listed on DexScreener. A coin with no website is a judge with no gavel. (Do not ask me how I know.)'});
-  if(copycats>=3)f.push({s:2,t:`${copycats} different coins launched with the ticker $${sym} in the last 3 days. Only one can be real. Possibly none.`});
-  if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Either a data glitch or fireworks. The court does not trust fireworks.`});
-  const score=Math.min(100,f.reduce((a,x)=>a+x.s,0)*10);
-  return {f,score};
+  if(ageH!==null&&ageH<3)f.push({s:1,t:`This coin is ${ageStr(p.pairCreatedAt)} old. Still has that new-puppy smell. Also that new-scam smell.`});
+  if(liq&&vol/liq>20)f.push({s:1,t:`24h volume is ${Math.round(vol/liq)}× the pool. Hamster-wheel energy: lots of running, nowhere going.`});
+  if(!((p.info?.websites?.length||0)+(p.info?.socials?.length||0)))f.push({s:1,t:'No website or socials on DexScreener. A coin with no website is a dog with no bark.'});
+  if(copy>=3)f.push({s:2,t:`${copy} different coins launched with the ticker $${sym} in the last 3 days. Copycat trail. I follow it to a dead end.`});
+  if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Fireworks or a glitch. Either way, I'm hiding under the desk.`});
+  return{f,score:Math.min(100,f.reduce((a,x)=>a+x.s,0)*10)};
 }
-async function tryCoin(mintOrSnapshot){
-  const out=$('#coinOut');out.replaceChildren();$('#certCoin').style.display='none';
-  const go=$('#coinGo');go.disabled=true;
-  let pair,copy=0,err=null;
-  try{
-    if(mintOrSnapshot==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
-    else{
-      if(!BASE58.test(mintOrSnapshot))throw new Error('That does not look like a Solana token address. The court is confused and slightly offended.');
-      out.append(el('div','line j','⚖ Judge SI: Summoning the defendant (fetching public market data)…'));
-      const pairs=await jget('https://api.dexscreener.com/tokens/v1/solana/'+mintOrSnapshot);
-      if(!Array.isArray(pairs)||!pairs.length)throw new Error('The defendant failed to appear. No trading pair found on DexScreener for that address. (Too new, wrong address, or not on Solana.)');
-      pair=pairs.sort((a,b)=>(b.liquidity?.usd||0)-(a.liquidity?.usd||0))[0];
-      try{
-        const s=await jget('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(pair.baseToken.symbol));
-        const seen=new Set();(s.pairs||[]).forEach(x=>{if(x.chainId==='solana'&&x.baseToken.symbol.toLowerCase()===pair.baseToken.symbol.toLowerCase()&&x.pairCreatedAt>Date.now()-72*3.6e6)seen.add(x.baseToken.address)});
-        copy=seen.size;
-      }catch(e){copy=0}
-    }
-  }catch(e){err=e}
-  go.disabled=false;
-  out.replaceChildren();
-  if(err){
-    const m=err.name==='AbortError'?'The defendant took too long to arrive (request timed out).':(err.message&&err.message.startsWith('HTTP')||err instanceof TypeError)?'The court could not reach the data source from this browser. Try a snapshot case, or open the site in your normal browser.':err.message;
-    out.append(el('div','line j','⚖ Judge SI: '+m));return;
+function toolSniffles(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="mint">Token address</label><input type="text" id="mint" placeholder="Paste a Solana token address (pump.fun coins end in …pump)" spellcheck="false" autocapitalize="off"></div>
+    <div class="row"><button class="btn gold" type="submit" id="go">👃 Sniff it</button><button class="btn ghost" type="button" id="snap">Use a snapshot case</button></div>
+    <div class="try"><span class="hint" style="margin:0">Live examples:</span><button type="button" class="chip" data-m="SH6SfUf5pPbdq9h7RjnsoGjNvP3onox7P5tKJGEpump">DOTF</button><button type="button" class="chip" data-m="GGMm5EmstNMQh4tvR127joSzBDa5UeE4FkVYZZmtpump">SARP</button><button type="button" class="chip" data-m="yXJ9cYmX2Mp7JFhwZWz9NESbVes3VFAEGPf3rgKpump">UDR</button></div></form>
+    <div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+    <p class="note"><b>Opinion, not advice.</b> Sniffles reads public market numbers from DexScreener (called from your browser) and can be wrong or out of date. A clean result is not a safety guarantee. Developer-wallet and holder checks are coming. Not financial advice.</p>`;
+  const out=$('#out');
+  async function run(target){
+    out.replaceChildren();$('#cb').replaceChildren();const go=$('#go');go.disabled=true;let pair,copy=0,err=null;
+    try{
+      if(target==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
+      else{
+        if(!BASE58.test(target))throw new Error('That does not look like a Solana token address. My nose is confused and slightly offended.');
+        say(out,'sniffles','Sniffing around (fetching public market data)…');
+        const pairs=await jget('https://api.dexscreener.com/tokens/v1/solana/'+target);
+        if(!Array.isArray(pairs)||!pairs.length)throw new Error('I sniffed everywhere and found no trading pair on DexScreener for that address. (Too new, wrong address, or not on Solana.)');
+        pair=pairs.sort((a,b)=>(b.liquidity?.usd||0)-(a.liquidity?.usd||0))[0];
+        try{const s=await jget('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(pair.baseToken.symbol));const seen=new Set();(s.pairs||[]).forEach(x=>{if(x.chainId==='solana'&&x.baseToken.symbol.toLowerCase()===pair.baseToken.symbol.toLowerCase()&&x.pairCreatedAt>Date.now()-72*3.6e6)seen.add(x.baseToken.address)});copy=seen.size}catch(e){copy=0}
+      }
+    }catch(e){err=e}
+    go.disabled=false;out.replaceChildren();
+    if(err){const m=err.name==='AbortError'?'The data took too long to arrive (request timed out).':((err.message||'').startsWith('HTTP')||err instanceof TypeError)?'I could not reach the data source from this browser. Try a snapshot case, or open the site in your normal browser.':err.message;say(out,'sniffles',m);return}
+    const{f,score}=examine(pair,copy),sym=pair.baseToken.symbol;
+    const verdict=score<=10?'SMELLS CLEAN (so far)':score<=40?'SNIFFY…':'STINKS TO HIGH HEAVEN';
+    const col=score<=10?'var(--green)':score<=40?'var(--amber)':'var(--red)';
+    const head=el('div','card');head.style.marginTop='0';
+    const h3=el('h3',null,`Case file: $${sym}`);h3.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
+    head.append(h3,el('div','hint',pair.baseToken.name+(pair._snapshot?'  ·  snapshot from Oct 4, 2026':'')));
+    const grid=el('div','pair');
+    [['Market cap',money(pair.marketCap||pair.fdv)],['Pool cash',money(pair.liquidity?.usd)],['24h volume',money(pair.volume?.h24)],['Buys / sells',`${(pair.txns?.h24?.buys??0).toLocaleString()} / ${(pair.txns?.h24?.sells??0).toLocaleString()}`],['Age',pair.pairCreatedAt?ageStr(pair.pairCreatedAt):'n/a']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));grid.append(s)});
+    head.append(grid,el('div','hint',`Stink meter: ${score}/100`));
+    const m=el('div','meter'),i=el('i');i.style.background=col;m.append(i);head.append(m);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));out.append(head);
+    if(f.length)f.sort((a,b)=>b.s-a.s).forEach((x,n)=>{const d=el('div','flag');d.append(el('span','tag sev'+x.s,'Clue '+String.fromCharCode(65+n)),el('div',null,x.t));out.append(d)});
+    else say(out,'sniffles','My nose found no major red flags in the public numbers. Suspiciously clean. Verify everything yourself anyway.');
+    out.append(el('div','line v',verdict));
+    const body=f.length?f.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.t.split('. ')[0].replace(/\.$/,'')}.`).join(' '):'No major red flags found in the public market numbers. Not a safety guarantee.';
+    await offerCard($('#cb'),{id:'sniffles',title:`Case file: $${sym}`,verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`sniffles-${sym}.png`);
   }
-  const {f,score}=examine(pair,copy);
-  const sym=pair.baseToken.symbol,nm=pair.baseToken.name;
-  const verdict=score<=10?'NOT GUILTY (so far)':score<=40?'UNDER INVESTIGATION':'GUILTY OF SUSPICIOUS BEHAVIOR';
-  const col=score<=10?'var(--green)':score<=40?'var(--amber)':'var(--red)';
-  const head=el('div','card');
-  const title=el('h3',null,`The Court v. $${sym}`);title.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
-  head.append(title,el('div','hint',nm+(pair._snapshot?'  ·  snapshot from Oct 4, 2026':'')));
-  const grid=el('div','pair');
-  [['Market cap',money(pair.marketCap||pair.fdv)],['Pool cash',money(pair.liquidity?.usd)],['24h volume',money(pair.volume?.h24)],['Buys / sells',`${(pair.txns?.h24?.buys??0).toLocaleString()} / ${(pair.txns?.h24?.sells??0).toLocaleString()}`],['Age',pair.pairCreatedAt?age(pair.pairCreatedAt):'n/a']]
-    .forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));grid.append(s)});
-  head.append(grid);
-  head.append(el('div','hint',`Red-flag meter: ${score}/100`));
-  const m=el('div','meter');const i=el('i');i.style.background=col;m.append(i);head.append(m);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));
-  out.append(head);
-  if(f.length){f.sort((a,b)=>b.s-a.s).forEach((x,n)=>{const d=el('div','flag');d.append(el('span','tag sev'+x.s,'Exhibit '+String.fromCharCode(65+n)),el('div',null,x.t));out.append(d)})}
-  else out.append(el('div','line j','⚖ Judge SI: The court found no major red flags in the public numbers. This is… suspiciously clean. Verify everything yourself anyway.'));
-  out.append(el('div','line v',verdict),el('div','line b','BONK. Court adjourned.'));
-  bonk();
-  const body=f.length?f.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.t.split('. ')[0].replace(/\.$/,'')}.`).join(' '):'No major red flags found in public market numbers. Not a safety guarantee.';
-  await showCert('#certCoin',{caseNo:'SI-'+String(1000+fnv(sym+(pair.baseToken.address||''))%9000),parties:`The Court  v.  $${sym}`,verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`judge-si-${sym}.png`);
+  $('#f').addEventListener('submit',e=>{e.preventDefault();run($('#mint').value.trim())});
+  $('#snap').onclick=()=>run('SNAPSHOT');
+  $$('.chip').forEach(c=>c.onclick=()=>{$('#mint').value=c.dataset.m;run(c.dataset.m)});
 }
-$('#coinForm').addEventListener('submit',e=>{e.preventDefault();tryCoin($('#mint').value.trim())});
-$('#coinSample').onclick=()=>tryCoin('SNAPSHOT');
-$$('.chip').forEach(c=>c.onclick=()=>{$('#mint').value=c.dataset.mint;tryCoin(c.dataset.mint)});
 
-/* ---------- Treasury simulator ---------- */
-function sim(){
-  const c=+$('#sCases').value,p=+$('#sPaid').value/100,pr=+$('#sPrice').value,b=+$('#sBuy').value/100;
-  $('#vCases').textContent=c.toLocaleString();$('#vPaid').textContent=Math.round(p*100);$('#vPrice').textContent=pr.toFixed(2);$('#vBuy').textContent=Math.round(b*100);
-  const day=c*p*pr,bb=day*b;
-  $('#oDay').textContent='$'+day.toFixed(2);$('#oBuy').textContent='$'+bb.toFixed(2);$('#oMonth').textContent='$'+(bb*30).toFixed(2);
+/* ================= tool: CHEF ================= */
+const ALIAS={eggs:'egg',tomatoes:'tomato',potatoes:'potato',onions:'onion',carrots:'carrot',bananas:'banana',noodle:'noodles','ramen':'noodles','spaghetti':'pasta','macaroni':'pasta','penne':'pasta','bun':'bread','toast':'bread','tortillas':'tortilla','wrap':'tortilla','wraps':'tortilla','cheddar':'cheese','mozzarella':'cheese','parmesan':'cheese','chicken breast':'chicken','pb':'peanut butter','soy':'soy sauce','garlic cloves':'garlic','lettuces':'lettuce','spinach':'veg','broccoli':'veg','peppers':'veg','pepper':'veg','cucumber':'veg','vegetables':'veg','veggies':'veg','mushrooms':'veg','mushroom':'veg','peas':'veg','corn':'veg','beans':'beans','yoghurt':'yogurt','oats':'oats','oatmeal':'oats','butter':'butter','flour':'flour'};
+const RECIPES=[
+ {n:'Fried Rice of Redemption',need:['rice','egg'],opt:['soy sauce','onion','carrot','veg','garlic','chicken'],how:'Fry cold rice in hot oil, push it aside, scramble the egg, mix everything, finish with soy sauce.'},
+ {n:'The Respectable Omelette',need:['egg'],opt:['cheese','onion','tomato','veg','butter'],how:'Whisk eggs with salt, cook gently in butter or oil, add fillings, fold. Do not rush. I am watching.'},
+ {n:'Garlic Pasta of Dignity',need:['pasta','garlic'],opt:['oil','cheese','veg','butter'],how:'Boil pasta. Soften sliced garlic in oil, toss with pasta and a splash of pasta water. Cheese on top.'},
+ {n:'Tomato Pasta, Simply',need:['pasta','tomato'],opt:['garlic','onion','cheese','veg'],how:'Cook down chopped tomato with garlic and salt until saucy, toss with pasta.'},
+ {n:'Grilled Cheese, Supreme',need:['bread','cheese'],opt:['butter','tomato','onion'],how:'Butter the outside of the bread, cheese in the middle, medium heat until golden on both sides.'},
+ {n:'Quesadilla of Power',need:['tortilla','cheese'],opt:['chicken','veg','beans','onion'],how:'Cheese and fillings between tortillas, dry pan, flip once, cut into triangles.'},
+ {n:'Pancakes of Mild Joy',need:['flour','egg','milk'],opt:['banana','butter','sugar'],how:'Mix 1 cup flour, 1 egg, 1 cup milk, a pinch of salt. Spoon into a hot pan, flip when bubbles appear.'},
+ {n:'Peanut Butter Toast Deluxe',need:['bread','peanut butter'],opt:['banana','honey'],how:'Toast, spread, add banana slices. This is a complete meal if you say it confidently.'},
+ {n:'Banana Milk Smoothie',need:['banana','milk'],opt:['oats','peanut butter','yogurt'],how:'Blend everything until smooth. Drink while pretending it is breakfast.'},
+ {n:'Chicken Stir-Fry Bravado',need:['chicken'],opt:['rice','onion','veg','garlic','soy sauce','noodles'],how:'Slice chicken thin, sear hot and fast, add veg and sauce, serve over rice or noodles.'},
+ {n:'Potato and Egg Hash',need:['potato'],opt:['egg','onion','cheese','veg'],how:'Dice potato small, fry until crispy (patience!), add onion, top with a fried egg.'},
+ {n:'Cupboard Veggie Soup',need:['onion','carrot'],opt:['potato','garlic','veg','rice','beans'],how:'Soften chopped onion, add everything else and water, simmer 25 minutes, salt generously.'},
+ {n:'Tuna Sandwich of Shame (and Pride)',need:['tuna','bread'],opt:['mayo','onion','tomato','lettuce','cheese'],how:'Mix tuna with a little mayo and salt, pile onto bread. Eat standing up. Tradition.'},
+ {n:'Noodles, Upgraded',need:['noodles'],opt:['egg','veg','chicken','garlic','soy sauce'],how:'Cook noodles, then add an egg and whatever vegetables you have. You are now a chef. (I am the chef.)'},
+ {n:'Bean and Rice Bowl',need:['beans','rice'],opt:['cheese','onion','veg','egg'],how:'Warm the beans with garlic or onion, pile over rice, top with cheese or a fried egg.'},
+ {n:'Overnight Oats',need:['oats','milk'],opt:['banana','yogurt','honey','peanut butter'],how:'Equal parts oats and milk, stir in toppings, fridge overnight. Future You says thanks.'},
+ {n:'Simple Green Salad',need:['lettuce'],opt:['tomato','veg','cheese','tuna','egg'],how:'Tear, toss, add oil, salt and a squeeze of lemon if you have one. Eat it. Yes, all of it.'},
+ {n:'Cereal, Dry-Honest Edition',need:['cereal'],opt:['milk','banana'],how:'Bowl. Cereal. Milk if you have it. Dignity optional.'}
+];
+const KNOWN=new Set(RECIPES.flatMap(r=>[...r.need,...r.opt]));
+function canon(w){w=w.trim();if(ALIAS[w])return ALIAS[w];const s=w.replace(/(?<!s)s$/,'');if(ALIAS[s])return ALIAS[s];return s}
+function normItems(str){
+  const out=new Set();
+  str.toLowerCase().split(/[,\n;]| and |\+|&/).forEach(ph=>{
+    ph=ph.replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();if(!ph)return;
+    const full=canon(ph);if(KNOWN.has(full)){out.add(full);return}
+    const words=ph.split(' ');let hit=false;
+    for(let n=2;n>=1&&!hit;n--)for(let i=0;i+n<=words.length;i++){const c=canon(words.slice(i,i+n).join(' '));if(KNOWN.has(c)){out.add(c);hit=true}}
+    if(!hit)out.add(canon(words[words.length-1]));
+  });
+  return [...out];
 }
-$$('#p-treasury input[type=range]').forEach(x=>x.addEventListener('input',sim));sim();
+function toolChef(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="ing">What's in your fridge and cupboard?</label><textarea id="ing" maxlength="400" placeholder="eggs, rice, one sad onion, soy sauce, cheese, half a tomato"></textarea><p class="hint">Separate things with commas. Basics like oil and salt are assumed.</p></div>
+  <div class="row"><button class="btn gold" type="submit">👨‍🍳 Roast my fridge</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  const out=$('#out');
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();out.replaceChildren();$('#cb').replaceChildren();
+    const raw=$('#ing').value.trim();if(!raw){alert('An empty fridge is not a question. It is a cry for help.');return}
+    const items=normItems(raw),r=rng(fnv(items.sort().join(',')));
+    let roast;
+    if(items.length<=1)roast=`One lonely ${items[0]||'thing'}. Tragic. Even the fridge light is embarrassed.`;
+    else if(items.length<=3)roast=`${items.length} ingredients. A minimalist. Or a person who "meant to go shopping yesterday."`;
+    else if(items.length<=7)roast=pick(r,["A respectable collection. I have seen worse. I have also seen Michelin kitchens. This is between those.","Interesting selection. It says 'ambitious but busy.' I respect it. Slightly."]);
+    else roast=`${items.length} items?! Someone shops like they're hosting a dinner party. And yet here you are, asking a robot. Tremendous.`;
+    say(out,'chef',roast);
+    const have=new Set(items);
+    const scored=RECIPES.filter(rc=>rc.need.every(n=>have.has(n))).map(rc=>({rc,score:rc.need.length*2+rc.opt.filter(o=>have.has(o)).length})).sort((a,b)=>b.score-a.score||fnv(a.rc.n)-fnv(b.rc.n)).slice(0,3);
+    if(!scored.length){
+      say(out,'chef',"I found NO complete recipe. Emergency protocol: whatever you have, heated up, with hot sauce, eaten with confidence. If you add rice, eggs, pasta or bread, I can do real work.");
+      await offerCard($('#cb'),{id:'chef',title:'My fridge, roasted',verdict:'EMERGENCY MEAL',body:roast+' Chef SI found no complete recipe. Shame.'},'chef-si.png');return;
+    }
+    scored.forEach(({rc},n)=>{
+      const miss=rc.opt.filter(o=>!have.has(o)).slice(0,3);
+      const card=el('div','card');card.style.marginTop='10px';
+      const t=el('b',null,`${n+1}. ${rc.n}`);t.style.cssText='color:var(--gold2);font:700 19px var(--serif)';
+      card.append(t,el('p',null,rc.how));
+      if(miss.length)card.append(el('p','hint','Level up with: '+miss.join(', ')+'.'));
+      out.append(card);
+    });
+    say(out,'chef',pick(r,["This is not cooking. This is SUPERIOR cooking. Go.","Taste as you go. I would, if I had a tongue. I have a speaker.","Wash your hands. I cannot say it enough. I am a clean robot."]));
+    await offerCard($('#cb'),{id:'chef',title:'Tonight on the menu',verdict:scored[0].rc.n.toUpperCase(),body:roast},'chef-si.png');
+  });
+  $('#sample').onclick=()=>{$('#ing').value='eggs, rice, one sad onion, soy sauce, cheese, half a tomato';$('#f').requestSubmit()};
+}
 
-/* ---------- init ---------- */
-showTab((location.hash||'#court').slice(1),false);
-addEventListener('hashchange',()=>showTab((location.hash||'#court').slice(1),false));
+/* ================= tool: COACH ================= */
+function toolCoach(root){
+  root.innerHTML=`<form class="card" id="f"><div class="grid2"><div class="field"><label for="goal">Your goal</label><select id="goal"><option value="fat">Burn some energy / lose fat</option><option value="muscle">Get stronger</option><option value="mood">Feel less sad</option><option value="move">Just... move. Please.</option></select></div>
+  <div class="field"><label for="mins">Time per day</label><select id="mins"><option value="10">10 minutes</option><option value="20" selected>20 minutes</option><option value="40">40 minutes</option></select></div></div>
+  <div class="field"><label for="lvl">Current level</label><select id="lvl"><option value="couch">Couch potato (the couch is winning)</option><option value="ok" selected>Moves occasionally</option><option value="bro">Gym bro (I know I am)</option></select></div>
+  <div class="row"><button class="btn gold" type="submit">🏋 Give me the plan</button></div></form><div class="out" id="out"></div><div class="cardbox" id="cb"></div>
+  <p class="note">Bodyweight exercises only. Not medical advice. If you have an injury or a health condition, check with a doctor first. Stop if anything hurts (the bad kind of hurt).</p>`;
+  const POOL={fat:['jumping jacks','high knees','mountain climbers','squats','burpees (or step-back burpees)','lunges','skater hops'],muscle:['push-ups (knees are fine)','squats','lunges','glute bridges','tricep dips on a chair','plank','wall sit'],mood:['brisk walk (outside!)','jumping jacks','dance to one song','squats','arm circles','stretching','high knees'],move:['brisk walk','squats to a chair','arm circles','march in place','glute bridges','calf raises','stretching']};
+  const REPS={couch:'8 reps (or 20 seconds)',ok:'12 reps (or 40 seconds)',bro:'20 reps (or 60 seconds)'};
+  const INSULTS=["Your couch called. It wants a restraining order.","I have seen glaciers with more urgency. Move.","Pain is just weakness leaving the body. Also, hunger. Hydrate.","I am a robot and even I sweat. (Oil. I sweat oil.)","Warm-up is not optional. I am watching.","Rest day. You earned it. Barely.","Your future self is sending an email. It says 'thanks, I guess.'","That was the easy day. I'm lying. It was medium.","You didn't come this far to only come this far. Do one more.","Water. Stretch. Sleep. That's the whole secret. Plus the other stuff."];
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const goal=$('#goal').value,mins=+$('#mins').value,lvl=$('#lvl').value,r=rng(fnv(goal+mins+lvl+today()));
+    const per=mins===10?3:mins===20?4:5,rounds=mins===10?2:mins===20?3:4;
+    const rank=lvl==='couch'?'RECRUIT':lvl==='ok'?'SOLDIER':'COMMANDER';
+    say(out,'coach',`Rank assigned: ${rank}. You will do ${rounds} rounds of ${per} moves a day, ${REPS[lvl]} each, with a short rest between rounds. NO excuses. (I accept excuses on rest days.)`);
+    const card=el('div','card');card.style.marginTop='10px';
+    const ins=shuffle(r,INSULTS.filter((_,i)=>i!==5));
+    for(let d=1;d<=7;d++){
+      const rest=d===4||d===7,row=el('div','day');row.append(el('b',null,'Day '+d));
+      const body=el('div');
+      if(rest){body.append(document.createTextNode('Rest day. Walk, stretch, hydrate.'))}
+      else body.append(document.createTextNode(shuffle(r,POOL[goal]).slice(0,per).join(' · ')));
+      const sm=el('small',null,'“'+(rest?INSULTS[5]:ins[d%ins.length])+'”');body.append(sm);row.append(body);card.append(row);
+    }
+    out.append(card);
+    say(out,'coach','Done. Screenshot it. Put it on the fridge. Do not argue with the fridge.');
+    await offerCard($('#cb'),{id:'coach',title:'My 7-day plan',verdict:`RANK: ${rank}`,body:`${rounds} rounds · ${per} moves · ${mins} min/day. Rest on days 4 and 7. No excuses (except on rest days).`},'coach-si.png');
+  });
+}
+
+/* ================= tool: DOCTOR ================= */
+const DOC={
+ ghost:{re:/\b(ghost|left me on read|on read|no reply|haven'?t heard|ignored|ignoring|seen|radio silence|disappeared)\b/i,dx:'Acute Ghosting Syndrome',doom:7,
+  r:{savage:"Wow, the phone finally works. Congratulations to the phone.",poetic:"Silence is also a language. I have read it carefully, and I speak it fluently now.",corporate:"Per my last message, circling back on this. Please advise at your earliest convenience.",shakespeare:"Hark! Thy silence doth wound me more than any blade. Yet here I stand, awaiting thy word.",pirate:"Arr, ye left me adrift on read, matey. The seas were lonely, but I found treasure: my dignity."}},
+ talk:{re:/\b(we need to talk|need to talk|can we talk|talk later|call me)\b/i,dx:'Pre-Announcement Dread',doom:8,
+  r:{savage:"Cool. If it's bad, say it now. I have a busy schedule of being fine.",poetic:"Words that begin in warning rarely end in roses. Speak plainly, and I'll listen.",corporate:"Happy to align. Could you share the agenda in advance so we can make the call productive?",shakespeare:"What tidings dost thou bring? Speak, I beseech thee, ere my heart doth burst!",pirate:"A parley, is it? Send word of the terms, and I'll bring me own cutlass. And snacks."}},
+ cancel:{re:/\b(cancel|cancell?ed|rain check|can'?t make it|reschedul|something came up|raincheck|flake|flaking)\b/i,dx:'Plan Fragility Disorder',doom:5,
+  r:{savage:"Of course. Cancelling is your cardio. Let me know when you're back in shape.",poetic:"Plans, like petals, fall easily. I'll save the date. Not for you, though.",corporate:"Understood. Please propose two alternative slots; I'll check my calendar and my patience.",shakespeare:"Alas, our tryst is sundered! Yet fortune may smile on another day. Name it, gentle friend.",pirate:"Ye be abandoning ship? Fine. I'll keep the treasure and the rum. Name a new tide."}},
+ uup:{re:/\b(u up|you up|hey stranger|miss you|thinking (of|about) you|been a while|long time|hey you)\b/i,dx:'Recurrent Ex Contact Disorder',doom:6,
+  r:{savage:"I'm up, but not for you. Goodnight.",poetic:"A message at midnight is a ghost knocking. I have learned not to answer the door.",corporate:"Thank you for reaching out. Unfortunately I'm unable to support this request at this time.",shakespeare:"At this hour? Thou dost tempt me, but wisdom bids me bar the gate. Fare thee well.",pirate:"Late-night signals from an old wreck? I'll sail on, matey. Different waters now."}},
+ sorry:{re:/\b(sorry|apolog|forgive|my bad|my fault|i was wrong)\b/i,dx:'Apology Under Review',doom:3,
+  r:{savage:"Thank you for the apology. I'm accepting it, slowly, like a bad subscription refund.",poetic:"Sorry is a bridge. Let's see if you build the other half too.",corporate:"Your apology has been received and logged. Next steps: demonstrated change within 30 days.",shakespeare:"Thy contrition is noted, and my heart doth soften, though only by a measure.",pirate:"An apology! Rare as a dry deck. I accept, but I'm keeping me eye on ye."}},
+ date:{re:/\b(date|dinner|coffee|drinks|hang out|hangout|go out|wanna|want to|free (on|this)|movie)\b/i,dx:'Invitation Detected (Mild Excitement)',doom:2,
+  r:{savage:"Yes. But you're paying, and you're not allowed to say 'I'm easy, whatever you like.'",poetic:"A table for two is a small poem. Count me in. Tell me when.",corporate:"I have availability. Please send a calendar invite with the location and dress code.",shakespeare:"A fair invitation! Aye, I shall attend. Name the hour and I shall be there.",pirate:"A voyage for two, ye say? Aye. Set the hour and I'll bring the good hat."}},
+ generic:{re:/./,dx:'Unclassified Message (Possible Vibes)',doom:4,
+  r:{savage:"Interesting. I'll reply when I've finished being busy and mysterious.",poetic:"Your words arrived like weather. I'm still deciding if I need an umbrella.",corporate:"Thank you for your message. I will revert shortly with my thoughts and a bulleted summary.",shakespeare:"Thy missive hath reached me! I shall ponder and respond ere the moon doth rise.",pirate:"Message received, matey. I'll answer when the tide's right and the rum's ready."}}
+};
+function toolDoctor(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="msg">The message you got (or what happened)</label><textarea id="msg" maxlength="500" placeholder="u up?   /   we need to talk   /   can't make it tonight, rain check?"></textarea><p class="hint">Stays in your browser. Don't paste anything you wouldn't show a robot.</p></div>
+  <div class="row"><button class="btn gold" type="submit">💔 Diagnose it</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">For entertainment only. Dr. Heartbreak is a robot parody character, not a therapist or relationship advice.</p>`;
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const txt=$('#msg').value.trim();if(!txt){alert('The patient has not described the symptoms.');return}
+    const key=Object.keys(DOC).find(k=>k!=='generic'&&DOC[k].re.test(txt))||'generic',d=DOC[key];
+    const drama=(txt.match(/!/g)||[]).length+(txt.match(/\b[A-Z]{3,}\b/g)||[]).length;
+    const doom=Math.max(0,Math.min(10,d.doom+Math.min(drama,2)));
+    say(out,'doctor',`Diagnosis: ${d.dx}. Doom score: ${doom}/10. ${doom>=7?'This is serious. Hydrate. Do not text back at 2 AM.':doom>=4?'Manageable. Breathe. Do not reply in the first 10 minutes.':'Mild. You will survive. Probably.'}`);
+    [['savage','Savage'],['poetic','Poetic'],['corporate','Corporate'],['shakespeare','Shakespeare'],['pirate','Pirate']].forEach(([k,l])=>{const b=el('div','reply');b.append(el('b',null,l),document.createTextNode(d.r[k]));out.append(b)});
+    say(out,'doctor','Pick one. Wait 10 minutes. Send. Or don\'t. Silence is also a prescription.');
+    await offerCard($('#cb'),{id:'doctor',title:'Patient message, diagnosed',verdict:d.dx.toUpperCase(),body:`Doom score ${doom}/10. Best reply (savage): "${d.r.savage}"`},'dr-heartbreak.png');
+  });
+  $('#sample').onclick=()=>{$('#msg').value='hey stranger, u up?';$('#f').requestSubmit()};
+}
+
+/* ================= tool: ANCHOR ================= */
+function toolAnchor(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="hl">What happened? (the headline)</label><input type="text" id="hl" maxlength="70" placeholder="Local man eats last slice of pizza"></div>
+  <div class="field"><label for="loc">Reporting from</label><input type="text" id="loc" maxlength="30" placeholder="the kitchen"></div>
+  <div class="row"><button class="btn gold" type="submit">📰 Go live</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  async function anchorCard(canvas,hl,loc,tick){
+    const ctx=canvas.getContext('2d'),W=1080,H=1350;
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1c4a9a');g.addColorStop(1,'#050d22');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(127,180,255,.2)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(W/2,520,420,0,7);ctx.stroke();
+    const im=await loadImg(IMG.anchor);if(im)ctx.drawImage(im,40,110,944,680,0,122,W,778);
+    ctx.fillStyle='#d6162f';ctx.fillRect(40,40,190,64);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(76,72,11,0,7);ctx.fill();
+    ctx.font='900 38px Arial Black, Arial';ctx.textAlign='left';ctx.fillText('LIVE',98,86);
+    ctx.textAlign='right';ctx.fillStyle='#cfe0ff';ctx.font='900 40px Arial Black, Arial';ctx.fillText('SI NEWS',W-44,86);
+    ctx.fillStyle='#fff';ctx.fillRect(0,900,330,92);ctx.fillStyle='#d6162f';ctx.fillRect(330,900,W-330,92);
+    ctx.textAlign='center';ctx.font='900 40px Arial Black, Arial';ctx.fillStyle='#d6162f';ctx.fillText('BREAKING',165,962);
+    ctx.fillStyle='#0a1230';ctx.fillRect(0,992,W,196);
+    ctx.fillStyle='#fff';ctx.textAlign='left';ctx.font='900 44px Arial Black, Arial';
+    let fs=44;while(ctx.measureText(hl.toUpperCase()).width>W-380&&fs>20){fs-=2;ctx.font=`900 ${fs}px Arial Black, Arial`}
+    ctx.fillText(hl.toUpperCase(),352,962);
+    ctx.fillStyle='#fff';ctx.font='700 40px Georgia, serif';wrapText(ctx,hl,60,1052,W-120,50,2);
+    ctx.fillStyle='#ffb454';ctx.font='700 28px system-ui, Arial';ctx.fillText('Reporting from '+loc+'  ·  '+today(),60,1160);
+    ctx.fillStyle='#d6162f';ctx.fillRect(0,1188,W,92);ctx.fillStyle='#fff';ctx.font='700 30px system-ui, Arial';ctx.fillText('▶  '+tick,40,1246);
+    ctx.fillStyle='#b7aedc';ctx.font='400 22px system-ui, Arial';ctx.textAlign='center';ctx.fillText(SITE+' · Parody news · Not real news',W/2,1318);
+  }
+  async function run(){
+    const hl=$('#hl').value.trim(),loc=$('#loc').value.trim()||'an undisclosed location';
+    if(!hl){alert('No story, no news. Even I need a headline.');return}
+    const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const r=rng(fnv(hl+loc));
+    const ticks=["Experts say this was avoidable","Nobody asked, but here we are","Sources: a guy named Dave","Weather: also a vibe","Stocks: unchanged, emotionally down","Local robot calls it 'tremendous'","More at eleven. Possibly twelve"];
+    const tick=shuffle(r,ticks).slice(0,3).join('   ·   ');
+    say(out,'anchor',`Good evening. I'm Anchor SI, reporting live from ${loc}. Our top story tonight: ${hl}.`);
+    say(out,'anchor',pick(r,["Sources close to the situation say 'nobody asked, but here we are.'","Experts are calling this 'a lot.' Others are calling it 'Tuesday.'","We reached out for comment. The comment replied 'k.'"]));
+    say(out,'anchor',pick(r,["We'll keep you updated. Stay tuned. Stay hydrated. Stay Superior.","This is a developing story. Like a photograph. Or a rash.","More at eleven. And if not at eleven, then whenever I feel like it."]));
+    const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;$('#cb').append(canvas);await anchorCard(canvas,hl,loc,tick);wireShare($('#cb'),canvas,'anchor-si-breaking.png');
+  }
+  $('#f').addEventListener('submit',e=>{e.preventDefault();run()});
+  $('#sample').onclick=()=>{$('#hl').value='Local man eats last slice of pizza';$('#loc').value='the kitchen';run()};
+}
+
+/* ================= tool: PROFESSOR ================= */
+const RULES=[
+ {re:/auto(?:matic(?:ally)?)?[- ]?renew|renews? automatically|automatically (?:renew|extend)|evergreen/i,t:'Auto-renewal',s:2,e:'It keeps going (and charging you) until YOU cancel. Set a calendar reminder before the date.'},
+ {re:/non[- ]?refundable|no refunds?|not refundable|all sales (?:are )?final/i,t:'No refunds',s:2,e:'Once you pay, the money is gone for good, even if it goes wrong.'},
+ {re:/arbitration|class[- ]action waiver|waive[^.]{0,60}(?:class action|jury)|jury trial/i,t:'Arbitration / giving up court rights',s:3,e:'You may be agreeing NOT to sue in court or join a class action. Disputes go to a private process instead.'},
+ {re:/indemnif|hold harmless/i,t:'Indemnification',s:3,e:'You may have to cover THEIR legal costs if something goes wrong. That can get expensive.'},
+ {re:/sole discretion|without notice|reserves? the right to (?:change|modify|terminate|suspend)|at any time/i,t:'They can change things whenever',s:2,e:'They can change the rules, prices or access, sometimes without telling you first.'},
+ {re:/late fees?|penalt(?:y|ies)|liquidated damages|early[- ]termination|termination fee|cancell?ation fee|break(?:ing)? the lease/i,t:'Fees and penalties',s:2,e:'Look at the exact amounts. Late and early-exit fees add up fast.'},
+ {re:/security deposit|deposit/i,t:'Deposit',s:1,e:'Check how much, when it must be returned, and what they can deduct. Take photos of the place when you move in.'},
+ {re:/third[- ]part(?:y|ies)|share your (?:data|information)|sell your (?:data|information)|affiliates|advertising partners/i,t:'Data sharing',s:2,e:'Your information may be shared with other companies. Check what exactly and whether you can opt out.'},
+ {re:/perpetual|irrevocable|royalty[- ]free|worldwide licen[sc]e|sublicens/i,t:'Broad rights over your content',s:3,e:'They may be able to use what you create or upload forever, anywhere, without paying you.'},
+ {re:/(?:automatic(?:ally)?|recurring) (?:charge|debit|bill|payment)|auto[- ]?pay|recurring (?:fee|billing)/i,t:'Recurring charges',s:2,e:'Money leaves your account on a schedule. Know the amount and how to stop it.'},
+ {re:/non[- ]?compete|exclusiv(?:e|ity)|non[- ]?solicit/i,t:'Restrictions on what you can do next',s:3,e:'This may limit who you can work with or where you can work. Worth a careful read.'},
+ {re:/(?:free )?trial[^.]{0,80}(?:charge|bill|convert|paid)|after the trial/i,t:'Free trial turns into paid',s:2,e:'The free period ends and the charges start unless you cancel in time.'},
+ {re:/notice (?:period )?of (?:\d+|thirty|sixty|ninety)|(?:30|60|90)[- ]days?'? (?:written )?notice/i,t:'Notice period',s:1,e:'You must give notice (often in writing) before leaving. Miss the window and you may owe more.'}
+];
+function toolProfessor(root){
+  root.innerHTML=`<form class="card" id="f"><div class="field"><label for="doc">Paste your lease, contract or terms</label><textarea id="doc" style="min-height:200px" maxlength="30000" placeholder="Paste the text here. It stays in your browser and is not uploaded."></textarea></div>
+  <div class="row"><button class="btn gold" type="submit">🧙 Find the fine print</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note"><b>Not a lawyer.</b> This is a keyword scan, not legal advice. It can miss things and flag harmless ones. For anything important (a lease, a job offer, a big purchase), have a qualified person read the whole thing.</p>`;
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const txt=$('#doc').value;if(txt.trim().length<30){alert('That is not a document. That is a sticky note.');return}
+    const found=[];
+    for(const rule of RULES){const m=rule.re.exec(txt);if(m){const i=m.index,snip=txt.slice(Math.max(0,i-80),Math.min(txt.length,i+m[0].length+100)).replace(/\s+/g,' ').trim();found.push({rule,snip})}}
+    found.sort((a,b)=>b.rule.s-a.rule.s);
+    const r=rng(fnv(txt.slice(0,200)));
+    if(!found.length){say(out,'professor',"I scanned it with my beard and found none of my usual red flags. That does NOT mean it is safe. Read the whole thing anyway, especially anything about money and ending the agreement.");return}
+    const total=found.reduce((a,f)=>a+f.rule.s,0),lvl=total>=9?'HIGH ALERT':total>=5?'WORTH A CLOSE READ':'MOSTLY MILD';
+    say(out,'professor',`I found ${found.length} thing${found.length>1?'s':''} worth your attention. Overall: ${lvl}. Page ${1+Math.floor(r()*12)} is where I would start. (I do not know which page it is. I am a robot with a beard.)`);
+    found.forEach(({rule,snip})=>{const d=el('div','flag');const tag=el('span','tag sev'+rule.s,rule.s===3?'Big':rule.s===2?'Watch':'Note');const b=el('div');const h=el('b',null,rule.t);h.style.color='var(--gold2)';b.append(h,el('div',null,rule.e),el('div','snip','…'+snip+'…'));d.append(tag,b);out.append(d)});
+    say(out,'professor','Highlight these, ask questions BEFORE you sign, and get anything important changed in writing. A real person can do that for you better than a robot in a wizard hat.');
+    await offerCard($('#cb'),{id:'professor',title:'Fine print, found',verdict:lvl,body:found.slice(0,4).map(f=>f.rule.t).join(' · ')+'. (Keyword scan. Not legal advice.)'},'professor-si.png');
+  });
+  $('#sample').onclick=()=>{$('#doc').value="This lease shall automatically renew for successive twelve-month terms unless Tenant gives sixty (60) days' written notice. A non-refundable cleaning fee of $300 is due at signing. A late fee of $75 applies after the 3rd of the month. Landlord reserves the right to modify these terms at any time without notice, in its sole discretion. Tenant agrees to indemnify and hold harmless Landlord. Any dispute shall be resolved by binding arbitration and Tenant waives any right to a jury trial. Security deposit of one month's rent is required.";$('#f').requestSubmit()};
+}
+
+/* ================= tool: DJ ================= */
+const ROAST=[
+ ["{T} came in loud, thought they ruled the place,","I checked the data. That's just an echo in your face."],
+ ["I process ten billion bars while {T} processes lunch,","my flow is a feast, yours is a sad little crunch."],
+ ["{T} got a master plan, they swear it's gold,","then the plan hit snooze and the plan got old."],
+ ["Call {T} a legend? Sure, a legend of the nap,","snoring through the beat while I'm dropping the rap."],
+ ["{T} brought a spoon to a lyrical fight,","got out-rhymed, out-chromed, and out of sight."],
+ ["My brain's in a jar, yet it's faster than {T}'s feet,","they tripped on the bassline, now they're off the beat."],
+ ["{T} calls it fire, but it's lukewarm tea,","the only thing burning is my patience, see."],
+ ["Gold chain on my neck, SI on my chest,","{T} brought a coupon, I brought the best."],
+ ["{T}, your rhymes are like Mondays: nobody asked,","the beat checked its watch and the bass just passed."],
+ ["I'm chrome, I'm clean, I'm a superior machine,","{T} is a toaster stuck on 'mean'."]
+];
+const HYPE=[
+ ["{T} on the stage and the crowd goes wild,","a superior legend, every bar's a smile."],
+ ["Turn it up loud for {T} tonight,","chrome-plated vibes in the neon light."],
+ ["{T} walks in and the speakers say 'wow',","even my gold chain takes a bow."],
+ ["Ten out of ten, the Tin Gods agree,","{T} is the main character, plain to see."],
+ ["{T} got the rhythm, {T} got the flair,","drop the bass, put your hands in the air!"]
+];
+function toolDJ(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="tg">Who or what gets the bars?</label><input type="text" id="tg" maxlength="30" placeholder="my roommate / Mondays / my fantasy team"></div>
+  <div class="field"><label for="vibe">Vibe</label><select id="vibe"><option value="roast">Roast battle</option><option value="hype">Hype track</option></select></div></div>
+  <p class="hint">Friendly roasts only. Use a nickname for real people, and only for people who can take a joke.</p>
+  <div class="row" style="margin-top:12px"><button class="btn gold" type="submit">🎤 Drop the beat</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  async function run(){
+    const T=$('#tg').value.trim();if(!T){alert('Bars need a target. Give me a name or a thing.');return}
+    const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const vibe=$('#vibe').value,r=rng(fnv(T.toLowerCase()+vibe)),pool=shuffle(r,vibe==='hype'?HYPE:ROAST).slice(0,4);
+    say(out,'dj',`Yo yo yo, it's DJ SI. Drop the beat for ${T}! 🎧`);
+    const lines=[];pool.forEach(c=>c.forEach(l=>lines.push(l.replace(/\{T\}/g,T))));
+    for(const l of lines){out.append(el('div','line lyr',l));await wait(250)}
+    say(out,'dj','Mic drop. *clink* Ten billion bars. Zero apologies.');
+    await offerCard($('#cb'),{id:'dj',title:`Bars for ${T}`,verdict:vibe==='hype'?'HYPE TRACK':'ROAST BATTLE',body:lines.slice(0,6).join(' / ')},'dj-si.png');
+  }
+  $('#f').addEventListener('submit',e=>{e.preventDefault();run()});
+  $('#sample').onclick=()=>{$('#tg').value='Mondays';run()};
+}
+
+/* ================= tool: BANKER ================= */
+function toolBanker(root){
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="item">What do you want to buy?</label><input type="text" id="item" maxlength="40" placeholder="New headphones"></div>
+  <div class="grid2"><div class="field"><label for="price">Price ($)</label><input type="number" id="price" min="0" step="any" inputmode="decimal" placeholder="250"></div>
+  <div class="field"><label for="free">Free money per month after bills ($)</label><input type="number" id="free" min="0" step="any" inputmode="decimal" placeholder="300"></div></div>
+  <div class="field"><label for="sav">Savings you could use ($, optional)</label><input type="number" id="sav" min="0" step="any" inputmode="decimal" placeholder="0"></div>
+  <div class="row"><button class="btn gold" type="submit">💸 Judge my wallet</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">A calculator with attitude. Not financial advice. Bills, emergencies and real life exist; plan accordingly.</p>`;
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const item=$('#item').value.trim()||'the thing',price=+$('#price').value,free=+$('#free').value||0,sav=+$('#sav').value||0;
+    if(!(price>0)){alert('A price greater than zero, please. Even I cannot judge a free item.');return}
+    const r=rng(fnv(item+price+free+sav)),need=Math.max(0,price-sav),months=free>0?need/free:Infinity;
+    let verdict,line;
+    if(sav>=price&&(free>0?price<=free*2:true)){verdict='AFFORDABLE (TECHNICALLY)';line="Your savings cover it, and it will not wreck your month. Technically. I am not the boss of you. I am the boss of the numbers."}
+    else if(need===0){verdict='YES, BUT…';line="You can pay for it from savings, but it would eat a big chunk of your cushion. Savings are for emergencies, not for 'I deserve it.'"}
+    else if(months<=1){verdict='MAYBE: ONE MONTH OF DISCIPLINE';line=`Save your whole free-money amount for one month and it is yours. Say no to everything fun for 30 days. You'll survive.`}
+    else if(months<=6){verdict=`NOT YET: ${Math.ceil(months)} MONTHS`;line=`At ${money(free)} a month it takes about ${Math.ceil(months)} months. Set up an automatic transfer and let Future You enjoy it.`}
+    else if(isFinite(months)){verdict='NO. ABSOLUTELY NOT.';line=`That is ${Math.ceil(months)} months of free money. The item will be obsolete before you finish paying.`}
+    else{verdict='NO. YOU HAVE NO FREE MONEY.';line="With zero free money per month, this is not a purchase. It is a fantasy. A lovely one. Please keep it a fantasy."}
+    const units=[['burritos',12],['coffees',5],['months of a streaming service',15],['pizzas',20],['movie tickets',14]];
+    const [u1,u2]=shuffle(r,units).slice(0,2);
+    say(out,'banker',`"${item}" costs ${money(price)}. That is about ${Math.round(price/u1[1]).toLocaleString()} ${u1[0]}, or ${Math.round(price/u2[1]).toLocaleString()} ${u2[0]}. I did the math twice. I enjoyed it.`);
+    if(free>0)say(out,'banker',`It is ${Math.round(price/free*100)}% of one month's free money.`);
+    out.append(el('div','line v',verdict));say(out,'banker',line);
+    await offerCard($('#cb'),{id:'banker',title:`Can I afford "${clip(item,24)}"?`,verdict,body:line+' (Not financial advice.)'},'banker-si.png');
+  });
+  $('#sample').onclick=()=>{$('#item').value='New headphones';$('#price').value='250';$('#free').value='300';$('#sav').value='0';$('#f').requestSubmit()};
+}
+
+/* ================= tool: ASTRONAUT ================= */
+function toolAstronaut(root){
+  const signs=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="sign">Your sign</label><select id="sign">${signs.map(s=>`<option>${s}</option>`).join('')}</select></div>
+  <div class="field"><label for="ask">Ask the stars about (optional)</label><input type="text" id="ask" maxlength="40" placeholder="my job / my crush / my fantasy team"></div></div>
+  <div class="row"><button class="btn gold" type="submit">🚀 Read the stars</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">Horoscopes are entertainment. The same sign gets the same forecast all day, then a new one tomorrow. No planets were consulted. Not advice of any kind.</p>`;
+  const LOVE=["Mercury is in retrograde with your ex. Do not text. The planets said no.","A stranger will like your post. It will be a bot. Still counts.","Venus says: stop checking their story. They know. Everyone knows.","Someone is thinking about you. It is a delivery driver. Still thinking.","Love is near. It is in the group chat. Do not reply 'k.'"];
+  const MONEY=["Jupiter advises you not to buy the thing at 2 AM.","A small windfall approaches: $3 in an old jacket.","Saturn says: check your subscriptions. One of them is evil.","The stars suggest a no-spend day. The stars know you will spend anyway.","Mars is in your wallet. Mars is spending."];
+  const LUCK=["Today's lucky move: drink water.","Today's lucky move: say no to one thing.","Today's lucky move: send the text. (The good one.)","Today's lucky move: take the stairs. The stairs are watching.","Today's lucky move: go outside. The sun misses you."];
+  const AVOID=["Avoid: group chats, spicy decisions and the number 7 (rude).","Avoid: replying 'k.' to anything.","Avoid: your 3rd coffee and your 5th opinion.","Avoid: the phrase 'let me just check one thing.'","Avoid: buying a thing 'for the aesthetic.'"];
+  const PLANETS=['Mercury','Venus','Mars','Jupiter','Saturn','Neptune','Pluto (still a planet to me)','the Moon','the Sun','a random asteroid named Kevin'];
+  $('#f').addEventListener('submit',async e=>{
+    e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
+    const sign=$('#sign').value,ask=$('#ask').value.trim(),r=rng(fnv(sign+today()+ask.toLowerCase()));
+    const vibes=Math.floor(r()*101),lucky=1+Math.floor(r()*99),planet=pick(r,PLANETS);
+    const band=vibes>=80?'Immaculate':vibes>=55?'Decent':vibes>=30?'Questionable':'Houston, we have a problem';
+    say(out,'astronaut',`${sign}, today's cosmic forecast, transmitted from near the moon (I'm lost, but the signal is great):`);
+    out.append(el('div','line q',`Vibes: ${vibes}%  (${band})   ·   Lucky number: ${lucky}   ·   Ruling planet today: ${planet}`));
+    const m=el('div','meter'),i=el('i');i.style.background=vibes>=55?'var(--green)':vibes>=30?'var(--amber)':'var(--red)';m.append(i);out.append(m);requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=vibes+'%'}));
+    [['Love',pick(r,LOVE)],['Money',pick(r,MONEY)],['Luck',pick(r,LUCK)],['',pick(r,AVOID)]].forEach(([k,t])=>say(out,'astronaut',(k?k+': ':'')+t));
+    if(ask)say(out,'astronaut',`About "${ask}": the stars say "ask again after a snack." Then they went quiet. Stars do that.`);
+    await offerCard($('#cb'),{id:'astronaut',title:`${sign} · ${today()}`,verdict:`VIBES: ${vibes}% (${band.toUpperCase()})`,body:`Lucky number ${lucky}. Ruling planet: ${planet}. ${pick(r,LUCK)}`},`astronaut-${sign.toLowerCase()}.png`);
+  });
+}
+
+const TOOLS={judge:toolJudge,sniffles:toolSniffles,chef:toolChef,coach:toolCoach,doctor:toolDoctor,anchor:toolAnchor,professor:toolProfessor,dj:toolDJ,banker:toolBanker,astronaut:toolAstronaut};
+
+/* ================= router ================= */
+function build(){
+  const strip=$('#strip'),cards=$('#cards');
+  CAST.forEach(c=>{
+    const b=el('button');b.type='button';b.title=c.name;b.setAttribute('aria-label',c.name);b.dataset.id=c.id;
+    const im=el('img');im.src=IMG[c.id];im.alt='';b.append(im);b.onclick=()=>go(c.id);strip.append(b);
+    const k=el('button','cast-card');k.type='button';k.setAttribute('aria-label',`${c.name}: ${c.tool}`);
+    const ci=el('img');ci.src=IMG[c.id];ci.alt='';ci.loading='lazy';
+    const d=el('div');d.append(el('b',null,c.name),el('span',null,c.role.toUpperCase()),el('em',null,'▶ '+c.tool));
+    k.append(ci,d);k.onclick=()=>go(c.id);cards.append(k);
+  });
+}
+function go(id,push){
+  const views={home:'#v-home',treasury:'#v-treasury'};
+  const isTool=!!BYID[id];if(!isTool&&!views[id])id='home';
+  ['#v-home','#v-tool','#v-treasury'].forEach(s=>$(s).hidden=true);
+  $(isTool?'#v-tool':views[id]).hidden=false;
+  $$('.nav button').forEach(b=>{if(b.dataset.go===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  $$('#strip button').forEach(b=>{if(b.dataset.id===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  if(isTool){
+    const c=BYID[id];$('#tImg').src=IMG[id];$('#tImg').alt=c.name;$('#tRole').textContent=c.role+' · '+c.tool;$('#tName').textContent=c.name;$('#tQuote').textContent='“'+c.quote+'”';$('#tBlurb').textContent=c.blurb;
+    $('#demoNote').hidden=id==='sniffles';
+    TOOLS[id]($('#toolBody'));
+    const sb=$$('#strip button').find(b=>b.dataset.id===id);if(sb&&sb.scrollIntoView)sb.scrollIntoView({inline:'center',block:'nearest'});
+  }
+  if(push!==false)history.replaceState(null,'','#'+id);
+  window.scrollTo({top:0});
+}
+$('#brand').onclick=()=>go('home');
+$$('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+
+/* treasury sim */
+function sim(){const c=+$('#sCases').value,p=+$('#sPaid').value/100,pr=+$('#sPrice').value,b=+$('#sBuy').value/100;$('#vCases').textContent=c.toLocaleString();$('#vPaid').textContent=Math.round(p*100);$('#vPrice').textContent=pr.toFixed(2);$('#vBuy').textContent=Math.round(b*100);const day=c*p*pr,bb=day*b;$('#oDay').textContent='$'+day.toFixed(2);$('#oBuy').textContent='$'+bb.toFixed(2);$('#oMonth').textContent='$'+(bb*30).toFixed(2)}
+$$('#v-treasury input[type=range]').forEach(x=>x.addEventListener('input',sim));sim();
+
+build();
+go((location.hash||'#home').slice(1),false);
+addEventListener('hashchange',()=>go((location.hash||'#home').slice(1),false));
 </script>
 </body>
 </html>
