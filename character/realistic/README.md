@@ -5,19 +5,22 @@ Photorealistic 3D-render versions of the Tin Gods cast. The flat vector art in `
 `previews/` holds 200px thumbnails only (from Canva). Full-size originals live at the links below.
 **Figma links expire 7 days after 2026-10-05. Download them before then.**
 
-| Character | Source | Full-size link |
+All 10 full-size (1024px) images are in this folder and are what the website uses (2026-10-05). Source of each:
+
+| Character | File | Made with |
 |---|---|---|
-| Judge SI | Canva | https://www.canva.com/M/MAHXJZqZbiA |
-| Judge SI (alt) | Figma | https://www.figma.com/api/mcp/asset/95890460-81f7-4b6d-8135-4bcf6db4c716.png |
-| Detective Sniffles SI | Canva | https://www.canva.com/M/MAHXJaWW1KU |
-| Chef SI | Canva | https://www.canva.com/M/MAHXJVDKX-c |
-| Coach SI | Canva | https://www.canva.com/M/MAHXJT8oxds |
-| Dr. Heartbreak SI | Canva | https://www.canva.com/M/MAHXJSrE69U |
-| Anchor SI | Figma | https://www.figma.com/api/mcp/asset/0133f968-de20-4ef8-9629-b7fb9879030d.png |
-| Professor SI | Figma | https://www.figma.com/api/mcp/asset/e4d1faac-cd69-429b-b18d-eba2f59b0ef9.png |
-| DJ SI | Figma | https://www.figma.com/api/mcp/asset/4f0d9fc5-a9b9-41f1-90fe-42c124fc5464.png |
-| Banker SI | Figma | https://www.figma.com/api/mcp/asset/bc4eaf23-7350-4162-aa8f-146710e8477b.png |
-| Astronaut SI | Figma | https://www.figma.com/api/mcp/asset/2f643923-fb93-44cd-927b-fd40ab39dd8d.png |
+| Judge SI | judge-si.png | Figma |
+| Detective Sniffles SI | detective-sniffles.png | Figma |
+| Chef SI | chef-si.png | Figma |
+| Coach SI | coach-si.png | Figma |
+| Dr. Heartbreak SI | dr-heartbreak.png | Figma |
+| Anchor SI | anchor-si.png | Figma |
+| Professor SI | professor-si.png | Figma |
+| DJ SI | dj-si.png | Figma, cropped to remove a real brand name that appeared on the turntables |
+| Banker SI | banker-si.png | Figma |
+| Astronaut SI | astronaut-si.png | Figma |
+
+`previews/` keeps the earlier 200px Canva versions of Judge SI, Sniffles, Chef, Coach and Dr. Heartbreak (not used by the site).
 
 Prompts used a shared style: "Photorealistic 3D render, portrait from the chest up, brushed chrome robot, dark glass visor with glowing cyan eyes, small round gold SI badge, cinematic rim lighting, octane render, 8k, no text".
 
@@ -25,5 +28,3 @@ Prompts used a shared style: "Photorealistic 3D render, portrait from the chest 
 `python3 site/build.py "Tin Gods"` looks for `character/realistic/<stem>.png|jpg|webp` and swaps that character's art to the realistic image (resized to 640px and embedded). Characters without a file keep their vector art.
 
 Stems: `judge-si`, `detective-sniffles`, `chef-si`, `coach-si`, `dr-heartbreak`, `anchor-si`, `professor-si`, `dj-si`, `banker-si`, `astronaut-si`.
-
-**Current state (2026-10-05):** the 5 Canva images are in place as 200px previews (soft when enlarged). The owner wants realistic photos for all 10. To finish: put the full-size originals (1024px) in this folder with the stems above and re-run the build. The 5 Figma images (Anchor, Professor, DJ, Banker, Astronaut) still need to be downloaded from the links above, and the 4 Canva ones other than Judge need full-size versions (or regeneration).
