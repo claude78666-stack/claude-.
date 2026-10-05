@@ -21,6 +21,7 @@
   --display:'Space Grotesk','Sora',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -40,7 +41,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .grad{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ---------- header ---------- */
-header.top{position:sticky;top:0;z-index:50;background:rgba(6,4,15,.72);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(6,4,15,.72);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
 .bar{display:flex;align-items:center;gap:20px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;color:var(--text)}
 .brand .logo{width:34px;height:34px}
@@ -251,7 +252,7 @@ textarea{min-height:120px;resize:vertical}
 .line.b{text-align:center;font:600 18px var(--display);color:var(--gold)}
 .line.lyr{font-family:var(--display);font-size:18px;font-weight:500;padding:10px 16px;border-left:3px solid #ff4fd8;background:rgba(255,79,216,.06);border-radius:0 10px 10px 0;margin:6px 0}
 .cardbox{margin-top:18px}
-.cardbox canvas{width:100%;max-width:400px;height:auto;border-radius:16px;border:1px solid rgba(244,194,66,.4);display:block;margin:0 0 14px;box-shadow:0 24px 60px -24px rgba(0,0,0,.9)}
+.cardbox canvas,.cardbox img.sharecard{width:100%;max-width:400px;height:auto;border-radius:16px;border:1px solid rgba(244,194,66,.4);display:block;margin:0 0 14px;box-shadow:0 24px 60px -24px rgba(0,0,0,.9)}
 .pair{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
 @media(min-width:700px){.pair{grid-template-columns:repeat(5,1fr)}}
 .stat{background:rgba(5,3,16,.6);border:1px solid var(--border);border-radius:12px;padding:11px 12px}
@@ -300,6 +301,8 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
 .crop{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;background:#0a0620}
 .crop img{width:100%;height:100%;display:block;object-fit:cover;border-radius:0!important;transform:scale(1.85)!important;transform-origin:50% 36%!important}
 .crop.real img{transform:scale(1.2)!important;transform-origin:50% 38%!important}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;max-width:min(92vw,420px);padding:12px 18px;border-radius:12px;background:#f5f2ea;color:#1a1033;font-weight:600;box-shadow:0 18px 40px -10px rgba(0,0,0,.7);animation:pop .25s ease-out}
 
 /* ---------- small screens ---------- */
 @media(max-width:760px){
@@ -545,6 +548,9 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
 const SITE='{{NAME}}';
 const IMG=/*IMG_JSON*/{};
 const REAL=/*REAL_JSON*/{};
+const CAN_DL=/*CAN_DL*/true;
+const CAN_LIVE=/*CAN_LIVE*/true;
+function toast(msg){const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=msg;document.body.append(d);setTimeout(()=>d.remove(),3800)}
 
 /* ================= helpers ================= */
 const $=s=>document.querySelector(s);
@@ -605,6 +611,7 @@ async function drawCard(canvas,c){
   ctx.fillStyle='#b7aedc';ctx.font='400 22px system-ui, Arial';ctx.fillText('Parody · Not legal, medical or financial advice · '+today(),W/2,1292);
 }
 function wireShare(host,canvas,filename){
+  if(!CAN_DL){const img=new Image();img.src=canvas.toDataURL('image/png');img.alt='Share card';img.className='sharecard';canvas.replaceWith(img);host.append(el('p','hint','Press and hold the card to save or share it.'));return}
   const toBlob=()=>new Promise(r=>canvas.toBlob(r,'image/png'));
   const dl=async()=>{const b=await toBlob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
   const bar=el('div','row');
@@ -724,7 +731,7 @@ function toolJudge(root){
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();
     const P={pName:$('#pName').value.trim()||'Plaintiff',dName:$('#dName').value.trim()||'Defendant',pSide:$('#pSide').value.trim(),dSide:$('#dSide').value.trim()};
-    if(!P.pSide||!P.dSide){alert('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
+    if(!P.pSide||!P.dSide){toast('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
     $('#cb').replaceChildren();const res=judgeCase(P);
     out.scrollIntoView({behavior:reduced?'auto':'smooth'});
     await playLines(out,res.lines,skip);
@@ -759,6 +766,7 @@ function toolSniffles(root){
     <p class="note"><b>Opinion, not advice.</b> Sniffles reads public market numbers from DexScreener (called from your browser) and can be wrong or out of date. A clean result is not a safety guarantee. Developer-wallet and holder checks are coming. Not financial advice.</p>`;
   const out=$('#out');
   async function run(target){
+    if(!CAN_LIVE&&target!=='SNAPSHOT'){out.replaceChildren();say(out,'sniffles','Live lookups are switched off in this preview. Tap "Use a snapshot case" to see how I work. They run when the site is hosted normally.');return}
     out.replaceChildren();$('#cb').replaceChildren();const go=$('#go');go.disabled=true;let pair,copy=0,err=null;
     try{
       if(target==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
@@ -836,7 +844,7 @@ function toolChef(root){
   const out=$('#out');
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();out.replaceChildren();$('#cb').replaceChildren();
-    const raw=$('#ing').value.trim();if(!raw){alert('An empty fridge is not a question. It is a cry for help.');return}
+    const raw=$('#ing').value.trim();if(!raw){toast('An empty fridge is not a question. It is a cry for help.');return}
     const items=normItems(raw),r=rng(fnv(items.sort().join(',')));
     let roast;
     if(items.length<=1)roast=`One lonely ${items[0]||'thing'}. Tragic. Even the fridge light is embarrassed.`;
@@ -918,7 +926,7 @@ function toolDoctor(root){
   <p class="note">For entertainment only. Dr. Heartbreak is a robot parody character, not a therapist or relationship advice.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const txt=$('#msg').value.trim();if(!txt){alert('The patient has not described the symptoms.');return}
+    const txt=$('#msg').value.trim();if(!txt){toast('The patient has not described the symptoms.');return}
     const key=Object.keys(DOC).find(k=>k!=='generic'&&DOC[k].re.test(txt))||'generic',d=DOC[key];
     const drama=(txt.match(/!/g)||[]).length+(txt.match(/\b[A-Z]{3,}\b/g)||[]).length;
     const doom=Math.max(0,Math.min(10,d.doom+Math.min(drama,2)));
@@ -956,7 +964,7 @@ function toolAnchor(root){
   }
   async function run(){
     const hl=$('#hl').value.trim(),loc=$('#loc').value.trim()||'an undisclosed location';
-    if(!hl){alert('No story, no news. Even I need a headline.');return}
+    if(!hl){toast('No story, no news. Even I need a headline.');return}
     const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
     const r=rng(fnv(hl+loc));
     const ticks=["Experts say this was avoidable","Nobody asked, but here we are","Sources: a guy named Dave","Weather: also a vibe","Stocks: unchanged, emotionally down","Local robot calls it 'tremendous'","More at eleven. Possibly twelve"];
@@ -992,7 +1000,7 @@ function toolProfessor(root){
   <p class="note"><b>Not a lawyer.</b> This is a keyword scan, not legal advice. It can miss things and flag harmless ones. For anything important (a lease, a job offer, a big purchase), have a qualified person read the whole thing.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const txt=$('#doc').value;if(txt.trim().length<30){alert('That is not a document. That is a sticky note.');return}
+    const txt=$('#doc').value;if(txt.trim().length<30){toast('That is not a document. That is a sticky note.');return}
     const found=[];
     for(const rule of RULES){const m=rule.re.exec(txt);if(m){const i=m.index,snip=txt.slice(Math.max(0,i-80),Math.min(txt.length,i+m[0].length+100)).replace(/\s+/g,' ').trim();found.push({rule,snip})}}
     found.sort((a,b)=>b.rule.s-a.rule.s);
@@ -1033,7 +1041,7 @@ function toolDJ(root){
   <p class="hint">Friendly roasts only. Use a nickname for real people, and only for people who can take a joke.</p>
   <div class="row" style="margin-top:12px"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-music"/></svg> Drop the beat</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
   async function run(){
-    const T=$('#tg').value.trim();if(!T){alert('Bars need a target. Give me a name or a thing.');return}
+    const T=$('#tg').value.trim();if(!T){toast('Bars need a target. Give me a name or a thing.');return}
     const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
     const vibe=$('#vibe').value,r=rng(fnv(T.toLowerCase()+vibe)),pool=shuffle(r,vibe==='hype'?HYPE:ROAST).slice(0,4);
     say(out,'dj',`Yo yo yo, it's DJ SI. Drop the beat for ${T}!`);
@@ -1057,7 +1065,7 @@ function toolBanker(root){
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
     const item=$('#item').value.trim()||'the thing',price=+$('#price').value,free=+$('#free').value||0,sav=+$('#sav').value||0;
-    if(!(price>0)){alert('A price greater than zero, please. Even I cannot judge a free item.');return}
+    if(!(price>0)){toast('A price greater than zero, please. Even I cannot judge a free item.');return}
     const r=rng(fnv(item+price+free+sav)),need=Math.max(0,price-sav),months=free>0?need/free:Infinity;
     let verdict,line;
     if(sav>=price&&(free>0?price<=free*2:true)){verdict='AFFORDABLE (TECHNICALLY)';line="Your savings cover it, and it will not wreck your month. Technically. I am not the boss of you. I am the boss of the numbers."}
@@ -1145,7 +1153,7 @@ function go(id,push,scroll){
     const sb=$$('#rail button').find(b=>b.dataset.id===id);if(sb&&sb.scrollIntoView)sb.scrollIntoView({inline:'center',block:'nearest'});
     document.title=c.name+' · '+SITE;
   }else document.title=SITE+' | Ten robots. Ten egos. Zero humility.';
-  if(push!==false)history.replaceState(null,'','#'+id);
+  if(push!==false){try{history.replaceState(null,'','#'+id)}catch(e){}}
   const tgt=scroll&&document.getElementById(scroll);
   if(tgt)tgt.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});else window.scrollTo({top:0});
 }

@@ -10,7 +10,9 @@ from pathlib import Path
 
 here = Path(__file__).parent
 root = here.parent
-NAME = sys.argv[1] if len(sys.argv) > 1 else "Tin Gods"
+args = [a for a in sys.argv[1:] if not a.startswith("--artifact")]
+ART = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--artifact=")), None)
+NAME = args[0] if args else "Tin Gods"
 
 FILES = {
     "judge": root / "character" / "judge-si.svg",
@@ -54,4 +56,16 @@ page = (here / "index.template.html").read_text()
 page = page.replace("/*IMG_JSON*/{}", json.dumps(imgs)).replace("/*REAL_JSON*/{}", json.dumps(real))
 page = page.replace("{{NAME_UP}}", NAME.upper()).replace("{{NAME}}", NAME)
 (here / "index.html").write_text(page)
+
+if ART:
+    # Fragment for the claude.ai page host: no html/head/body wrappers, no downloads, no outside fetches.
+    import re
+    a = page.replace("/*CAN_DL*/true", "false").replace("/*CAN_LIVE*/true", "false")
+    a = re.sub(r"<title>.*?</title>", f"<title>{NAME}</title>", a, count=1, flags=re.S)
+    for pat in (r"<!doctype html>\s*", r"<html[^>]*>\s*", r"<head>\s*", r"</head>\s*", r"<body>\s*", r"</body>\s*", r"</html>\s*",
+                r"<meta charset[^>]*>\s*", r'<meta name="viewport"[^>]*>\s*', r'<meta name="color-scheme"[^>]*>\s*',
+                r'<meta name="theme-color"[^>]*>\s*', r'<meta name="description"[^>]*>\s*'):
+        a = re.sub(pat, "", a, flags=re.I)
+    Path(ART).write_text(a)
+    print(f"wrote page fragment {ART} ({len(a):,} bytes)")
 print(f"wrote {here / 'index.html'} ({len(page):,} bytes) as '{NAME}'; realistic art for: {[k for k,v in real.items() if v] or 'none (vector art)'}")
