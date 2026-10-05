@@ -1,4 +1,4 @@
-# Tin Gods site (working name)
+# SI Agents site
 
 Single-file demo site with all 10 characters. Everything runs in the browser; nothing is sent anywhere
 except the Coin Sniffer's public DexScreener lookups. **Test mode: no coin, wallet or payments.**

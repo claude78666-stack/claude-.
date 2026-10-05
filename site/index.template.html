@@ -375,7 +375,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
         <div class="stage">
           <div class="glow"></div>
           <svg class="rings" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48"/><circle class="d" cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="30"/></svg>
-          <div class="main"><img data-img="judge" alt="Judge SI, Chief Justice of the Tin Gods"></div>
+          <div class="main"><img data-img="judge" alt="Judge SI, Chief Justice of {{NAME}}"></div>
           <div class="orb o1"><span class="crop"><img data-img="sniffles" alt=""></span></div>
           <div class="orb o2"><span class="crop"><img data-img="banker" alt=""></span></div>
           <div class="orb o3"><span class="crop"><img data-img="dj" alt=""></span></div>
@@ -398,7 +398,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
 
       <div class="section" id="cast">
         <div class="shead">
-          <div><span class="eyebrow">The Cabinet</span><h2>Pick a god.</h2><p>Every member of the cabinet has a free tool. Tap a card to open it.</p></div>
+          <div><span class="eyebrow">The Cabinet</span><h2>Pick an agent.</h2><p>Every member of the cabinet has a free tool. Tap a card to open it.</p></div>
           <div class="filters" id="filters" role="group" aria-label="Filter characters"></div>
         </div>
         <div class="cards" id="cards"></div>
@@ -418,7 +418,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
           <div>
             <span class="eyebrow">Featured</span>
             <h2>Judge SI will hear your case.</h2>
-            <p>He is the Chief Justice of the Tin Gods, he is also the jury, and he has never lost. Bring him your pettiest dispute.</p>
+            <p>He is the Chief Justice of {{NAME}}, he is also the jury, and he has never lost. Bring him your pettiest dispute.</p>
             <ul class="ticks">
               <li><svg class="ic"><use href="#i-check"/></svg>A full mock trial with evidence and cross-examination</li>
               <li><svg class="ic"><use href="#i-check"/></svg>A binding verdict (not legally binding) and a ridiculous sentence</li>
@@ -458,7 +458,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
           <details><summary>Is there a coin?</summary><p>No. Nothing is for sale. The name and ticker are not final, and the Treasury page is only a calculator.</p></details>
           <details><summary>What happens to what I type?</summary><p>It stays in your browser. Nothing is uploaded or stored. The one exception is the Coin Sniffer, which asks DexScreener for public market data about the address you paste.</p></details>
           <details><summary>Is any of this legal, medical or financial advice?</summary><p>No. It is all parody and entertainment. Judge SI is not a court, Dr. Heartbreak is not a therapist, Banker SI is not an adviser, and Detective Sniffles gives opinions about public numbers that can be wrong.</p></details>
-          <details><summary>Why "{{NAME}}"?</summary><p>It's a working name: robots with god-sized egos. It may change before any launch.</p></details>
+          <details><summary>Why "{{NAME}}"?</summary><p>SI stands for Superior Intelligence, and each robot in the cabinet is an agent with a job and a very big ego. The name may still change before any launch.</p></details>
         </div>
       </div>
 
@@ -535,7 +535,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
   <div class="fgrid">
     <div>
       <div class="brand" style="cursor:default"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2.5l15.5 5.8v11.4c0 8.6-6.2 14.4-15.5 17.8C10.7 34.1 4.5 28.3 4.5 19.7V8.3z" fill="#120b30" stroke="url(#lg)" stroke-width="2.4" stroke-linejoin="round"/><text x="20" y="25" text-anchor="middle" font-family="Space Grotesk,Arial" font-weight="800" font-size="14" fill="url(#lg)">SI</text></svg><span><b>{{NAME}}</b></span></div>
-      <p>Ten robots with god-sized egos and a free tool each. A parody cast, built for fun.</p>
+      <p>Ten Superior Intelligence agents with giant egos and a free tool each. A parody cast, built for fun.</p>
     </div>
     <div><h5>Cast</h5><ul id="fCast1"></ul></div>
     <div><h5>&nbsp;</h5><ul id="fCast2"></ul></div>
@@ -1032,7 +1032,7 @@ const HYPE=[
  ["{T} on the stage and the crowd goes wild,","a superior legend, every bar's a smile."],
  ["Turn it up loud for {T} tonight,","chrome-plated vibes in the neon light."],
  ["{T} walks in and the speakers say 'wow',","even my gold chain takes a bow."],
- ["Ten out of ten, the Tin Gods agree,","{T} is the main character, plain to see."],
+ ["Ten out of ten, the SI agents agree,","{T} is the main character, plain to see."],
  ["{T} got the rhythm, {T} got the flair,","drop the bass, put your hands in the air!"]
 ];
 function toolDJ(root){

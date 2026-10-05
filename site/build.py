@@ -3,7 +3,7 @@
 
 - Embeds all 10 character SVGs as data URIs (so there are no id clashes between them).
 - Swaps in the working name. Change NAME / change it on the command line to rename the whole site:
-      python3 site/build.py "Tin Gods"
+      python3 site/build.py "SI Agents"
 """
 import base64, json, os, subprocess, sys
 from pathlib import Path
@@ -12,7 +12,7 @@ here = Path(__file__).parent
 root = here.parent
 args = [a for a in sys.argv[1:] if not a.startswith("--artifact")]
 ART = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--artifact=")), None)
-NAME = args[0] if args else "Tin Gods"
+NAME = args[0] if args else "SI Agents"
 
 FILES = {
     "judge": root / "character" / "judge-si.svg",
