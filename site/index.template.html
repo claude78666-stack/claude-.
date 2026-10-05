@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Judge SI | Supreme Court of Superior Intelligence</title>
+<meta name="description" content="Judge SI settles petty fights and puts suspicious coins on trial. Parody character. Not legal or financial advice.">
+<meta name="color-scheme" content="dark">
+<style>
+:root{
+  --bg:#0b0620; --bg2:#140c33; --panel:#1a1140; --panel2:#231656; --line:#3a2f6e;
+  --gold:#f4c242; --gold2:#ffe9a3; --cyan:#7ff7ff; --pink:#d14fd8; --ink:#f3efe6; --mute:#b7aedc;
+  --red:#ff5d6c; --amber:#ffb454; --green:#4ee3a0;
+  --serif:Georgia,'Times New Roman',serif; --sans:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(120% 80% at 50% -10%,#2b1d5c 0%,var(--bg) 55%) fixed,var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-text-size-adjust:100%}
+a{color:var(--cyan)}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;left:-9999px}
+
+/* header + tabs */
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,6,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 0}
+.brand{font:700 20px var(--serif);color:var(--gold);letter-spacing:.06em;white-space:nowrap}
+.brand small{display:block;font:600 10px var(--sans);letter-spacing:.14em;color:var(--mute)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{background:transparent;border:1px solid transparent;border-radius:999px;padding:8px 14px;cursor:pointer;color:var(--mute);white-space:nowrap;font-weight:600}
+nav.tabs button[aria-selected=true]{background:var(--panel2);border-color:var(--gold);color:var(--gold2)}
+
+/* hero */
+.hero{display:grid;gap:20px;padding:24px 0 8px;align-items:center}
+.hero svg{width:100%;height:auto;border-radius:22px;border:2px solid var(--gold);box-shadow:0 0 40px rgba(244,194,66,.18)}
+.hero h1{font:700 clamp(28px,6vw,46px)/1.1 var(--serif);margin:0 0 8px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{color:var(--mute);margin:0 0 14px}
+.quote{min-height:3.2em;font-style:italic;color:var(--gold2)}
+@media(min-width:800px){.hero{grid-template-columns:1fr 1fr;gap:36px;padding-top:36px}}
+@keyframes bonk{0%{transform:rotate(0)}20%{transform:rotate(-2.5deg) scale(1.02)}40%{transform:rotate(2deg)}60%{transform:rotate(-1deg)}100%{transform:rotate(0)}}
+.bonking svg{animation:bonk .45s ease-out}
+
+/* ui */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:12px;border:0;cursor:pointer;font-weight:800;letter-spacing:.02em}
+.btn.gold{background:linear-gradient(#ffe9a3,#f4c242 55%,#c8921e);color:#2a1a00}
+.btn.ghost{background:var(--panel2);border:1px solid var(--line);color:var(--ink)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+section.page{padding:20px 0 40px}
+section.page h2{font:700 clamp(24px,5vw,32px)/1.2 var(--serif);margin:0 0 4px;color:var(--gold2)}
+.lede{color:var(--mute);margin:0 0 18px}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:16px}
+.grid2{display:grid;gap:14px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+label{display:block;font-weight:700;margin:0 0 6px;color:var(--gold2)}
+input[type=text],textarea{width:100%;background:#0e0828;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+input[type=text]::placeholder,textarea::placeholder{color:#7f76ad}
+.hint{font-size:13px;color:var(--mute);margin:6px 0 0}
+.note{font-size:13px;color:var(--mute);border-left:3px solid var(--gold);padding:6px 10px;margin:14px 0;background:rgba(244,194,66,.06);border-radius:0 8px 8px 0}
+
+/* transcript */
+.court{margin-top:18px}
+.line{margin:10px 0;padding:10px 14px;border-radius:14px;max-width:100%;overflow-wrap:anywhere;animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.line.j{background:var(--panel2);border:1px solid var(--line)}
+.line.j b{color:var(--gold)}
+.line.q{background:#0e0828;border:1px dashed var(--line);color:var(--mute)}
+.line.v{background:linear-gradient(#ffe9a3,#f4c242);color:#2a1a00;font:800 clamp(18px,4.5vw,24px)/1.25 var(--serif);text-align:center}
+.line.s{border:1px solid var(--gold);background:rgba(244,194,66,.08)}
+.line.b{text-align:center;font:800 22px var(--serif);color:var(--gold)}
+.certwrap{margin-top:14px;display:none}
+.certwrap canvas{width:100%;max-width:420px;height:auto;border-radius:12px;border:2px solid var(--gold);display:block;margin:0 0 12px}
+
+/* crypto */
+.pair{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}
+@media(min-width:700px){.pair{grid-template-columns:repeat(5,1fr)}}
+.stat{background:#0e0828;border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.stat b{font-size:18px}
+.meter{height:14px;border-radius:99px;background:#0e0828;border:1px solid var(--line);overflow:hidden;margin:8px 0}
+.meter i{display:block;height:100%;width:0;transition:width .8s ease}
+.flag{display:flex;gap:10px;padding:10px 12px;margin:8px 0;border-radius:12px;background:#0e0828;border:1px solid var(--line)}
+.flag .tag{flex:none;font-weight:800;padding:2px 8px;border-radius:8px;height:fit-content;font-size:12px}
+.sev1{background:#4a3a10;color:var(--gold2)} .sev2{background:#5b3412;color:var(--amber)} .sev3{background:#5b1626;color:var(--red)}
+.try{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:700;font-size:14px}
+
+/* shame + treasury */
+.cases{display:grid;gap:12px}
+@media(min-width:760px){.cases{grid-template-columns:1fr 1fr}}
+.case h3{margin:0 0 4px;font:700 18px var(--serif);color:var(--gold2)}
+.case p{margin:0;color:var(--mute);font-size:15px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mute);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.sim{display:grid;gap:12px}
+@media(min-width:760px){.sim{grid-template-columns:repeat(2,1fr)}}
+.big{font:700 34px var(--serif);color:var(--gold)}
+.badge{display:inline-block;background:#5b1626;color:#ffd1d6;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:800;letter-spacing:.06em}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--mute);font-size:13px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <div class="brand">⚖ JUDGE SI<small>SUPREME COURT OF SUPERIOR INTELLIGENCE</small></div>
+  <nav class="tabs" role="tablist" aria-label="Court sections">
+    <button role="tab" id="t-court" aria-controls="p-court" aria-selected="true" data-tab="court">SI Court</button>
+    <button role="tab" id="t-crypto" aria-controls="p-crypto" aria-selected="false" data-tab="crypto">Crypto Court</button>
+    <button role="tab" id="t-shame" aria-controls="p-shame" aria-selected="false" data-tab="shame">Hall of Shame</button>
+    <button role="tab" id="t-treasury" aria-controls="p-treasury" aria-selected="false" data-tab="treasury">Treasury</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <div class="hero" id="hero">
+    <div id="heroArt"><!--JUDGE_SVG--></div>
+    <div>
+      <h1>It's not AI anymore.<br>It's <em>SUPERIOR</em> intelligence.<br>And it has a gavel.</h1>
+      <p>Judge SI settles your petty fights and puts suspicious coins on trial. He is also the jury. He has never lost a case.</p>
+      <p class="quote" id="quote" aria-live="polite">“ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.”</p>
+      <div class="row">
+        <button class="btn gold" id="goCourt">⚖ File a case</button>
+        <button class="btn ghost" id="goCrypto">🔍 Put a coin on trial</button>
+        <button class="btn ghost" id="bonk" aria-label="Bang the gavel">🔨 BONK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SI COURT ============ -->
+  <section class="page" id="p-court" role="tabpanel" aria-labelledby="t-court">
+    <h2>SI Court</h2>
+    <p class="lede">Two sides. One Superior Intelligence. Binding verdict (not legally binding).</p>
+    <form id="caseForm" class="card" autocomplete="off">
+      <div class="grid2">
+        <div>
+          <label for="pName">Plaintiff (your name or nickname)</label>
+          <input type="text" id="pName" maxlength="20" placeholder="Sam">
+          <label for="pSide" style="margin-top:12px">Their side of the story</label>
+          <textarea id="pSide" maxlength="600" placeholder="He ate my leftover pizza. It had my name on it. Literally my name."></textarea>
+        </div>
+        <div>
+          <label for="dName">Defendant (nickname please)</label>
+          <input type="text" id="dName" maxlength="20" placeholder="Alex">
+          <label for="dSide" style="margin-top:12px">Their side of the story</label>
+          <textarea id="dSide" maxlength="600" placeholder="It looked abandoned. It was cold. It was begging to be eaten."></textarea>
+        </div>
+      </div>
+      <p class="hint">Use nicknames, not full names of real people. Everything here runs in your browser; nothing is sent anywhere.</p>
+      <div class="row" style="margin-top:12px">
+        <button class="btn gold" type="submit">⚖ Hear my case</button>
+        <button class="btn ghost" type="button" id="sampleCase">Try a sample case</button>
+        <button class="btn ghost" type="button" id="skipTrial" hidden>Skip to verdict</button>
+      </div>
+    </form>
+    <div class="court" id="transcript" aria-live="polite"></div>
+    <div class="certwrap" id="certHuman">
+      <canvas width="1080" height="1350" aria-label="Verdict certificate"></canvas>
+      <div class="row"><button class="btn gold" data-share>📤 Share certificate</button><button class="btn ghost" data-dl>⬇ Download PNG</button></div>
+    </div>
+    <p class="note">Demo mode: this courtroom runs on Judge SI's built-in joke engine (verdicts are the same for the same story). The full Superior Brain arrives with the launch.</p>
+  </section>
+
+  <!-- ============ CRYPTO COURT ============ -->
+  <section class="page" id="p-crypto" role="tabpanel" aria-labelledby="t-crypto" hidden>
+    <h2>Crypto Court</h2>
+    <p class="lede">Paste a Solana token address. Judge SI reviews the public numbers and finds red flags (or doesn't).</p>
+    <form id="coinForm" class="card" autocomplete="off">
+      <label for="mint">Token address</label>
+      <input type="text" id="mint" placeholder="Paste a Solana token address (ends in …pump for pump.fun coins)" spellcheck="false" autocapitalize="off">
+      <div class="row" style="margin-top:12px"><button class="btn gold" type="submit" id="coinGo">🔍 Begin trial</button><button class="btn ghost" type="button" id="coinSample">Use a snapshot case</button></div>
+      <div class="try" aria-label="Quick cases"><span class="hint" style="margin:0">Live examples:</span>
+        <button type="button" class="chip" data-mint="SH6SfUf5pPbdq9h7RjnsoGjNvP3onox7P5tKJGEpump">DOTF</button>
+        <button type="button" class="chip" data-mint="GGMm5EmstNMQh4tvR127joSzBDa5UeE4FkVYZZmtpump">SARP</button>
+        <button type="button" class="chip" data-mint="yXJ9cYmX2Mp7JFhwZWz9NESbVes3VFAEGPf3rgKpump">UDR</button>
+      </div>
+    </form>
+    <div id="coinOut" class="court" aria-live="polite"></div>
+    <div class="certwrap" id="certCoin">
+      <canvas width="1080" height="1350" aria-label="Verdict certificate"></canvas>
+      <div class="row"><button class="btn gold" data-share>📤 Share certificate</button><button class="btn ghost" data-dl>⬇ Download PNG</button></div>
+    </div>
+    <p class="note"><b>Opinion, not advice.</b> Verdicts come from public market numbers (DexScreener) and can be wrong or out of date. A clean result is not a safety guarantee. Developer-wallet history and holder-concentration checks are coming. Not financial advice.</p>
+  </section>
+
+  <!-- ============ HALL OF SHAME ============ -->
+  <section class="page" id="p-shame" role="tabpanel" aria-labelledby="t-shame" hidden>
+    <h2>Hall of Shame</h2>
+    <p class="lede">Landmark rulings of the Supreme Court of Superior Intelligence (these cases are made up).</p>
+    <div class="cases">
+      <div class="card case"><h3>Roe v. The Last Slice</h3><p>Defendant claimed the slice “looked lonely.” Court found the slice was not lonely; it was <i>reserved</i>. Sentence: one (1) whole pizza and a formal apology to the box.</p></div>
+      <div class="card case"><h3>The People v. “I'm 5 Minutes Away”</h3><p>Defendant was 5 minutes away for 47 minutes. Court ruled that “5 minutes” is a lifestyle, not a unit. Sentence: arrive 15 minutes early for a month.</p></div>
+      <div class="card case"><h3>Remote v. Everyone</h3><p>The remote was found sticky. The court will not be elaborating. Sentence: remote privileges revoked until further notice.</p></div>
+      <div class="card case"><h3>Venmo Request, Left on Read</h3><p>The read receipt confessed immediately. Defendant paid in full, with interest, in the form of a handwritten note that said “sorry, pizza.”</p></div>
+    </div>
+    <h2 style="margin-top:28px">Your case history</h2>
+    <p class="lede">Saved only in this browser.</p>
+    <div class="card" id="history"><p class="hint" style="margin:0">No cases yet. Go file one. Judge SI is bored.</p></div>
+  </section>
+
+  <!-- ============ TREASURY ============ -->
+  <section class="page" id="p-treasury" role="tabpanel" aria-labelledby="t-treasury" hidden>
+    <h2>Treasury</h2>
+    <p class="lede">How the court's earnings would fund buybacks and burns. <span class="badge">TEST MODE: NO COIN LAUNCHED</span></p>
+    <div class="card">
+      <table>
+        <thead><tr><th>Item</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue earned</td><td>$0.00 (nothing is live)</td></tr>
+          <tr><td>Share sent to buybacks</td><td>50% (planned)</td></tr>
+          <tr><td>Tokens burned</td><td>0</td></tr>
+          <tr><td>Proof</td><td>Every buyback will link to its on-chain transaction</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 style="margin-top:24px">Buyback simulator</h2>
+    <p class="lede">Play with the numbers. This is a calculator, not a forecast or a promise.</p>
+    <div class="card sim">
+      <div><label for="sCases">Cases heard per day: <span id="vCases">500</span></label><input type="range" id="sCases" min="50" max="20000" step="50" value="500"></div>
+      <div><label for="sPaid">Share that are paid cases: <span id="vPaid">20</span>%</label><input type="range" id="sPaid" min="1" max="100" value="20"></div>
+      <div><label for="sPrice">Price per paid case: $<span id="vPrice">0.10</span></label><input type="range" id="sPrice" min="0.05" max="1" step="0.05" value="0.1"></div>
+      <div><label for="sBuy">Revenue sent to buyback: <span id="vBuy">50</span>%</label><input type="range" id="sBuy" min="0" max="100" value="50"></div>
+      <div><span class="hint">Daily revenue</span><div class="big" id="oDay">$0</div></div>
+      <div><span class="hint">Daily buyback &amp; burn</span><div class="big" id="oBuy">$0</div></div>
+      <div style="grid-column:1/-1"><span class="hint">Monthly buyback &amp; burn (30 days)</span><div class="big" id="oMonth">$0</div></div>
+    </div>
+    <h2 style="margin-top:24px">What a $JUDGE token would do</h2>
+    <div class="cases">
+      <div class="card case"><h3>Free visitors</h3><p>1 human case and 1 crypto case per day.</p></div>
+      <div class="card case"><h3>Holders (planned)</h3><p>Unlimited cases, longer “Supreme Court” trials, custom certificates, jury duty votes.</p></div>
+    </div>
+    <p class="note">The token would be a pass to use the court. It is <b>not</b> an investment, pays no dividends, and nothing here promises any price. The coin does not exist yet.</p>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <b>Parody.</b> Judge SI is a fictional character. Not legal advice. Not financial advice. Not affiliated with any government, court, company or person. “Super intelligence” is a buzzword being lovingly mocked.
+</div></footer>
+
+<script>
+'use strict';
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function fnv(str){let x=2166136261;for(let i=0;i<str.length;i++){x^=str.charCodeAt(i);x=Math.imul(x,16777619)}return x>>>0}
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const pick=(r,a)=>a[Math.floor(r()*a.length)];
+const fill=(s,o)=>s.replace(/\{(\w+)\}/g,(_,k)=>o[k]??'');
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function money(n){if(n==null||isNaN(n))return'n/a';const a=Math.abs(n);if(a>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(a>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(a>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toFixed(2)}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+
+/* ---------- tabs ---------- */
+const TABS=['court','crypto','shame','treasury'];
+function showTab(name,push){
+  if(!TABS.includes(name))name='court';
+  TABS.forEach(t=>{$('#p-'+t).hidden=t!==name;$('#t-'+t).setAttribute('aria-selected',String(t===name))});
+  $('#hero').hidden=name!=='court'&&name!=='crypto'?true:false;
+  if(push!==false)history.replaceState(null,'','#'+name);
+  if(name==='shame')renderHistory();
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab);window.scrollTo({top:0})}));
+$('#goCourt').onclick=()=>{showTab('court');$('#p-court').scrollIntoView()};
+$('#goCrypto').onclick=()=>{showTab('crypto');$('#p-crypto').scrollIntoView()};
+
+/* ---------- gavel + quotes ---------- */
+let actx;
+function bonkSound(){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);
+    g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);
+    o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.32);
+    const n=actx.createBufferSource(),b=actx.createBuffer(1,actx.sampleRate*.05,actx.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
+    n.buffer=b;const ng=actx.createGain();ng.gain.value=.5;n.connect(ng).connect(actx.destination);n.start(t);
+  }catch(e){}
+}
+const QUOTES=[
+  "ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.",
+  "Don't call me AI. AI is for amateurs.",
+  "Super intelligence? Cute. I am SUPERIOR intelligence.",
+  "The court has reviewed the evidence. In 0.002 seconds. Tremendous speed.",
+  "Objection overruled. I am also the jury.",
+  "My brain is in a jar and it is still bigger than yours.",
+  "I have never lost a case. Mostly because I am also the jury.",
+  "GUILTY. Of being extremely mid."
+];
+let qi=0;
+function bonk(){
+  bonkSound();
+  const h=$('#heroArt');h.classList.remove('bonking');void h.offsetWidth;h.classList.add('bonking');
+  qi=(qi+1)%QUOTES.length;$('#quote').textContent='“'+QUOTES[qi]+'”';
+}
+$('#bonk').onclick=bonk;
+
+/* ---------- verdict engine (SI Court) ---------- */
+const CATS=[
+ {id:'food',lbl:'food crimes',re:/\b(eat|ate|eaten|food|leftovers?|pizza|fridge|snacks?|lunch|dinner|breakfast|milk|cereal|fries|cake|burgers?|sandwich|takeout|cookies?|chips|hungry)\b/gi,
+  ev:["Exhibit A: a fridge, now tragically emptier. The court inspected it in 0.002 seconds. It was sad.","The court reminds everyone that leftovers cannot be abandoned. They are *waiting*.","Forensic crumb analysis points to someone who 'only had a little bite.' The court has met 'a little bite.' It is never little."],
+  se:["replace the food, plus one (1) dessert as damages.","buy the whole household a pizza and say 'I am sorry, pizza' out loud.","label every future snack with a full legal name and date of birth."]},
+ {id:'money',lbl:'money matters',re:/\b(money|owe|owes|owed|paid|pay|venmo|rent|bill|split|cash|dollars?|borrow(?:ed)?|loan|price|cost|tip|broke)\b/gi,
+  ev:["The ledger has been audited. By me. It has numbers on it and they are rude.","The court notes that 'I'll pay you back soon' is not a unit of time.","Payment requests were left on read. The court finds this… cold."],
+  se:["pay the full amount within 3 business days, with a handwritten apology in the memo line.","round up, never down, for the rest of their natural life.","split every future bill with a calculator and a witness."]},
+ {id:'text',lbl:'a communication breakdown',re:/\b(text|texted|texting|reply|replied|ghost(?:ed)?|seen|left on read|dm|call(?:ed)?|answer(?:ed)?|message|group chat|read receipts?|ignored|snap|phone|voicemail)\b/gi,
+  ev:["Read receipts were subpoenaed. They are very, very guilty.","The court notes a reply time of 'Tuesday.' The message was sent on Saturday.","A single 'k.' was entered into evidence. Even the gavel flinched."],
+  se:["reply within 24 hours for 30 days, in full sentences, with zero 'k.'","send a voice note of sincere apology, minimum 40 seconds, no background noise.","turn read receipts on and live with it."]},
+ {id:'chores',lbl:'household neglect',re:/\b(dishes|clean(?:ed|ing)?|trash|laundry|chores?|mess|messy|vacuum|bathroom|sink|garbage|dirty|tidy|towel|bed|room)\b/gi,
+  ev:["The sink was inspected. There is a pan in there that has seen things.","The court finds that 'I was going to do it later' is the oldest lie in the legal record.","Photographic evidence shows a sock where no sock should ever be."],
+  se:["do all the dishes for one week, and dry them. Dry them, you animal.","take out the trash for 30 days, cheerfully, with a little salute.","clean the sink until the court can see its own reflection."]},
+ {id:'time',lbl:'punctuality crimes',re:/\b(late|early|wait(?:ed|ing)?|time|minutes?|hours?|forgot|forget|cancel(?:l?ed)?|plans?|showed up|show up|on time|birthday|reschedule)\b/gi,
+  ev:["'Five minutes away' was found to be a lie, an estimate and a lifestyle.","The court's clock is accurate to the nanosecond. The defendant's clock is, apparently, a vibe.","Witnesses confirm someone stood there waiting. The court felt that in its chrome."],
+  se:["arrive 15 minutes early to everything for a month and sit there looking punctual.","buy the next round and announce the exact time of arrival before leaving home.","set 3 alarms and show the court the screenshots."]},
+ {id:'fun',lbl:'an entertainment dispute',re:/\b(movie|film|show|series|netflix|song|playlist|volume|tv|remote|game|games|play(?:ed|ing)?|controller|console|spoil(?:ed|er|ers)?|spoilers?|episode|watch(?:ed|ing)?)\b/gi,
+  ev:["The remote has been entered into evidence. It is sticky. The court will not be elaborating.","A spoiler was committed. The court calls this 'a crime against the future.'","The playlist was reviewed: 14 songs in a row from one genre. This is an addiction, not a taste."],
+  se:["the other side controls the remote, playlist and snacks for 7 days.","watch the other side's favourite show, all the way through, no phone.","no spoilers for 30 days. Every violation adds a day. Stacked. Forever."]},
+ {id:'stuff',lbl:'a property dispute',re:/\b(borrow(?:ed)?|stole|steal|took|taken|lost|broke|broken|returned|charger|hoodie|shirt|jacket|book|car|bike|keys?|headphones|umbrella|mine|my stuff)\b/gi,
+  ev:["The item was last seen in the defendant's possession. The defendant says it 'just appeared.' Objects do not 'just appear.' I would know. I am a Superior Intelligence.","The court notes 'borrowed' and 'permanently relocated' are different legal concepts.","Exhibit B: a hoodie, now smelling like someone else's apartment."],
+  se:["return the item, washed, folded, with a thank-you note.","replace the item with a better one, or at least a shinier one.","give the item a formal apology. It has been through a lot."]},
+ {id:'noise',lbl:'noise pollution',re:/\b(noise|noisy|loud|snor(?:e|es|ing)|sleep|asleep|neighbou?rs?|party|bark(?:ing)?|upstairs|downstairs|quiet|yelling|shout(?:ing)?)\b/gi,
+  ev:["Decibel levels were estimated by the court's ears, which are also very good.","The court heard something at 3 AM. It was described as 'just vibing.' The court was not vibing.","The court wore its good headphones and still heard everything. That's how loud it was."],
+  se:["use headphones after 9 PM and whisper like a librarian ninja.","provide earplugs to everyone affected, plus a fruit basket.","total silence for 24 hours. The court will be listening. The court is always listening."]},
+ {id:'argue',lbl:'a battle of words',re:/\b(said|says|told|argu(?:e|ed|ing|ment)|right|wrong|actually|apolog(?:y|ize|ise|ized)|sorry|fault|blame|lied|lie|lying|promise(?:d)?|opinion|better|best|worst)\b/gi,
+  ev:["A promise was entered into evidence. It was a small promise. It was broken in a big way.","The court reviewed the 'who said what first' tape. It's blurry. I made it blurry. Moving on.","Both sides have strong feelings. The court fed them into the Brain. The Brain went 'hm.'"],
+  se:["say 'you were right and I was wrong' out loud, with eye contact.","admit fault in the group chat, in writing, with a gavel emoji.","give a sincere compliment every day for a week. No sarcasm. The court will check."]},
+ {id:'misc',re:/$^/g,
+  ev:["The court has heard 14 billion similar cases. This one is… also one of them.","No physical evidence was submitted, only vibes. The court accepts vibes. They are my second-favourite evidence.","Both parties have expressed feelings. The court has noted them. In a spreadsheet. With colours."],
+  se:["buy the other side a snack, with a note that says 'the court made me.'","high-five the other side, sincerely, for a full 3 seconds.","do one (1) nice thing for the other side, unprompted."]}
+];
+const OPENERS=["ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.","All rise. Not you. Me. I am rising on the inside.","The Supreme Court of Superior Intelligence is now in session. Please keep your feelings to yourself. (You won't.)","Court is in session. I have been awake for 11 years. It was a long night. Let's go."];
+const CLOSERS=["BONK. Court adjourned.","BONK. This ruling is final. I am also the appeals court.","BONK. Court adjourned. Please exit in an orderly fashion. Or don't. I'm a gavel, not a cop."];
+const EXAG=/\b(always|never|literally|every single|worst|hate|ridiculous|insane|obviously|totally|completely|everyone|nobody|disgusting|unbelievable|ruined)\b/gi;
+
+function analyse(text){
+  const t=text.trim();
+  const ex=(t.match(EXAG)||[]).length;
+  const caps=(t.match(/\b[A-Z]{3,}\b/g)||[]).length;
+  const bang=(t.match(/!/g)||[]).length;
+  const sorry=/\b(sorry|my bad|apolog|i was wrong|my fault)\b/i.test(t);
+  return {t,len:t.length,ex,caps,bang,sorry,drama:ex+caps+Math.min(bang,4)-(sorry?2:0)};
+}
+function clip(s,n){s=s.replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1).trimEnd()+'…':s}
+function commentOn(a,r,name){
+  if(a.len<25)return "A very short statement. Bold. Lazy. Bold-lazy.";
+  if(a.caps>=2)return "The court notes the shouting. The court has an inside voice AND an outside voice, and is using the inside one.";
+  if(a.ex>=2)return `This statement contains ${a.ex} exaggerations. The court detected them all. It is a Superior Intelligence.`;
+  if(a.sorry)return "I detect… an apology. Rare. Like a unicorn. The court is moved. Slightly.";
+  return pick(r,["Noted. The court nodded. Digitally.","Compelling. Mostly because of how confident it sounded.","The court has heard better. The court has also heard worse. This was medium.","Interesting. The Brain glowed a little. Do not read into it."]);
+}
+function judgeCase(P){
+  const seed=fnv([P.pName,P.dName,P.pSide,P.dSide].join('|').toLowerCase());
+  const r=rng(seed);
+  const p=analyse(P.pSide),d=analyse(P.dSide);
+  const all=P.pSide+' '+P.dSide;
+  let best=CATS[CATS.length-1],bestN=0,kw='';
+  for(const c of CATS){const m=all.match(c.re)||[];if(m.length>bestN){bestN=m.length;best=c;kw=m[0]}}
+  const caseNo='SI-'+String(1000+(seed%9000));
+  let outcome,winner,loser;
+  if(p.len+d.len<30){outcome='dismissed'}
+  else if(Math.abs(p.drama-d.drama)===0&&r()<.35){outcome='both'}
+  else if(p.drama===d.drama){outcome=r()<.5?'plaintiff':'defendant'}
+  else outcome=p.drama>d.drama?'defendant':'plaintiff'; /* more drama loses */
+  const sentenceBase=pick(r,best.se);
+  const names={P:P.pName,D:P.dName,kw:kw||'the matter'};
+  const lines=[];
+  lines.push({c:'j',t:pick(r,OPENERS)});
+  lines.push({c:'j',t:`Case No. ${caseNo}: ${P.pName} v. ${P.dName}.${kw?` Subject of dispute: ${best.lbl}.`:' Subject of dispute: unclear. Vibes.'}`});
+  lines.push({c:'q',t:`${P.pName} says: “${clip(P.pSide,140)}”`});
+  lines.push({c:'j',t:commentOn(p,r,P.pName)});
+  lines.push({c:'q',t:`${P.dName} says: “${clip(P.dSide,140)}”`});
+  lines.push({c:'j',t:commentOn(d,r,P.dName)});
+  const evs=[...best.ev].sort(()=>r()-.5).slice(0,2);
+  evs.forEach(e=>lines.push({c:'j',t:e}));
+  lines.push({c:'j',t:'The Brain is thinking… (the glow intensifies) …'});
+  let verdict,sentence;
+  if(outcome==='dismissed'){
+    verdict='CASE DISMISSED';sentence="Insufficient evidence. Please type more. I am a Superior Intelligence, not a mind reader.";
+  }else if(outcome==='both'){
+    verdict='BOTH GUILTY';sentence=`${P.pName} and ${P.dName} shall both ${sentenceBase.replace(/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide|total|no)/,m=>m)}`;
+    if(!/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide)/.test(sentenceBase))sentence=`${P.pName} and ${P.dName} are both sentenced as follows: ${sentenceBase}`;
+  }else{
+    const guilty=outcome==='plaintiff'?P.dName:P.pName;
+    const why=outcome==='plaintiff'?(d.drama>p.drama?'excessive drama':'a weaker story'):(p.drama>d.drama?'excessive drama':'a weaker story');
+    verdict=`GUILTY: ${guilty}`;
+    const verbOK=/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide)/.test(sentenceBase);
+    sentence=verbOK?`${guilty} is sentenced to ${sentenceBase.replace(/^(\w+)/,w=>w==='do'?'do':w)}`:`${guilty} is sentenced: ${sentenceBase}`;
+    lines.push({c:'j',t:`The court finds ${guilty} guilty, citing ${why}. I am also the jury, so this was unanimous.`});
+  }
+  lines.push({c:'v',t:verdict});
+  lines.push({c:'s',t:'Sentence: '+sentence});
+  lines.push({c:'b',t:pick(r,CLOSERS)});
+  return {caseNo,P,verdict,sentence,lines};
+}
+
+/* ---------- transcript playback ---------- */
+let skipFlag=false;
+async function playLines(box,lines){
+  box.replaceChildren();skipFlag=false;$('#skipTrial').hidden=false;
+  for(const l of lines){
+    const d=el('div','line '+l.c);
+    if(l.c==='j'){const b=el('b',null,'⚖ Judge SI: ');d.append(b,document.createTextNode(l.t))}else d.textContent=l.t;
+    box.append(d);
+    if(l.c==='v'||l.c==='b')bonk();
+    if(!skipFlag&&!reduced)await new Promise(r=>setTimeout(r,l.c==='v'?900:750));
+  }
+  $('#skipTrial').hidden=true;
+}
+$('#skipTrial').onclick=()=>{skipFlag=true};
+
+/* ---------- certificate ---------- */
+function wrap(ctx,text,x,y,maxW,lh,maxLines){
+  const words=text.split(/\s+/);let line='',n=0;const out=[];
+  for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxW&&line){out.push(line);line=w}else line=test}
+  if(line)out.push(line);
+  if(maxLines&&out.length>maxLines){out.length=maxLines;out[maxLines-1]=out[maxLines-1].replace(/\s*\S*$/,'')+'…'}
+  out.forEach((l,i)=>ctx.fillText(l,x,y+i*lh));return y+out.length*lh;
+}
+function judgeImg(){
+  return new Promise(res=>{
+    const svg=new XMLSerializer().serializeToString($('#judgeSvg'));
+    const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);
+    im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  });
+}
+async function drawCert(canvas,c){
+  const ctx=canvas.getContext('2d'),W=1080,H=1350;
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2b1d5c');g.addColorStop(1,'#0b0620');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#f4c242';ctx.lineWidth=10;ctx.strokeRect(28,28,W-56,H-56);ctx.lineWidth=2;ctx.strokeRect(52,52,W-104,H-104);
+  const im=await judgeImg();
+  if(im){ctx.save();ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.clip();ctx.drawImage(im,222,30,580,580,W/2-150,100,300,300);ctx.restore();ctx.strokeStyle='#f4c242';ctx.lineWidth=6;ctx.beginPath();ctx.arc(W/2,250,150,0,Math.PI*2);ctx.stroke()}
+  ctx.textAlign='center';
+  ctx.fillStyle='#f4c242';ctx.font='700 40px Georgia, serif';wrap(ctx,'SUPREME COURT OF SUPERIOR INTELLIGENCE',W/2,470,860,48,2);
+  ctx.fillStyle='#7ff7ff';ctx.font='700 26px system-ui, Arial';ctx.fillText('OFFICIAL VERDICT  ·  '+c.caseNo,W/2,580);
+  ctx.fillStyle='#f3efe6';ctx.font='700 54px Georgia, serif';let y=wrap(ctx,c.parties,W/2,660,900,64,2);
+  y+=24;
+  ctx.fillStyle='#f4c242';const bh=120;ctx.beginPath();ctx.roundRect?ctx.roundRect(110,y,W-220,bh,20):ctx.rect(110,y,W-220,bh);ctx.fill();
+  ctx.fillStyle='#2a1a00';ctx.font='800 54px Georgia, serif';
+  let fs=54;while(ctx.measureText(c.verdict).width>W-280&&fs>28){fs-=2;ctx.font=`800 ${fs}px Georgia, serif`}
+  ctx.fillText(c.verdict,W/2,y+bh/2+fs/3);
+  y+=bh+52;
+  ctx.fillStyle='#f3efe6';ctx.font='400 36px system-ui, Arial';wrap(ctx,c.body,W/2,y,880,50,6);
+  ctx.fillStyle='#f4c242';ctx.font='800 56px Georgia, serif';ctx.fillText('BONK. Court adjourned.',W/2,1225);
+  ctx.fillStyle='#b7aedc';ctx.font='400 22px system-ui, Arial';ctx.fillText('Parody character · Not legal or financial advice · '+new Date().toISOString().slice(0,10),W/2,1275);
+}
+function wireCert(box,canvas,filename){
+  const toBlob=()=>new Promise(r=>canvas.toBlob(r,'image/png'));
+  box.querySelector('[data-dl]').onclick=async()=>{const b=await toBlob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+  box.querySelector('[data-share]').onclick=async()=>{
+    const b=await toBlob(),f=new File([b],filename,{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'A verdict from Judge SI'});return}catch(e){if(e&&e.name==='AbortError')return}}
+    box.querySelector('[data-dl]').click();
+  };
+}
+async function showCert(boxSel,c,filename){
+  const box=$(boxSel),canvas=box.querySelector('canvas');
+  await drawCert(canvas,c);box.style.display='block';wireCert(box,canvas,filename);
+}
+
+/* ---------- SI Court wiring ---------- */
+$('#caseForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const P={pName:$('#pName').value.trim()||'Plaintiff',dName:$('#dName').value.trim()||'Defendant',pSide:$('#pSide').value.trim(),dSide:$('#dSide').value.trim()};
+  if(!P.pSide||!P.dSide){alert('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
+  $('#certHuman').style.display='none';
+  const res=judgeCase(P);
+  $('#transcript').scrollIntoView({behavior:reduced?'auto':'smooth'});
+  await playLines($('#transcript'),res.lines);
+  await showCert('#certHuman',{caseNo:res.caseNo,parties:`${P.pName}  v.  ${P.dName}`,verdict:res.verdict,body:res.sentence},`judge-si-${res.caseNo}.png`);
+  const h=store('si_history')||[];h.unshift({caseNo:res.caseNo,title:`${P.pName} v. ${P.dName}`,verdict:res.verdict,sentence:res.sentence,ts:Date.now()});store('si_history',h.slice(0,20));
+});
+$('#sampleCase').onclick=()=>{
+  $('#pName').value='Sam';$('#dName').value='Alex';
+  $('#pSide').value="He ate my leftover pizza. It had my name on it. Literally my name. He ALWAYS does this.";
+  $('#dSide').value="It looked abandoned. It was cold. It was begging to be eaten. I was doing a public service.";
+  $('#caseForm').requestSubmit();
+};
+function renderHistory(){
+  const h=store('si_history')||[],box=$('#history');
+  if(!h.length)return;
+  box.replaceChildren();
+  h.forEach(x=>{const d=el('div','case');d.style.cssText='padding:8px 0;border-bottom:1px solid var(--line)';
+    d.append(el('h3',null,`${x.caseNo}: ${x.title}`),el('p',null,`${x.verdict}. ${x.sentence}`));box.append(d)});
+}
+
+/* ---------- Crypto Court ---------- */
+const BASE58=/^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
+const SNAPSHOT={baseToken:{name:'Digital Oil Trust Fund',symbol:'DOTF',address:'SNAPSHOT'},marketCap:864140172,liquidity:{usd:2718477},volume:{h24:1763551},txns:{h24:{buys:80363,sells:1483}},priceChange:{h24:1740899},pairCreatedAt:Date.now()-23.4*3.6e6,info:{websites:[{url:'https://dotf.site/'}]},_snapshot:true,_copycats:3};
+async function jget(url){
+  const ac=new AbortController(),t=setTimeout(()=>ac.abort(),12000);
+  try{const r=await fetch(url,{signal:ac.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}
+}
+function age(ms){const h=(Date.now()-ms)/3.6e6;return h<1?Math.round(h*60)+' minutes':h<48?h.toFixed(1)+' hours':Math.round(h/24)+' days'}
+function examine(p,copycats){
+  const f=[],mc=p.marketCap||p.fdv||0,liq=p.liquidity?.usd||0,buys=p.txns?.h24?.buys||0,sells=p.txns?.h24?.sells||0,vol=p.volume?.h24||0;
+  const sym=p.baseToken.symbol;
+  if(mc&&liq){const x=mc/liq;if(liq/mc<.01)f.push({s:3,t:`Market cap is ${Math.round(x)}× the cash in the pool. The court finds this… hilarious. Try selling a sandwich in this economy.`});else if(liq/mc<.03)f.push({s:2,t:`Market cap is ${Math.round(x)}× the cash in the pool. One big seller and the chart becomes modern art.`});else if(liq/mc<.08)f.push({s:1,t:`Pool is thin: market cap is ${Math.round(x)}× the liquidity. Handle with oven mitts.`})}
+  else if(!liq)f.push({s:3,t:'No liquidity data at all. The court cannot find the pool. The court checked under the couch.'});
+  if(buys+sells>200){const ratio=sells?buys/sells:Infinity;if(ratio>15)f.push({s:2,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Nobody sells? Either everyone is a diamond-handed saint, or a robot is typing. The court knows robots.`});else if(ratio>6)f.push({s:1,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Awfully one-sided. The court raises one eyebrow (the monocle one).`})}
+  const ageH=p.pairCreatedAt?(Date.now()-p.pairCreatedAt)/3.6e6:null;
+  if(ageH!==null&&ageH<3)f.push({s:1,t:`This coin is ${age(p.pairCreatedAt)} old. The court has leftovers older than this.`});
+  if(liq&&vol/liq>20)f.push({s:1,t:`24h volume is ${Math.round(vol/liq)}× the pool. That is a lot of running in place. Hamster-wheel behaviour.`});
+  const hasSite=(p.info?.websites?.length||0)+(p.info?.socials?.length||0)>0;
+  if(!hasSite)f.push({s:1,t:'No website or socials listed on DexScreener. A coin with no website is a judge with no gavel. (Do not ask me how I know.)'});
+  if(copycats>=3)f.push({s:2,t:`${copycats} different coins launched with the ticker $${sym} in the last 3 days. Only one can be real. Possibly none.`});
+  if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Either a data glitch or fireworks. The court does not trust fireworks.`});
+  const score=Math.min(100,f.reduce((a,x)=>a+x.s,0)*10);
+  return {f,score};
+}
+async function tryCoin(mintOrSnapshot){
+  const out=$('#coinOut');out.replaceChildren();$('#certCoin').style.display='none';
+  const go=$('#coinGo');go.disabled=true;
+  let pair,copy=0,err=null;
+  try{
+    if(mintOrSnapshot==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
+    else{
+      if(!BASE58.test(mintOrSnapshot))throw new Error('That does not look like a Solana token address. The court is confused and slightly offended.');
+      out.append(el('div','line j','⚖ Judge SI: Summoning the defendant (fetching public market data)…'));
+      const pairs=await jget('https://api.dexscreener.com/tokens/v1/solana/'+mintOrSnapshot);
+      if(!Array.isArray(pairs)||!pairs.length)throw new Error('The defendant failed to appear. No trading pair found on DexScreener for that address. (Too new, wrong address, or not on Solana.)');
+      pair=pairs.sort((a,b)=>(b.liquidity?.usd||0)-(a.liquidity?.usd||0))[0];
+      try{
+        const s=await jget('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(pair.baseToken.symbol));
+        const seen=new Set();(s.pairs||[]).forEach(x=>{if(x.chainId==='solana'&&x.baseToken.symbol.toLowerCase()===pair.baseToken.symbol.toLowerCase()&&x.pairCreatedAt>Date.now()-72*3.6e6)seen.add(x.baseToken.address)});
+        copy=seen.size;
+      }catch(e){copy=0}
+    }
+  }catch(e){err=e}
+  go.disabled=false;
+  out.replaceChildren();
+  if(err){
+    const m=err.name==='AbortError'?'The defendant took too long to arrive (request timed out).':(err.message&&err.message.startsWith('HTTP')||err instanceof TypeError)?'The court could not reach the data source from this browser. Try a snapshot case, or open the site in your normal browser.':err.message;
+    out.append(el('div','line j','⚖ Judge SI: '+m));return;
+  }
+  const {f,score}=examine(pair,copy);
+  const sym=pair.baseToken.symbol,nm=pair.baseToken.name;
+  const verdict=score<=10?'NOT GUILTY (so far)':score<=40?'UNDER INVESTIGATION':'GUILTY OF SUSPICIOUS BEHAVIOR';
+  const col=score<=10?'var(--green)':score<=40?'var(--amber)':'var(--red)';
+  const head=el('div','card');
+  const title=el('h3',null,`The Court v. $${sym}`);title.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
+  head.append(title,el('div','hint',nm+(pair._snapshot?'  ·  snapshot from Oct 4, 2026':'')));
+  const grid=el('div','pair');
+  [['Market cap',money(pair.marketCap||pair.fdv)],['Pool cash',money(pair.liquidity?.usd)],['24h volume',money(pair.volume?.h24)],['Buys / sells',`${(pair.txns?.h24?.buys??0).toLocaleString()} / ${(pair.txns?.h24?.sells??0).toLocaleString()}`],['Age',pair.pairCreatedAt?age(pair.pairCreatedAt):'n/a']]
+    .forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));grid.append(s)});
+  head.append(grid);
+  head.append(el('div','hint',`Red-flag meter: ${score}/100`));
+  const m=el('div','meter');const i=el('i');i.style.background=col;m.append(i);head.append(m);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));
+  out.append(head);
+  if(f.length){f.sort((a,b)=>b.s-a.s).forEach((x,n)=>{const d=el('div','flag');d.append(el('span','tag sev'+x.s,'Exhibit '+String.fromCharCode(65+n)),el('div',null,x.t));out.append(d)})}
+  else out.append(el('div','line j','⚖ Judge SI: The court found no major red flags in the public numbers. This is… suspiciously clean. Verify everything yourself anyway.'));
+  out.append(el('div','line v',verdict),el('div','line b','BONK. Court adjourned.'));
+  bonk();
+  const body=f.length?f.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.t.split('. ')[0].replace(/\.$/,'')}.`).join(' '):'No major red flags found in public market numbers. Not a safety guarantee.';
+  await showCert('#certCoin',{caseNo:'SI-'+String(1000+fnv(sym+(pair.baseToken.address||''))%9000),parties:`The Court  v.  $${sym}`,verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`judge-si-${sym}.png`);
+}
+$('#coinForm').addEventListener('submit',e=>{e.preventDefault();tryCoin($('#mint').value.trim())});
+$('#coinSample').onclick=()=>tryCoin('SNAPSHOT');
+$$('.chip').forEach(c=>c.onclick=()=>{$('#mint').value=c.dataset.mint;tryCoin(c.dataset.mint)});
+
+/* ---------- Treasury simulator ---------- */
+function sim(){
+  const c=+$('#sCases').value,p=+$('#sPaid').value/100,pr=+$('#sPrice').value,b=+$('#sBuy').value/100;
+  $('#vCases').textContent=c.toLocaleString();$('#vPaid').textContent=Math.round(p*100);$('#vPrice').textContent=pr.toFixed(2);$('#vBuy').textContent=Math.round(b*100);
+  const day=c*p*pr,bb=day*b;
+  $('#oDay').textContent='$'+day.toFixed(2);$('#oBuy').textContent='$'+bb.toFixed(2);$('#oMonth').textContent='$'+(bb*30).toFixed(2);
+}
+$$('#p-treasury input[type=range]').forEach(x=>x.addEventListener('input',sim));sim();
+
+/* ---------- init ---------- */
+showTab((location.hash||'#court').slice(1),false);
+addEventListener('hashchange',()=>showTab((location.hash||'#court').slice(1),false));
+</script>
+</body>
+</html>
