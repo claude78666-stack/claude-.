@@ -20,3 +20,10 @@ Photorealistic 3D-render versions of the Tin Gods cast. The flat vector art in `
 | Astronaut SI | Figma | https://www.figma.com/api/mcp/asset/2f643923-fb93-44cd-927b-fd40ab39dd8d.png |
 
 Prompts used a shared style: "Photorealistic 3D render, portrait from the chest up, brushed chrome robot, dark glass visor with glowing cyan eyes, small round gold SI badge, cinematic rim lighting, octane render, 8k, no text".
+
+## How the website uses these
+`python3 site/build.py "Tin Gods"` looks for `character/realistic/<stem>.png|jpg|webp` and swaps that character's art to the realistic image (resized to 640px and embedded). Characters without a file keep their vector art.
+
+Stems: `judge-si`, `detective-sniffles`, `chef-si`, `coach-si`, `dr-heartbreak`, `anchor-si`, `professor-si`, `dj-si`, `banker-si`, `astronaut-si`.
+
+**Current state:** the 5 Canva images are in place as 200px previews (soft when enlarged). To finish: put the full-size originals (1024px) in this folder with the stems above and re-run the build. The 5 Figma images (Anchor, Professor, DJ, Banker, Astronaut) still need to be downloaded from the links above.

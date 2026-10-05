@@ -5,7 +5,7 @@
 - Swaps in the working name. Change NAME / change it on the command line to rename the whole site:
       python3 site/build.py "Tin Gods"
 """
-import base64, json, sys
+import base64, json, os, subprocess, sys
 from pathlib import Path
 
 here = Path(__file__).parent
@@ -24,13 +24,34 @@ FILES = {
     "banker": root / "character" / "cast" / "banker-si.svg",
     "astronaut": root / "character" / "cast" / "astronaut-si.svg",
 }
-imgs = {
-    k: "data:image/svg+xml;base64," + base64.b64encode(p.read_bytes()).decode()
-    for k, p in FILES.items()
+# Realistic (AI-generated) art: drop full-size files into character/realistic/<stem>.png|jpg|webp
+# (stems below). Any character without a file keeps its vector art. Override the folder with REAL_DIR=...
+REAL_DIR = Path(os.environ.get("REAL_DIR", root / "character" / "realistic"))
+STEMS = {
+    "judge": "judge-si", "sniffles": "detective-sniffles", "chef": "chef-si", "coach": "coach-si",
+    "doctor": "dr-heartbreak", "anchor": "anchor-si", "professor": "professor-si", "dj": "dj-si",
+    "banker": "banker-si", "astronaut": "astronaut-si",
 }
 
+def realistic(key):
+    for ext in ("png", "jpg", "jpeg", "webp"):
+        f = REAL_DIR / f"{STEMS[key]}.{ext}"
+        if f.exists():
+            out = subprocess.run(
+                ["convert", str(f), "-resize", "640x640>", "-strip", "-quality", "80", "jpeg:-"],
+                capture_output=True, check=True,
+            ).stdout
+            return "data:image/jpeg;base64," + base64.b64encode(out).decode()
+    return None
+
+imgs, real = {}, {}
+for k, p in FILES.items():
+    r = realistic(k)
+    real[k] = bool(r)
+    imgs[k] = r or "data:image/svg+xml;base64," + base64.b64encode(p.read_bytes()).decode()
+
 page = (here / "index.template.html").read_text()
-page = page.replace("/*IMG_JSON*/{}", json.dumps(imgs))
+page = page.replace("/*IMG_JSON*/{}", json.dumps(imgs)).replace("/*REAL_JSON*/{}", json.dumps(real))
 page = page.replace("{{NAME_UP}}", NAME.upper()).replace("{{NAME}}", NAME)
 (here / "index.html").write_text(page)
-print(f"wrote {here / 'index.html'} ({len(page):,} bytes) as '{NAME}'")
+print(f"wrote {here / 'index.html'} ({len(page):,} bytes) as '{NAME}'; realistic art for: {[k for k,v in real.items() if v] or 'none (vector art)'}")
