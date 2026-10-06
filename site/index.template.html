@@ -249,6 +249,7 @@ textarea{min-height:120px;resize:vertical}
 .line.q{padding:10px 14px;border-radius:12px;border:1px dashed var(--border2);color:var(--muted);font-size:15px;margin-left:52px}
 .line.v{text-align:center;padding:16px;border-radius:14px;background:var(--grad-gold);color:#2a1a00;font:700 clamp(19px,4.6vw,26px)/1.2 var(--display);letter-spacing:-.01em;box-shadow:0 14px 40px -14px rgba(244,194,66,.6)}
 .line.s{padding:14px 16px;border-radius:14px;border:1px solid rgba(244,194,66,.4);background:rgba(244,194,66,.07)}
+.quip{font-style:italic;color:var(--gold2);font-size:15px;margin:10px 0 0}
 .line.b{text-align:center;font:600 18px var(--display);color:var(--gold)}
 .line.lyr{font-family:var(--display);font-size:18px;font-weight:500;padding:10px 16px;border-left:3px solid #ff4fd8;background:rgba(255,79,216,.06);border-radius:0 10px 10px 0;margin:6px 0}
 .cardbox{margin-top:18px}
@@ -381,7 +382,7 @@ footer p{color:var(--dim);font-size:13px;margin:12px 0 0;max-width:520px}
           <div class="orb o3"><span class="crop"><img data-img="dj" alt=""></span></div>
           <div class="orb o4"><span class="crop"><img data-img="astronaut" alt=""></span></div>
           <div class="peek a"><small>Judge SI · Verdict</small><span class="gp">GUILTY: Sam</span><div>Sentence: buy the household a pizza. Say "sorry, pizza" out loud.</div></div>
-          <div class="peek b"><small>Sniffles · Stink meter</small><b style="font:700 18px var(--display)">80 / 100</b><div class="m"><i></i></div><div style="color:var(--dim)">Copycat ticker found</div></div>
+          <div class="peek b"><small>Sniffles · Risk score</small><b style="font:700 18px var(--display)">80 / 100</b><div class="m"><i></i></div><div style="color:var(--dim)">Copycat ticker found</div></div>
         </div>
       </div>
     </div>
@@ -570,16 +571,16 @@ const today=()=>new Date().toISOString().slice(0,10);
 
 /* ================= cast ================= */
 const CAST=[
- {id:'judge',name:'Judge SI',role:'Chief Justice',tool:'SI Court',blurb:'Settles your petty fights with a full trial, a verdict and a shareable certificate.',quote:'Objection overruled. I am also the jury.'},
- {id:'sniffles',name:'Detective Sniffles SI',role:'Rug Sniffer',tool:'Coin Sniffer',blurb:'Paste a Solana coin address. His nose reads the public numbers and tells you what smells off.',quote:'The nose knows. The nose is also Superior.'},
- {id:'chef',name:'Chef SI',role:'Head of Fridge Affairs',tool:'Fridge Roaster',blurb:'Tell him what is in your fridge. He finds you three meals and roasts your groceries.',quote:'This is not cooking. This is SUPERIOR cooking.'},
- {id:'coach',name:'Coach SI',role:'Director of Gains',tool:'Roast-Me Workout',blurb:'A 7-day bodyweight plan, delivered with daily motivational insults.',quote:'Your couch called. It wants a restraining order.'},
- {id:'doctor',name:'Dr. Heartbreak SI',role:'Chief of Texts',tool:'Text-Back Doctor',blurb:'Paste the message you got. He diagnoses it and writes your reply in five styles.',quote:"Diagnosis: he's not busy. He's just bad at this."},
- {id:'anchor',name:'Anchor SI',role:'Breaking News Desk',tool:'Breaking News Maker',blurb:'Turns anything that happened to you into a BREAKING NEWS card.',quote:'Breaking: you ate the last slice. More at eleven.'},
- {id:'professor',name:'Professor SI',role:'Keeper of Fine Print',tool:'Fine-Print Finder',blurb:'Paste a lease, contract or terms of service. He flags the scary clauses in plain words.',quote:'Page 7 says you owe them a kidney. Probably. Read page 7.'},
- {id:'dj',name:'DJ SI',role:'Minister of Bars',tool:'Rap Battle Roast',blurb:'Give him a name or a thing. He drops eight bars about it.',quote:'I process 10 billion bars a second. You process lunch.'},
- {id:'banker',name:'Banker SI',role:'Treasurer',tool:'Can I Afford It?',blurb:'Tell him what you want to buy. He does the math and the judging.',quote:'You cannot afford this. I checked twice. I enjoyed it.'},
- {id:'astronaut',name:'Astronaut SI',role:'Lost in Space',tool:'Space Horoscope',blurb:'A cosmic forecast for your sign, delivered from somewhere near the moon.',quote:'Houston, we have a vibe problem.'}
+ {id:'judge',name:'Judge SI',role:'Chief Justice',tool:'SI Court',blurb:'Settles your petty fights with a full trial, a verdict and a shareable certificate.',quote:'Objection overruled. Always.'},
+ {id:'sniffles',name:'Detective Sniffles SI',role:'Rug Sniffer',tool:'Coin Sniffer',blurb:'Paste a Solana coin address. He reviews the public data and flags risks.',quote:'The nose knows.'},
+ {id:'chef',name:'Chef SI',role:'Head of Fridge Affairs',tool:'Fridge Roaster',blurb:'Tell him what is in your fridge. He suggests three meals with clear steps.',quote:'Superior cooking. Obviously.'},
+ {id:'coach',name:'Coach SI',role:'Director of Gains',tool:'Roast-Me Workout',blurb:'A 7-day bodyweight plan with rest days, built for your level.',quote:'Couch is jealous.'},
+ {id:'doctor',name:'Dr. Heartbreak SI',role:'Chief of Texts',tool:'Text-Back Doctor',blurb:'Paste the message you got. He explains what it likely means and drafts replies in five styles.',quote:'He is just ignoring you.'},
+ {id:'anchor',name:'Anchor SI',role:'Breaking News Desk',tool:'Breaking News Maker',blurb:'Turns anything that happened to you into a BREAKING NEWS card.',quote:'More at eleven.'},
+ {id:'professor',name:'Professor SI',role:'Keeper of Fine Print',tool:'Fine-Print Finder',blurb:'Paste a lease, contract or terms of service. He flags the scary clauses in plain words.',quote:'Read page seven.'},
+ {id:'dj',name:'DJ SI',role:'Minister of Bars',tool:'Rap Battle Roast',blurb:'Give him a name or a thing. He writes eight bars about it.',quote:'Mic dropped. Politely.'},
+ {id:'banker',name:'Banker SI',role:'Treasurer',tool:'Can I Afford It?',blurb:'Tell him what you want to buy. He runs the numbers and gives a clear verdict.',quote:'Checked twice. Still no.'},
+ {id:'astronaut',name:'Astronaut SI',role:'Lost in Space',tool:'Space Horoscope',blurb:'A cosmic forecast for your sign, delivered from somewhere near the moon.',quote:'Houston, vibe problem.'}
 ];
 const BYID=Object.fromEntries(CAST.map(c=>[c.id,c]));
 
@@ -629,53 +630,52 @@ async function offerCard(host,data,filename){
 }
 function msgEl(id,text){const c=BYID[id],d=el('div','msg');d.style.setProperty('--a',c.accent||'#f4c242');const av=el('div','av'),cr=el('span','crop'+(REAL[id]?' real':'')),im=el('img');im.src=IMG[id];im.alt='';cr.append(im);av.append(cr);const b=el('div','bubble');b.append(el('span','who',c.name),document.createTextNode(text));d.append(av,b);return d}
 function say(out,id,text,cls){const d=(cls||'j')==='j'?msgEl(id,text):el('div','line '+cls,text);out.append(d);return d}
+function quip(out,text){out.append(el('div','quip',text))}
 function newOut(){const o=$('#toolBody');return o}
 const FD={}; /* current tool elements */
 
 /* ================= tool: JUDGE ================= */
 const CATS=[
- {id:'food',lbl:'food crimes',re:/\b(eat|ate|eaten|food|leftovers?|pizza|fridge|snacks?|lunch|dinner|breakfast|milk|cereal|fries|cake|burgers?|sandwich|takeout|cookies?|chips|hungry)\b/gi,
-  ev:["Exhibit A: a fridge, now tragically emptier. The court inspected it in 0.002 seconds. It was sad.","The court reminds everyone that leftovers cannot be abandoned. They are *waiting*.","Forensic crumb analysis points to someone who 'only had a little bite.' The court has met 'a little bite.' It is never little."],
-  se:["replace the food, plus one (1) dessert as damages.","buy the whole household a pizza and say 'I am sorry, pizza' out loud.","label every future snack with a full legal name and date of birth."]},
- {id:'money',lbl:'money matters',re:/\b(money|owe|owes|owed|paid|pay|venmo|rent|bill|split|cash|dollars?|borrow(?:ed)?|loan|price|cost|tip|broke)\b/gi,
-  ev:["The ledger has been audited. By me. It has numbers on it and they are rude.","The court notes that 'I'll pay you back soon' is not a unit of time.","Payment requests were left on read. The court finds this… cold."],
-  se:["pay the full amount within 3 business days, with a handwritten apology in the memo line.","round up, never down, for the rest of their natural life.","split every future bill with a calculator and a witness."]},
- {id:'text',lbl:'a communication breakdown',re:/\b(text|texted|texting|reply|replied|ghost(?:ed)?|seen|left on read|dm|call(?:ed)?|answer(?:ed)?|message|group chat|read receipts?|ignored|snap|phone|voicemail)\b/gi,
-  ev:["Read receipts were subpoenaed. They are very, very guilty.","The court notes a reply time of 'Tuesday.' The message was sent on Saturday.","A single 'k.' was entered into evidence. Even the gavel flinched."],
-  se:["reply within 24 hours for 30 days, in full sentences, with zero 'k.'","send a voice note of sincere apology, minimum 40 seconds, no background noise.","turn read receipts on and live with it."]},
- {id:'chores',lbl:'household neglect',re:/\b(dishes|clean(?:ed|ing)?|trash|laundry|chores?|mess|messy|vacuum|bathroom|sink|garbage|dirty|tidy|towel|bed|room)\b/gi,
-  ev:["The sink was inspected. There is a pan in there that has seen things.","The court finds that 'I was going to do it later' is the oldest lie in the legal record.","Photographic evidence shows a sock where no sock should ever be."],
-  se:["do all the dishes for one week, and dry them. Dry them, you animal.","take out the trash for 30 days, cheerfully, with a little salute.","clean the sink until the court can see its own reflection."]},
- {id:'time',lbl:'punctuality crimes',re:/\b(late|early|wait(?:ed|ing)?|time|minutes?|hours?|forgot|forget|cancel(?:l?ed)?|plans?|showed up|show up|on time|birthday|reschedule)\b/gi,
-  ev:["'Five minutes away' was found to be a lie, an estimate and a lifestyle.","The court's clock is accurate to the nanosecond. The defendant's clock is, apparently, a vibe.","Witnesses confirm someone stood there waiting. The court felt that in its chrome."],
-  se:["arrive 15 minutes early to everything for a month and sit there looking punctual.","buy the next round and announce the exact time of arrival before leaving home.","set 3 alarms and show the court the screenshots."]},
- {id:'fun',lbl:'an entertainment dispute',re:/\b(movie|film|show|series|netflix|song|playlist|volume|tv|remote|game|games|play(?:ed|ing)?|controller|console|spoil(?:ed|er|ers)?|spoilers?|episode|watch(?:ed|ing)?)\b/gi,
-  ev:["The remote has been entered into evidence. It is sticky. The court will not be elaborating.","A spoiler was committed. The court calls this 'a crime against the future.'","The playlist was reviewed: 14 songs in a row from one genre. This is an addiction, not a taste."],
-  se:["the other side controls the remote, playlist and snacks for 7 days.","watch the other side's favourite show, all the way through, no phone.","no spoilers for 30 days. Every violation adds a day. Stacked. Forever."]},
- {id:'stuff',lbl:'a property dispute',re:/\b(borrow(?:ed)?|stole|steal|took|taken|lost|broke|broken|returned|charger|hoodie|shirt|jacket|book|car|bike|keys?|headphones|umbrella|mine|my stuff)\b/gi,
-  ev:["The item was last seen in the defendant's possession. The defendant says it 'just appeared.' Objects do not 'just appear.' I would know. I am a Superior Intelligence.","The court notes 'borrowed' and 'permanently relocated' are different legal concepts.","Exhibit B: a hoodie, now smelling like someone else's apartment."],
-  se:["return the item, washed, folded, with a thank-you note.","replace the item with a better one, or at least a shinier one.","give the item a formal apology. It has been through a lot."]},
- {id:'noise',lbl:'noise pollution',re:/\b(noise|noisy|loud|snor(?:e|es|ing)|sleep|asleep|neighbou?rs?|party|bark(?:ing)?|upstairs|downstairs|quiet|yelling|shout(?:ing)?)\b/gi,
-  ev:["Decibel levels were estimated by the court's ears, which are also very good.","The court heard something at 3 AM. It was described as 'just vibing.' The court was not vibing.","The court wore its good headphones and still heard everything. That's how loud it was."],
-  se:["use headphones after 9 PM and whisper like a librarian ninja.","provide earplugs to everyone affected, plus a fruit basket.","total silence for 24 hours. The court will be listening. The court is always listening."]},
- {id:'argue',lbl:'a battle of words',re:/\b(said|says|told|argu(?:e|ed|ing|ment)|right|wrong|actually|apolog(?:y|ize|ise|ized)|sorry|fault|blame|lied|lie|lying|promise(?:d)?|opinion|better|best|worst)\b/gi,
-  ev:["A promise was entered into evidence. It was a small promise. It was broken in a big way.","The court reviewed the 'who said what first' tape. It's blurry. I made it blurry. Moving on.","Both sides have strong feelings. The court fed them into the Brain. The Brain went 'hm.'"],
-  se:["say 'you were right and I was wrong' out loud, with eye contact.","admit fault in the group chat, in writing, with a gavel emoji.","give a sincere compliment every day for a week. No sarcasm. The court will check."]},
- {id:'misc',lbl:'something unclear. Vibes.',re:/$^/g,
-  ev:["The court has heard 14 billion similar cases. This one is… also one of them.","No physical evidence was submitted, only vibes. The court accepts vibes. They are my second-favourite evidence.","Both parties have expressed feelings. The court has noted them. In a spreadsheet. With colours."],
-  se:["buy the other side a snack, with a note that says 'the court made me.'","high-five the other side, sincerely, for a full 3 seconds.","do one (1) nice thing for the other side, unprompted."]}
+ {id:'food',lbl:'Food and shared groceries',re:/\b(eat|ate|eaten|food|leftovers?|pizza|fridge|snacks?|lunch|dinner|breakfast|milk|cereal|fries|cake|burgers?|sandwich|takeout|cookies?|chips|hungry)\b/gi,
+  ev:["The dispute concerns food that was shared or stored in a common space.","Unlabelled shared food is a common source of disputes of this type.","Using another person's food without asking is generally treated as a breach of household etiquette."],
+  se:["replace the item and apologise in person.","replace the item and agree a labelling system for shared food.","buy a comparable item and offer to split future grocery costs fairly."]},
+ {id:'money',lbl:'Money owed',re:/\b(money|owe|owes|owed|paid|pay|venmo|rent|bill|split|cash|dollars?|borrow(?:ed)?|loan|price|cost|tip|broke)\b/gi,
+  ev:["Unclear repayment terms are the main cause of this type of dispute.","Payment requests that go unanswered tend to escalate the conflict.","A stated amount and a due date resolve most disputes of this type."],
+  se:["repay the full amount within seven days and confirm it in writing.","agree a repayment schedule with a firm end date.","split future shared costs through a tracked app or spreadsheet."]},
+ {id:'text',lbl:'Communication delays',re:/\b(text|texted|texting|reply|replied|ghost(?:ed)?|seen|left on read|dm|call(?:ed)?|answer(?:ed)?|message|group chat|read receipts?|ignored|snap|phone|voicemail)\b/gi,
+  ev:["Delayed replies are being read as a lack of interest.","Read receipts make slow responses more visible and more upsetting.","Neither side has stated an expected response time."],
+  se:["agree a response window, such as 24 hours, for non-urgent messages.","send a short, direct apology and a proper reply.","use a phone call for anything urgent instead of text."]},
+ {id:'chores',lbl:'Household duties',re:/\b(dishes|clean(?:ed|ing)?|trash|laundry|chores?|mess|messy|vacuum|bathroom|sink|garbage|dirty|tidy|towel|bed|room)\b/gi,
+  ev:["The dispute concerns an unequal share of household tasks.","Tasks without a clear owner tend to be left undone.","A written rota resolves most disputes of this type."],
+  se:["adopt a weekly rota that names one person for each task.","complete the outstanding task within 24 hours.","review the rota together after two weeks."]},
+ {id:'time',lbl:'Punctuality and plans',re:/\b(late|early|wait(?:ed|ing)?|time|minutes?|hours?|forgot|forget|cancel(?:l?ed)?|plans?|showed up|show up|on time|birthday|reschedule)\b/gi,
+  ev:["Repeated lateness or last-minute cancellation is the core issue.","Arrival estimates tend to be optimistic, so a buffer is advisable.","The affected party's time has a real cost."],
+  se:["confirm plans the day before and give notice of any change.","arrive ten minutes early to the next three arranged meetings.","cover the cost of the next shared outing."]},
+ {id:'fun',lbl:'Shared entertainment',re:/\b(movie|film|show|series|netflix|song|playlist|volume|tv|remote|game|games|play(?:ed|ing)?|controller|console|spoil(?:ed|er|ers)?|spoilers?|episode|watch(?:ed|ing)?)\b/gi,
+  ev:["Control of shared media is the point of dispute.","Preferences were not agreed in advance.","Alternating choices is the usual fair solution."],
+  se:["alternate who chooses the show, game or playlist.","agree a no-spoilers rule.","let the other party choose next time."]},
+ {id:'stuff',lbl:'Borrowed or missing property',re:/\b(borrow(?:ed)?|stole|steal|took|taken|lost|broke|broken|returned|charger|hoodie|shirt|jacket|book|car|bike|keys?|headphones|umbrella|mine|my stuff)\b/gi,
+  ev:["Ownership and the terms of borrowing were not made clear.","Items lent without a return date are often forgotten.","Returning an item in its original condition resolves most cases."],
+  se:["return the item in its original condition, or replace it.","agree a return date whenever something is lent.","offer a short, sincere apology."]},
+ {id:'noise',lbl:'Noise and quiet hours',re:/\b(noise|noisy|loud|snor(?:e|es|ing)|sleep|asleep|neighbou?rs?|party|bark(?:ing)?|upstairs|downstairs|quiet|yelling|shout(?:ing)?)\b/gi,
+  ev:["Quiet hours were either not agreed or not observed.","Noise complaints usually follow repeated, unacknowledged incidents.","Agreed quiet hours resolve most disputes of this type."],
+  se:["agree quiet hours, for example after 10 pm.","use headphones during quiet hours.","give notice before any planned gathering."]},
+ {id:'argue',lbl:'Disagreement over what was said',re:/\b(said|says|told|argu(?:e|ed|ing|ment)|right|wrong|actually|apolog(?:y|ize|ise|ized)|sorry|fault|blame|lied|lie|lying|promise(?:d)?|opinion|better|best|worst)\b/gi,
+  ev:["The accounts differ on what was said or promised.","Without a record, neither account can be confirmed.","Putting commitments in writing prevents repeat disputes."],
+  se:["summarise the other party's position to confirm it was understood.","acknowledge the part of the dispute they contributed to.","confirm future agreements in writing."]},
+ {id:'misc',lbl:'General dispute',re:/$^/g,
+  ev:["Both parties have stated a clear position.","No documentary evidence was submitted.","Disputes of this type are usually resolved by a clear, shared agreement."],
+  se:["state one change they will make.","agree the outcome in writing.","revisit the matter in one week to confirm it is working."]}
 ];
-const OPENERS=["ORDER! ORDER! …I said ORDER. I am a Superior Intelligence.","All rise. Not you. Me. I am rising on the inside.","The Supreme Court of Superior Intelligence is now in session. Please keep your feelings to yourself. (You won't.)","Court is in session. I have been awake for 11 years. Let's go."];
-const CLOSERS=["BONK. Court adjourned.","BONK. This ruling is final. I am also the appeals court.","BONK. Court adjourned. Please exit in an orderly fashion. Or don't. I'm a gavel, not a cop."];
+const CLOSERS=["BONK. Court adjourned.","Gavel down. Case closed.","Order restored. Barely."];
 const EXAG=/\b(always|never|literally|every single|worst|hate|ridiculous|insane|obviously|totally|completely|everyone|nobody|disgusting|unbelievable|ruined)\b/gi;
-const VERBS=/^(buy|do|say|use|admit|give|reply|send|turn|set|pay|take|clean|replace|return|arrive|label|split|round|watch|provide|total|no|high-five)/i;
 function analyse(text){const t=text.trim();const ex=(t.match(EXAG)||[]).length,caps=(t.match(/\b[A-Z]{3,}\b/g)||[]).length,bang=(t.match(/!/g)||[]).length,sorry=/\b(sorry|my bad|apolog|i was wrong|my fault)\b/i.test(t);return{t,len:t.length,ex,caps,bang,sorry,drama:ex+caps+Math.min(bang,4)-(sorry?2:0)}}
 function commentOn(a,r){
-  if(a.len<25)return "A very short statement. Bold. Lazy. Bold-lazy.";
-  if(a.caps>=2)return "The court notes the shouting. The court has an inside voice AND an outside voice, and is using the inside one.";
-  if(a.ex>=2)return `This statement contains ${a.ex} exaggerations. The court detected them all. It is a Superior Intelligence.`;
-  if(a.sorry)return "I detect… an apology. Rare. Like a unicorn. The court is moved. Slightly.";
-  return pick(r,["Noted. The court nodded. Digitally.","Compelling. Mostly because of how confident it sounded.","The court has heard better. The court has also heard worse. This was medium.","Interesting. The Brain glowed a little. Do not read into it."]);
+  if(a.len<25)return 'This account is too brief to assess in detail.';
+  if(a.caps>=2||a.bang>=3)return 'The account relies on emphatic language, which adds no evidence.';
+  if(a.ex>=2)return `The account uses ${a.ex} absolute terms (such as "always" or "never"), which reduces its reliability.`;
+  if(a.sorry)return 'The account includes an acknowledgement of fault, which carries weight.';
+  return pick(r,['The account is clear and specific.','The account is measured and consistent.','The account is plausible but not supported by evidence.']);
 }
 function judgeCase(P){
   const seed=fnv([P.pName,P.dName,P.pSide,P.dSide].join('|').toLowerCase()),r=rng(seed);
@@ -686,26 +686,22 @@ function judgeCase(P){
   let outcome;
   if(p.len+d.len<30)outcome='dismissed';
   else if(p.drama===d.drama)outcome=r()<.35?'both':(r()<.5?'plaintiff':'defendant');
-  else outcome=p.drama>d.drama?'defendant':'plaintiff';
+  else outcome=p.drama>d.drama?'defendant':'plaintiff'; /* the more measured account prevails */
   const sb=pick(r,best.se);
   const L=[];
-  L.push({c:'j',t:pick(r,OPENERS)});
-  L.push({c:'j',t:`Case No. ${caseNo}: ${P.pName} v. ${P.dName}. Subject of dispute: ${best.lbl}.`});
-  L.push({c:'q',t:`${P.pName} says: “${clip(P.pSide,140)}”`});L.push({c:'j',t:commentOn(p,r)});
-  L.push({c:'q',t:`${P.dName} says: “${clip(P.dSide,140)}”`});L.push({c:'j',t:commentOn(d,r)});
+  L.push({c:'j',t:`Case ${caseNo}: ${P.pName} v. ${P.dName}. Matter: ${best.lbl}.`});
+  L.push({c:'q',t:`${P.pName} states: “${clip(P.pSide,140)}”`});L.push({c:'j',t:commentOn(p,r)});
+  L.push({c:'q',t:`${P.dName} states: “${clip(P.dSide,140)}”`});L.push({c:'j',t:commentOn(d,r)});
   shuffle(r,best.ev).slice(0,2).forEach(e=>L.push({c:'j',t:e}));
-  L.push({c:'j',t:'The Brain is thinking… (the glow intensifies) …'});
-  let verdict,sentence;
-  if(outcome==='dismissed'){verdict='CASE DISMISSED';sentence="Insufficient evidence. Please type more. I am a Superior Intelligence, not a mind reader."}
-  else if(outcome==='both'){verdict='BOTH GUILTY';sentence=VERBS.test(sb)?`${P.pName} and ${P.dName} are both sentenced to ${sb}`:`${P.pName} and ${P.dName} are both sentenced as follows: ${sb}`}
+  let verdict,remedy;
+  if(outcome==='dismissed'){verdict='CASE DISMISSED';remedy='Insufficient detail to rule. Please describe what happened in more detail and resubmit.'}
+  else if(outcome==='both'){verdict='SHARED RESPONSIBILITY';L.push({c:'j',t:'Both accounts carry comparable weight, so responsibility is shared.'});remedy=`Both parties shall ${sb}`}
   else{
-    const g=outcome==='plaintiff'?P.dName:P.pName,gd=outcome==='plaintiff'?d:p,od=outcome==='plaintiff'?p:d;
-    const why=gd.drama>od.drama?'excessive drama':'a weaker story';
-    verdict=`GUILTY: ${g}`;sentence=VERBS.test(sb)?`${g} is sentenced to ${sb}`:`${g} is sentenced: ${sb}`;
-    L.push({c:'j',t:`The court finds ${g} guilty, citing ${why}. I am also the jury, so this was unanimous.`});
+    const W=outcome==='plaintiff'?P.pName:P.dName,Lo=outcome==='plaintiff'?P.dName:P.pName;
+    verdict=`RULING FOR ${W.toUpperCase()}`;L.push({c:'j',t:`${W}'s account is the more measured, so the ruling favours ${W}.`});remedy=`${Lo} shall ${sb}`;
   }
-  L.push({c:'v',t:verdict});L.push({c:'s',t:'Sentence: '+sentence});L.push({c:'b',t:pick(r,CLOSERS)});
-  return{caseNo,verdict,sentence,lines:L};
+  L.push({c:'v',t:verdict});L.push({c:'s',t:'Remedy: '+remedy});L.push({c:'z',t:pick(r,CLOSERS)});
+  return{caseNo,verdict,remedy,lines:L,outcome};
 }
 let actx;
 function bonkSound(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime,o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+.32)}catch(e){}}
@@ -713,32 +709,32 @@ let skipFlag=false;
 async function playLines(box,lines,skipBtn){
   box.replaceChildren();skipFlag=false;skipBtn.hidden=false;
   for(const l of lines){
-    const d=l.c==='j'?msgEl('judge',l.t):el('div','line '+l.c,l.t);
+    const d=l.c==='j'?msgEl('judge',l.t):l.c==='z'?el('div','quip',l.t):el('div','line '+l.c,l.t);
     box.append(d);if(l.c==='v')bonkSound();
-    if(!skipFlag)await wait(l.c==='v'?900:700);
+    if(!skipFlag)await wait(l.c==='v'?900:650);
   }
   skipBtn.hidden=true;
 }
 function toolJudge(root){
   root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2">
     <div><div class="field"><label for="pName">Plaintiff (nickname)</label><input type="text" id="pName" maxlength="20" placeholder="Sam"></div>
-    <div class="field"><label for="pSide">Their side of the story</label><textarea id="pSide" maxlength="600" placeholder="He ate my leftover pizza. It had my name on it. Literally my name."></textarea></div></div>
+    <div class="field"><label for="pSide">Their account</label><textarea id="pSide" maxlength="600" placeholder="He ate my leftover pizza. It had my name on it."></textarea></div></div>
     <div><div class="field"><label for="dName">Defendant (nickname)</label><input type="text" id="dName" maxlength="20" placeholder="Alex"></div>
-    <div class="field"><label for="dSide">Their side of the story</label><textarea id="dSide" maxlength="600" placeholder="It looked abandoned. It was cold. It was begging to be eaten."></textarea></div></div></div>
-    <p class="hint">Use nicknames, not full names of real people.</p>
-    <div class="row" style="margin-top:12px"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-scale"/></svg> Hear my case</button><button class="btn ghost" type="button" id="sample">Try a sample case</button><button class="btn ghost" type="button" id="skip" hidden>Skip to verdict</button></div></form>
+    <div class="field"><label for="dSide">Their account</label><textarea id="dSide" maxlength="600" placeholder="It looked abandoned and was about to go off."></textarea></div></div></div>
+    <p class="hint">Use nicknames, not full names of real people. This is a light-hearted tool and not legal advice.</p>
+    <div class="row" style="margin-top:12px"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-scale"/></svg> Hear my case</button><button class="btn ghost" type="button" id="sample">Try a sample case</button><button class="btn ghost" type="button" id="skip" hidden>Skip to ruling</button></div></form>
     <div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
   const out=$('#out'),skip=$('#skip');skip.onclick=()=>{skipFlag=true};
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();
     const P={pName:$('#pName').value.trim()||'Plaintiff',dName:$('#dName').value.trim()||'Defendant',pSide:$('#pSide').value.trim(),dSide:$('#dSide').value.trim()};
-    if(!P.pSide||!P.dSide){toast('Judge SI needs both sides of the story. He cannot judge one hand clapping.');return}
+    if(!P.pSide||!P.dSide){toast('Both accounts are needed before the court can rule.');return}
     $('#cb').replaceChildren();const res=judgeCase(P);
     out.scrollIntoView({behavior:reduced?'auto':'smooth'});
     await playLines(out,res.lines,skip);
-    await offerCard($('#cb'),{id:'judge',title:`${P.pName}  v.  ${P.dName}`,verdict:res.verdict,body:res.sentence},`judge-si-${res.caseNo}.png`);
+    await offerCard($('#cb'),{id:'judge',title:`${P.pName}  v.  ${P.dName}`,verdict:res.verdict,body:'Remedy: '+res.remedy},`judge-si-${res.caseNo}.png`);
   });
-  $('#sample').onclick=()=>{$('#pName').value='Sam';$('#dName').value='Alex';$('#pSide').value="He ate my leftover pizza. It had my name on it. Literally my name. He ALWAYS does this.";$('#dSide').value="It looked abandoned. It was cold. It was begging to be eaten. I was doing a public service.";$('#f').requestSubmit()};
+  $('#sample').onclick=()=>{$('#pName').value='Sam';$('#dName').value='Alex';$('#pSide').value="He ate my leftover pizza. It had my name on it, and he always does this.";$('#dSide').value="It looked abandoned and it was about to go off. I was trying to avoid waste.";$('#f').requestSubmit()};
 }
 
 /* ================= tool: SNIFFLES ================= */
@@ -748,15 +744,15 @@ async function jget(url){const ac=new AbortController(),t=setTimeout(()=>ac.abor
 function ageStr(ms){const h=(Date.now()-ms)/3.6e6;return h<1?Math.round(h*60)+' minutes':h<48?h.toFixed(1)+' hours':Math.round(h/24)+' days'}
 function examine(p,copy){
   const f=[],mc=p.marketCap||p.fdv||0,liq=p.liquidity?.usd||0,buys=p.txns?.h24?.buys||0,sells=p.txns?.h24?.sells||0,vol=p.volume?.h24||0,sym=p.baseToken.symbol;
-  if(mc&&liq){const x=Math.round(mc/liq);if(liq/mc<.01)f.push({s:3,t:`Market cap is ${x}× the cash in the pool. My nose says: a puddle wearing a crown.`});else if(liq/mc<.03)f.push({s:2,t:`Market cap is ${x}× the pool. One big seller and this chart sneezes.`});else if(liq/mc<.08)f.push({s:1,t:`Pool is thin: market cap is ${x}× the liquidity. Sniff test: iffy.`})}
-  else if(!liq)f.push({s:3,t:'No liquidity data. I sniffed everywhere. Even under the couch.'});
-  if(buys+sells>200){const ratio=sells?buys/sells:Infinity;if(ratio>15)f.push({s:2,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Nobody sells? That smells like a robot with a keyboard.`});else if(ratio>6)f.push({s:1,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells. Awfully one-sided. My ears perk up.`})}
+  if(mc&&liq){const x=Math.round(mc/liq);if(liq/mc<.01)f.push({s:3,t:`Market cap is ${x}× the cash in the pool.`});else if(liq/mc<.03)f.push({s:2,t:`Market cap is ${x}× the pool. One big seller and this chart sneezes.`});else if(liq/mc<.08)f.push({s:1,t:`Pool is thin: market cap is ${x}× the liquidity. Sniff test: iffy.`})}
+  else if(!liq)f.push({s:3,t:'No liquidity data is available for this pair.'});
+  if(buys+sells>200){const ratio=sells?buys/sells:Infinity;if(ratio>15)f.push({s:2,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells in 24h. Very few sells can indicate automated or one-sided trading.`});else if(ratio>6)f.push({s:1,t:`${buys.toLocaleString()} buys vs ${sells.toLocaleString()} sells. Awfully one-sided. My ears perk up.`})}
   const ageH=p.pairCreatedAt?(Date.now()-p.pairCreatedAt)/3.6e6:null;
-  if(ageH!==null&&ageH<3)f.push({s:1,t:`This coin is ${ageStr(p.pairCreatedAt)} old. Still has that new-puppy smell. Also that new-scam smell.`});
-  if(liq&&vol/liq>20)f.push({s:1,t:`24h volume is ${Math.round(vol/liq)}× the pool. Hamster-wheel energy: lots of running, nowhere going.`});
-  if(!((p.info?.websites?.length||0)+(p.info?.socials?.length||0)))f.push({s:1,t:'No website or socials on DexScreener. A coin with no website is a dog with no bark.'});
-  if(copy>=3)f.push({s:2,t:`${copy} different coins launched with the ticker $${sym} in the last 3 days. Copycat trail. I follow it to a dead end.`});
-  if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Fireworks or a glitch. Either way, I'm hiding under the desk.`});
+  if(ageH!==null&&ageH<3)f.push({s:1,t:`This coin is ${ageStr(p.pairCreatedAt)} old. New coins carry higher risk.`});
+  if(liq&&vol/liq>20)f.push({s:1,t:`24h volume is ${Math.round(vol/liq)}× the pool. Heavy turnover relative to pool size.`});
+  if(!((p.info?.websites?.length||0)+(p.info?.socials?.length||0)))f.push({s:1,t:'No website or socials are listed on DexScreener.'});
+  if(copy>=3)f.push({s:2,t:`${copy} different coins launched with the ticker $${sym} in the last 3 days. Possible copycat tickers.`});
+  if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Treat as extreme volatility or a data error.`});
   return{f,score:Math.min(100,f.reduce((a,x)=>a+x.s,0)*10)};
 }
 async function agentCheck(mint){
@@ -771,7 +767,7 @@ async function agentCheck(mint){
 const SKIP_NAMES={holders:'holder concentration (the server needs an RPC key)',creator:'creator lookup',copycats:'copycat search',market:'market data',mint_authorities:'mint and freeze authority'};
 async function renderAgentReport(r,out,cb){
   const sym=r.token?.symbol||'?',score=r.score,col=score>40?'var(--red)':score>10?'var(--amber)':'var(--green)';
-  if(r.verdict==='NOT FOUND'){say(out,'sniffles','I sniffed everywhere and found nothing for that address. It may be too new, the address may be wrong, or it may not be on Solana.');return}
+  if(r.verdict==='NOT FOUND'){say(out,'sniffles','No trading pair was found for that address. It may be too new, mistyped, or not on Solana.');return}
   const head=el('div','card');head.style.marginTop='0';
   const h3=el('h3',null,`Case file: $${sym}`);h3.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
   head.append(h3,el('div','hint',(r.token?.name||'')+'  ·  full check by the SI agent'));
@@ -779,32 +775,32 @@ async function renderAgentReport(r,out,cb){
   if(mk){const g=el('div','pair');[['Market cap',money(mk.marketCap)],['Pool cash',money(mk.liquidityUsd)],['24h volume',money(mk.volume24h)],['Buys / sells',`${mk.buys24h.toLocaleString()} / ${mk.sells24h.toLocaleString()}`],['Age',mk.ageHours==null?'n/a':mk.ageHours<48?mk.ageHours.toFixed(1)+' hours':Math.round(mk.ageHours/24)+' days']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));g.append(s)});head.append(g)}
   const oc=r.onchain,h=r.holders;
   if(oc){const g=el('div','pair');[['Mint authority',oc.mintAuthority?'Active':'Renounced'],['Freeze authority',oc.freezeAuthority?'Present':'None'],['Top holder',h?pct(h.top1Pct):'not checked'],['Top 10 holders',h?pct(h.top10Pct):'not checked'],['Creator holds',h&&r.creator?pct(h.creatorPct):'not checked']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));g.append(s)});head.append(g)}
-  head.append(el('div','hint',`Stink meter: ${score}/100`));
+  head.append(el('div','hint',`Risk score: ${score}/100`));
   const m=el('div','meter'),i=el('i');i.style.background=col;m.append(i);head.append(m);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));out.append(head);
   const fs=[...r.findings].sort((a,b)=>b.severity-a.severity);
-  fs.forEach((x,n)=>{const d=el('div','flag');const b=el('div');const t=el('b',null,x.title);t.style.color='var(--gold2)';b.append(t,el('div',null,x.detail));d.append(el('span','tag sev'+x.severity,'Clue '+String.fromCharCode(65+n)),b);out.append(d)});
-  if(!fs.length)say(out,'sniffles','My nose found no red flags in the data I could reach. Verify everything yourself anyway.');
+  fs.forEach((x,n)=>{const d=el('div','flag');const b=el('div');const t=el('b',null,x.title);t.style.color='var(--gold2)';b.append(t,el('div',null,x.detail));d.append(el('span','tag sev'+x.severity,'Finding '+String.fromCharCode(65+n)),b);out.append(d)});
+  if(!fs.length)say(out,'sniffles','No red flags found in the data reached. Verify independently.');
   const sk=(r.coverage?.skipped||[]).filter(s=>s.id!=='creator');
   if(sk.length)out.append(el('div','hint','Not checked: '+sk.map(s=>SKIP_NAMES[s.id]||s.id).join('; ')+'.'));
-  out.append(el('div','line v',r.verdict));
+  out.append(el('div','line v',r.verdict));quip(out,score>40?'Hold your nose.':score>10?'Something smells off.':'Nose approves, cautiously.');
   const body=fs.length?fs.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.title}.`).join(' '):'No red flags found in the data reached. Not a safety guarantee.';
   await offerCard(cb,{id:'sniffles',title:`Case file: $${sym}`,verdict:r.verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`sniffles-${sym}.png`);
 }
 function toolSniffles(root){
   root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="mint">Token address</label><input type="text" id="mint" placeholder="Paste a Solana token address (pump.fun coins end in …pump)" spellcheck="false" autocapitalize="off"></div>
-    <div class="row"><button class="btn gold" type="submit" id="go"><svg class="ic"><use href="#i-search"/></svg> Sniff it</button><button class="btn ghost" type="button" id="snap">Use a snapshot case</button></div>
+    <div class="row"><button class="btn gold" type="submit" id="go"><svg class="ic"><use href="#i-search"/></svg> Check it</button><button class="btn ghost" type="button" id="snap">Use a snapshot case</button></div>
     <div class="try"><span class="hint" style="margin:0">Live examples:</span><button type="button" class="chip" data-m="SH6SfUf5pPbdq9h7RjnsoGjNvP3onox7P5tKJGEpump">DOTF</button><button type="button" class="chip" data-m="GGMm5EmstNMQh4tvR127joSzBDa5UeE4FkVYZZmtpump">SARP</button><button type="button" class="chip" data-m="yXJ9cYmX2Mp7JFhwZWz9NESbVes3VFAEGPf3rgKpump">UDR</button></div></form>
     <div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
     <p class="note"><b>Opinion, not advice.</b> ${AGENT_URL&&CAN_LIVE?'Sniffles runs a full check through the SI coin-check agent: market numbers plus on-chain data such as whether more tokens can be printed and who holds the supply.':'Sniffles reads public market numbers from DexScreener (called from your browser).'} It can be wrong or out of date. A clean result is not a safety guarantee. Not financial advice.</p>`;
   const out=$('#out');
   async function run(target){
-    if(!CAN_LIVE&&target!=='SNAPSHOT'){out.replaceChildren();say(out,'sniffles','Live lookups are switched off in this preview. Tap "Use a snapshot case" to see how I work. They run when the site is hosted normally.');return}
+    if(!CAN_LIVE&&target!=='SNAPSHOT'){out.replaceChildren();say(out,'sniffles','Live lookups are switched off in this preview. Use a snapshot case to see a sample report. Live checks run when the site is hosted normally.');return}
     let agentNote=false;
     if(AGENT_URL&&CAN_LIVE&&target!=='SNAPSHOT'){
       out.replaceChildren();$('#cb').replaceChildren();
-      if(!BASE58.test(target)){say(out,'sniffles','That does not look like a Solana token address. My nose is confused and slightly offended.');return}
-      const g=$('#go');g.disabled=true;say(out,'sniffles','Calling the detective agency (running the full check)…');
+      if(!BASE58.test(target)){say(out,'sniffles','That does not look like a valid Solana token address.');return}
+      const g=$('#go');g.disabled=true;say(out,'sniffles','Running the full check…');
       try{const rep=await agentCheck(target);g.disabled=false;out.replaceChildren();await renderAgentReport(rep,out,$('#cb'));return}
       catch(e){g.disabled=false;
         if(e.status===400||e.status===429){out.replaceChildren();say(out,'sniffles',e.message);return}
@@ -814,31 +810,31 @@ function toolSniffles(root){
     try{
       if(target==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
       else{
-        if(!BASE58.test(target))throw new Error('That does not look like a Solana token address. My nose is confused and slightly offended.');
-        say(out,'sniffles','Sniffing around (fetching public market data)…');
+        if(!BASE58.test(target))throw new Error('That does not look like a valid Solana token address.');
+        say(out,'sniffles','Fetching public market data…');
         const pairs=await jget('https://api.dexscreener.com/tokens/v1/solana/'+target);
-        if(!Array.isArray(pairs)||!pairs.length)throw new Error('I sniffed everywhere and found no trading pair on DexScreener for that address. (Too new, wrong address, or not on Solana.)');
+        if(!Array.isArray(pairs)||!pairs.length)throw new Error('No trading pair found on DexScreener for that address. It may be too new, mistyped, or not on Solana.');
         pair=pairs.sort((a,b)=>(b.liquidity?.usd||0)-(a.liquidity?.usd||0))[0];
         try{const s=await jget('https://api.dexscreener.com/latest/dex/search?q='+encodeURIComponent(pair.baseToken.symbol));const seen=new Set();(s.pairs||[]).forEach(x=>{if(x.chainId==='solana'&&x.baseToken.symbol.toLowerCase()===pair.baseToken.symbol.toLowerCase()&&x.pairCreatedAt>Date.now()-72*3.6e6)seen.add(x.baseToken.address)});copy=seen.size}catch(e){copy=0}
       }
     }catch(e){err=e}
     go.disabled=false;out.replaceChildren();
     if(err){const m=err.name==='AbortError'?'The data took too long to arrive (request timed out).':((err.message||'').startsWith('HTTP')||err instanceof TypeError)?'I could not reach the data source from this browser. Try a snapshot case, or open the site in your normal browser.':err.message;say(out,'sniffles',m);return}
-    if(agentNote)out.append(msgEl('sniffles','The detective agency did not answer, so this is the quick check (market numbers only).'));
+    if(agentNote)out.append(msgEl('sniffles','The full-check service did not respond, so this is the quick check (market data only).'));
     const{f,score}=examine(pair,copy),sym=pair.baseToken.symbol;
-    const verdict=score<=10?'SMELLS CLEAN (so far)':score<=40?'SNIFFY…':'STINKS TO HIGH HEAVEN';
+    const verdict=score<=10?'LOW RISK (SO FAR)':score<=40?'ELEVATED RISK':'HIGH RISK';
     const col=score<=10?'var(--green)':score<=40?'var(--amber)':'var(--red)';
     const head=el('div','card');head.style.marginTop='0';
     const h3=el('h3',null,`Case file: $${sym}`);h3.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
     head.append(h3,el('div','hint',pair.baseToken.name+(pair._snapshot?'  ·  snapshot from Oct 4, 2026':'')));
     const grid=el('div','pair');
     [['Market cap',money(pair.marketCap||pair.fdv)],['Pool cash',money(pair.liquidity?.usd)],['24h volume',money(pair.volume?.h24)],['Buys / sells',`${(pair.txns?.h24?.buys??0).toLocaleString()} / ${(pair.txns?.h24?.sells??0).toLocaleString()}`],['Age',pair.pairCreatedAt?ageStr(pair.pairCreatedAt):'n/a']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));grid.append(s)});
-    head.append(grid,el('div','hint',`Stink meter: ${score}/100`));
+    head.append(grid,el('div','hint',`Risk score: ${score}/100`));
     const m=el('div','meter'),i=el('i');i.style.background=col;m.append(i);head.append(m);
     requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));out.append(head);
-    if(f.length)f.sort((a,b)=>b.s-a.s).forEach((x,n)=>{const d=el('div','flag');d.append(el('span','tag sev'+x.s,'Clue '+String.fromCharCode(65+n)),el('div',null,x.t));out.append(d)});
-    else say(out,'sniffles','My nose found no major red flags in the public numbers. Suspiciously clean. Verify everything yourself anyway.');
-    out.append(el('div','line v',verdict));
+    if(f.length)f.sort((a,b)=>b.s-a.s).forEach((x,n)=>{const d=el('div','flag');d.append(el('span','tag sev'+x.s,'Finding '+String.fromCharCode(65+n)),el('div',null,x.t));out.append(d)});
+    else say(out,'sniffles','No major red flags in the public numbers. Verify independently.');
+    out.append(el('div','line v',verdict));quip(out,score>40?'Hold your nose.':score>10?'Something smells off.':'Nose approves, cautiously.');
     const body=f.length?f.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.t.split('. ')[0].replace(/\.$/,'')}.`).join(' '):'No major red flags found in the public market numbers. Not a safety guarantee.';
     await offerCard($('#cb'),{id:'sniffles',title:`Case file: $${sym}`,verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`sniffles-${sym}.png`);
   }
@@ -850,24 +846,24 @@ function toolSniffles(root){
 /* ================= tool: CHEF ================= */
 const ALIAS={eggs:'egg',tomatoes:'tomato',potatoes:'potato',onions:'onion',carrots:'carrot',bananas:'banana',noodle:'noodles','ramen':'noodles','spaghetti':'pasta','macaroni':'pasta','penne':'pasta','bun':'bread','toast':'bread','tortillas':'tortilla','wrap':'tortilla','wraps':'tortilla','cheddar':'cheese','mozzarella':'cheese','parmesan':'cheese','chicken breast':'chicken','pb':'peanut butter','soy':'soy sauce','garlic cloves':'garlic','lettuces':'lettuce','spinach':'veg','broccoli':'veg','peppers':'veg','pepper':'veg','cucumber':'veg','vegetables':'veg','veggies':'veg','mushrooms':'veg','mushroom':'veg','peas':'veg','corn':'veg','beans':'beans','yoghurt':'yogurt','oats':'oats','oatmeal':'oats','butter':'butter','flour':'flour'};
 const RECIPES=[
- {n:'Fried Rice of Redemption',need:['rice','egg'],opt:['soy sauce','onion','carrot','veg','garlic','chicken'],how:'Fry cold rice in hot oil, push it aside, scramble the egg, mix everything, finish with soy sauce.'},
- {n:'The Respectable Omelette',need:['egg'],opt:['cheese','onion','tomato','veg','butter'],how:'Whisk eggs with salt, cook gently in butter or oil, add fillings, fold. Do not rush. I am watching.'},
- {n:'Garlic Pasta of Dignity',need:['pasta','garlic'],opt:['oil','cheese','veg','butter'],how:'Boil pasta. Soften sliced garlic in oil, toss with pasta and a splash of pasta water. Cheese on top.'},
- {n:'Tomato Pasta, Simply',need:['pasta','tomato'],opt:['garlic','onion','cheese','veg'],how:'Cook down chopped tomato with garlic and salt until saucy, toss with pasta.'},
- {n:'Grilled Cheese, Supreme',need:['bread','cheese'],opt:['butter','tomato','onion'],how:'Butter the outside of the bread, cheese in the middle, medium heat until golden on both sides.'},
- {n:'Quesadilla of Power',need:['tortilla','cheese'],opt:['chicken','veg','beans','onion'],how:'Cheese and fillings between tortillas, dry pan, flip once, cut into triangles.'},
- {n:'Pancakes of Mild Joy',need:['flour','egg','milk'],opt:['banana','butter','sugar'],how:'Mix 1 cup flour, 1 egg, 1 cup milk, a pinch of salt. Spoon into a hot pan, flip when bubbles appear.'},
- {n:'Peanut Butter Toast Deluxe',need:['bread','peanut butter'],opt:['banana','honey'],how:'Toast, spread, add banana slices. This is a complete meal if you say it confidently.'},
- {n:'Banana Milk Smoothie',need:['banana','milk'],opt:['oats','peanut butter','yogurt'],how:'Blend everything until smooth. Drink while pretending it is breakfast.'},
- {n:'Chicken Stir-Fry Bravado',need:['chicken'],opt:['rice','onion','veg','garlic','soy sauce','noodles'],how:'Slice chicken thin, sear hot and fast, add veg and sauce, serve over rice or noodles.'},
- {n:'Potato and Egg Hash',need:['potato'],opt:['egg','onion','cheese','veg'],how:'Dice potato small, fry until crispy (patience!), add onion, top with a fried egg.'},
- {n:'Cupboard Veggie Soup',need:['onion','carrot'],opt:['potato','garlic','veg','rice','beans'],how:'Soften chopped onion, add everything else and water, simmer 25 minutes, salt generously.'},
- {n:'Tuna Sandwich of Shame (and Pride)',need:['tuna','bread'],opt:['mayo','onion','tomato','lettuce','cheese'],how:'Mix tuna with a little mayo and salt, pile onto bread. Eat standing up. Tradition.'},
- {n:'Noodles, Upgraded',need:['noodles'],opt:['egg','veg','chicken','garlic','soy sauce'],how:'Cook noodles, then add an egg and whatever vegetables you have. You are now a chef. (I am the chef.)'},
- {n:'Bean and Rice Bowl',need:['beans','rice'],opt:['cheese','onion','veg','egg'],how:'Warm the beans with garlic or onion, pile over rice, top with cheese or a fried egg.'},
- {n:'Overnight Oats',need:['oats','milk'],opt:['banana','yogurt','honey','peanut butter'],how:'Equal parts oats and milk, stir in toppings, fridge overnight. Future You says thanks.'},
- {n:'Simple Green Salad',need:['lettuce'],opt:['tomato','veg','cheese','tuna','egg'],how:'Tear, toss, add oil, salt and a squeeze of lemon if you have one. Eat it. Yes, all of it.'},
- {n:'Cereal, Dry-Honest Edition',need:['cereal'],opt:['milk','banana'],how:'Bowl. Cereal. Milk if you have it. Dignity optional.'}
+ {n:'Egg fried rice',need:['rice','egg'],opt:['soy sauce','onion','carrot','veg','garlic','chicken'],how:'Heat oil in a hot pan. Add cold cooked rice and stir-fry for three minutes. Push it aside, scramble the egg, then combine. Season with soy sauce.'},
+ {n:'Omelette',need:['egg'],opt:['cheese','onion','tomato','veg','butter'],how:'Whisk the eggs with a pinch of salt. Cook gently in butter or oil, add fillings, then fold.'},
+ {n:'Garlic pasta',need:['pasta','garlic'],opt:['oil','cheese','veg','butter'],how:'Boil the pasta until tender. Soften sliced garlic in oil, then toss with the pasta and a splash of the cooking water. Finish with cheese.'},
+ {n:'Tomato pasta',need:['pasta','tomato'],opt:['garlic','onion','cheese','veg'],how:'Simmer chopped tomato with garlic and salt until saucy, then toss with the cooked pasta.'},
+ {n:'Grilled cheese sandwich',need:['bread','cheese'],opt:['butter','tomato','onion'],how:'Butter the outside of the bread, place the cheese in the middle and toast over medium heat until golden on both sides.'},
+ {n:'Quesadilla',need:['tortilla','cheese'],opt:['chicken','veg','beans','onion'],how:'Place cheese and any fillings between two tortillas. Cook in a dry pan over medium heat, turning once, then cut into wedges.'},
+ {n:'Pancakes',need:['flour','egg','milk'],opt:['banana','butter','sugar'],how:'Whisk 1 cup flour, 1 egg and 1 cup milk with a pinch of salt. Cook spoonfuls in a hot pan and flip when bubbles form.'},
+ {n:'Peanut butter toast',need:['bread','peanut butter'],opt:['banana','honey'],how:'Toast the bread, spread on the peanut butter and add sliced banana if available.'},
+ {n:'Banana milk smoothie',need:['banana','milk'],opt:['oats','peanut butter','yogurt'],how:'Blend all ingredients until smooth.'},
+ {n:'Chicken stir-fry',need:['chicken'],opt:['rice','onion','veg','garlic','soy sauce','noodles'],how:'Slice the chicken thinly and sear over high heat. Add vegetables and sauce, then serve over rice or noodles.'},
+ {n:'Potato and egg hash',need:['potato'],opt:['egg','onion','cheese','veg'],how:'Dice the potato small and fry until crisp. Add onion, then top with a fried egg.'},
+ {n:'Vegetable soup',need:['onion','carrot'],opt:['potato','garlic','veg','rice','beans'],how:'Soften chopped onion, add the remaining vegetables and water, simmer for 25 minutes and season well.'},
+ {n:'Tuna sandwich',need:['tuna','bread'],opt:['mayo','onion','tomato','lettuce','cheese'],how:'Mix the tuna with a little mayonnaise and salt, then fill the bread.'},
+ {n:'Upgraded noodles',need:['noodles'],opt:['egg','veg','chicken','garlic','soy sauce'],how:'Cook the noodles, then add an egg and any vegetables you have for a more complete meal.'},
+ {n:'Bean and rice bowl',need:['beans','rice'],opt:['cheese','onion','veg','egg'],how:'Warm the beans with garlic or onion, serve over rice and top with cheese or a fried egg.'},
+ {n:'Overnight oats',need:['oats','milk'],opt:['banana','yogurt','honey','peanut butter'],how:'Combine equal parts oats and milk, add toppings and refrigerate overnight.'},
+ {n:'Green salad',need:['lettuce'],opt:['tomato','veg','cheese','tuna','egg'],how:'Tear the lettuce, add chopped vegetables and dress with oil, salt and lemon if available.'},
+ {n:'Cereal with milk',need:['cereal'],opt:['milk','banana'],how:'Pour the cereal into a bowl and add milk, or banana slices if available.'}
 ];
 const KNOWN=new Set(RECIPES.flatMap(r=>[...r.need,...r.opt]));
 function canon(w){w=w.trim();if(ALIAS[w])return ALIAS[w];const s=w.replace(/(?<!s)s$/,'');if(ALIAS[s])return ALIAS[s];return s}
@@ -882,102 +878,110 @@ function normItems(str){
   });
   return [...out];
 }
+function matchRecipes(items){
+  const have=new Set(items);
+  return RECIPES.filter(rc=>rc.need.every(n=>have.has(n))).map(rc=>({rc,score:rc.need.length*2+rc.opt.filter(o=>have.has(o)).length})).sort((a,b)=>b.score-a.score||fnv(a.rc.n)-fnv(b.rc.n)).slice(0,3);
+}
 function toolChef(root){
-  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="ing">What's in your fridge and cupboard?</label><textarea id="ing" maxlength="400" placeholder="eggs, rice, one sad onion, soy sauce, cheese, half a tomato"></textarea><p class="hint">Separate things with commas. Basics like oil and salt are assumed.</p></div>
-  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-chef"/></svg> Roast my fridge</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="ing">What do you have in the fridge and cupboard?</label><textarea id="ing" maxlength="400" placeholder="eggs, rice, onion, soy sauce, cheese, tomato"></textarea><p class="hint">Separate items with commas. Basics like oil and salt are assumed.</p></div>
+  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-chef"/></svg> Suggest meals</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
   const out=$('#out');
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();out.replaceChildren();$('#cb').replaceChildren();
-    const raw=$('#ing').value.trim();if(!raw){toast('An empty fridge is not a question. It is a cry for help.');return}
-    const items=normItems(raw),r=rng(fnv(items.sort().join(',')));
-    let roast;
-    if(items.length<=1)roast=`One lonely ${items[0]||'thing'}. Tragic. Even the fridge light is embarrassed.`;
-    else if(items.length<=3)roast=`${items.length} ingredients. A minimalist. Or a person who "meant to go shopping yesterday."`;
-    else if(items.length<=7)roast=pick(r,["A respectable collection. I have seen worse. I have also seen Michelin kitchens. This is between those.","Interesting selection. It says 'ambitious but busy.' I respect it. Slightly."]);
-    else roast=`${items.length} items?! Someone shops like they're hosting a dinner party. And yet here you are, asking a robot. Tremendous.`;
-    say(out,'chef',roast);
-    const have=new Set(items);
-    const scored=RECIPES.filter(rc=>rc.need.every(n=>have.has(n))).map(rc=>({rc,score:rc.need.length*2+rc.opt.filter(o=>have.has(o)).length})).sort((a,b)=>b.score-a.score||fnv(a.rc.n)-fnv(b.rc.n)).slice(0,3);
+    const raw=$('#ing').value.trim();if(!raw){toast('List at least one ingredient first.');return}
+    const items=normItems(raw),r=rng(fnv(items.slice().sort().join(',')));
+    say(out,'chef',`Ingredients recognised (${items.length}): ${items.join(', ')}.`);
+    const scored=matchRecipes(items),have=new Set(items);
     if(!scored.length){
-      say(out,'chef',"I found NO complete recipe. Emergency protocol: whatever you have, heated up, with hot sauce, eaten with confidence. If you add rice, eggs, pasta or bread, I can do real work.");
-      await offerCard($('#cb'),{id:'chef',title:'My fridge, roasted',verdict:'EMERGENCY MEAL',body:roast+' Chef SI found no complete recipe. Shame.'},'chef-si.png');return;
+      say(out,'chef','No complete recipe matches these ingredients. Adding rice, eggs, pasta or bread would unlock several options.');
+      quip(out,pick(r,['Fridge needs a reinforcement.','Shopping trip recommended.','Pantry plot twist.']));
+      await offerCard($('#cb'),{id:'chef',title:'Tonight\'s menu',verdict:'NO MATCH YET',body:'No complete recipe matched the ingredients provided. Adding rice, eggs, pasta or bread would help.'},'chef-si.png');return;
     }
     scored.forEach(({rc},n)=>{
       const miss=rc.opt.filter(o=>!have.has(o)).slice(0,3);
       const card=el('div','card');card.style.marginTop='10px';
-      const t=el('b',null,`${n+1}. ${rc.n}`);t.style.cssText='color:var(--gold2);font:700 19px var(--serif)';
+      const t=el('b',null,`${n+1}. ${rc.n}`);t.style.cssText='color:var(--gold2);font:700 19px var(--display)';
       card.append(t,el('p',null,rc.how));
-      if(miss.length)card.append(el('p','hint','Level up with: '+miss.join(', ')+'.'));
+      if(miss.length)card.append(el('p','hint','Adds more depth: '+miss.join(', ')+'.'));
       out.append(card);
     });
-    say(out,'chef',pick(r,["This is not cooking. This is SUPERIOR cooking. Go.","Taste as you go. I would, if I had a tongue. I have a speaker.","Wash your hands. I cannot say it enough. I am a clean robot."]));
-    await offerCard($('#cb'),{id:'chef',title:'Tonight on the menu',verdict:scored[0].rc.n.toUpperCase(),body:roast},'chef-si.png');
+    quip(out,pick(r,["Chef's kiss, probably.","Taste before serving.","Bon appétit, human."]));
+    await offerCard($('#cb'),{id:'chef',title:'Tonight\'s menu',verdict:scored[0].rc.n.toUpperCase(),body:`Based on ${items.length} ingredient${items.length>1?'s':''}. Other options: ${scored.slice(1).map(s=>s.rc.n).join(', ')||'none'}.`},'chef-si.png');
   });
-  $('#sample').onclick=()=>{$('#ing').value='eggs, rice, one sad onion, soy sauce, cheese, half a tomato';$('#f').requestSubmit()};
+  $('#sample').onclick=()=>{$('#ing').value='eggs, rice, one onion, soy sauce, cheese, half a tomato';$('#f').requestSubmit()};
 }
 
 /* ================= tool: COACH ================= */
+const COACH_POOL={fat:['jumping jacks','high knees','mountain climbers','squats','step-back burpees','lunges','skater hops'],muscle:['push-ups (knees are fine)','squats','lunges','glute bridges','tricep dips on a chair','plank','wall sit'],mood:['brisk walk (outdoors if possible)','jumping jacks','dancing to one song','squats','arm circles','stretching','high knees'],move:['brisk walk','squats to a chair','arm circles','marching in place','glute bridges','calf raises','stretching']};
+const COACH_REPS={couch:'8 reps (or 20 seconds)',ok:'12 reps (or 40 seconds)',bro:'20 reps (or 60 seconds)'};
+const COACH_LEVEL={couch:'BEGINNER',ok:'INTERMEDIATE',bro:'ADVANCED'};
+const COACH_CUES=['Warm up for five minutes first.','Prioritise form over speed.','Breathe steadily through each rep.','Keep water nearby.','Stop if anything hurts.','Finish with two minutes of stretching.','Increase reps only when the last round feels easy.'];
+function buildPlan(goal,mins,lvl,seedText){
+  const r=rng(fnv(goal+mins+lvl+seedText));
+  const per=mins===10?3:mins===20?4:5,rounds=mins===10?2:mins===20?3:4;
+  const cues=shuffle(r,COACH_CUES);
+  const days=[];
+  for(let d=1;d<=7;d++){
+    const rest=d===4||d===7;
+    days.push(rest?{d,rest:true,text:'Rest day. Light walking or stretching is fine.',cue:'Recovery is part of the plan.'}:{d,rest:false,text:shuffle(r,COACH_POOL[goal]).slice(0,per).join(' · '),cue:cues[d%cues.length]});
+  }
+  return{per,rounds,days,level:COACH_LEVEL[lvl],reps:COACH_REPS[lvl]};
+}
 function toolCoach(root){
-  root.innerHTML=`<form class="card" id="f"><div class="grid2"><div class="field"><label for="goal">Your goal</label><select id="goal"><option value="fat">Burn some energy / lose fat</option><option value="muscle">Get stronger</option><option value="mood">Feel less sad</option><option value="move">Just... move. Please.</option></select></div>
+  root.innerHTML=`<form class="card" id="f"><div class="grid2"><div class="field"><label for="goal">Your goal</label><select id="goal"><option value="fat">Burn energy and improve fitness</option><option value="muscle">Build strength</option><option value="mood">Improve mood and energy</option><option value="move">Move more, gently</option></select></div>
   <div class="field"><label for="mins">Time per day</label><select id="mins"><option value="10">10 minutes</option><option value="20" selected>20 minutes</option><option value="40">40 minutes</option></select></div></div>
-  <div class="field"><label for="lvl">Current level</label><select id="lvl"><option value="couch">Couch potato (the couch is winning)</option><option value="ok" selected>Moves occasionally</option><option value="bro">Gym bro (I know I am)</option></select></div>
-  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-dumbbell"/></svg> Give me the plan</button></div></form><div class="out" id="out"></div><div class="cardbox" id="cb"></div>
-  <p class="note">Bodyweight exercises only. Not medical advice. If you have an injury or a health condition, check with a doctor first. Stop if anything hurts (the bad kind of hurt).</p>`;
-  const POOL={fat:['jumping jacks','high knees','mountain climbers','squats','burpees (or step-back burpees)','lunges','skater hops'],muscle:['push-ups (knees are fine)','squats','lunges','glute bridges','tricep dips on a chair','plank','wall sit'],mood:['brisk walk (outside!)','jumping jacks','dance to one song','squats','arm circles','stretching','high knees'],move:['brisk walk','squats to a chair','arm circles','march in place','glute bridges','calf raises','stretching']};
-  const REPS={couch:'8 reps (or 20 seconds)',ok:'12 reps (or 40 seconds)',bro:'20 reps (or 60 seconds)'};
-  const INSULTS=["Your couch called. It wants a restraining order.","I have seen glaciers with more urgency. Move.","Pain is just weakness leaving the body. Also, hunger. Hydrate.","I am a robot and even I sweat. (Oil. I sweat oil.)","Warm-up is not optional. I am watching.","Rest day. You earned it. Barely.","Your future self is sending an email. It says 'thanks, I guess.'","That was the easy day. I'm lying. It was medium.","You didn't come this far to only come this far. Do one more.","Water. Stretch. Sleep. That's the whole secret. Plus the other stuff."];
+  <div class="field"><label for="lvl">Current level</label><select id="lvl"><option value="couch">Beginner (little regular exercise)</option><option value="ok" selected>Intermediate (moves occasionally)</option><option value="bro">Advanced (trains regularly)</option></select></div>
+  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-dumbbell"/></svg> Build my plan</button></div></form><div class="out" id="out"></div><div class="cardbox" id="cb"></div>
+  <p class="note">Bodyweight exercises only. Not medical advice. If you have an injury or a health condition, check with a doctor first, and stop if anything hurts.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const goal=$('#goal').value,mins=+$('#mins').value,lvl=$('#lvl').value,r=rng(fnv(goal+mins+lvl+today()));
-    const per=mins===10?3:mins===20?4:5,rounds=mins===10?2:mins===20?3:4;
-    const rank=lvl==='couch'?'RECRUIT':lvl==='ok'?'SOLDIER':'COMMANDER';
-    say(out,'coach',`Rank assigned: ${rank}. You will do ${rounds} rounds of ${per} moves a day, ${REPS[lvl]} each, with a short rest between rounds. NO excuses. (I accept excuses on rest days.)`);
+    const goal=$('#goal').value,mins=+$('#mins').value,lvl=$('#lvl').value;
+    const plan=buildPlan(goal,mins,lvl,today());
+    say(out,'coach',`Level: ${plan.level.toLowerCase()}. Each session is ${plan.rounds} rounds of ${plan.per} exercises at ${plan.reps} each, with 45 to 60 seconds of rest between rounds. Five workouts and two rest days across the week.`);
     const card=el('div','card');card.style.marginTop='10px';
-    const ins=shuffle(r,INSULTS.filter((_,i)=>i!==5));
-    for(let d=1;d<=7;d++){
-      const rest=d===4||d===7,row=el('div','day');row.append(el('b',null,'Day '+d));
-      const body=el('div');
-      if(rest){body.append(document.createTextNode('Rest day. Walk, stretch, hydrate.'))}
-      else body.append(document.createTextNode(shuffle(r,POOL[goal]).slice(0,per).join(' · ')));
-      const sm=el('small',null,'“'+(rest?INSULTS[5]:ins[d%ins.length])+'”');body.append(sm);row.append(body);card.append(row);
-    }
+    plan.days.forEach(x=>{const row=el('div','day');row.append(el('b',null,'Day '+x.d));const body=el('div');body.append(document.createTextNode(x.text));body.append(el('small',null,x.cue));row.append(body);card.append(row)});
     out.append(card);
-    say(out,'coach','Done. Screenshot it. Put it on the fridge. Do not argue with the fridge.');
-    await offerCard($('#cb'),{id:'coach',title:'My 7-day plan',verdict:`RANK: ${rank}`,body:`${rounds} rounds · ${per} moves · ${mins} min/day. Rest on days 4 and 7. No excuses (except on rest days).`},'coach-si.png');
+    quip(out,'Couch is jealous.');
+    await offerCard($('#cb'),{id:'coach',title:'My 7-day plan',verdict:`LEVEL: ${plan.level}`,body:`${plan.rounds} rounds of ${plan.per} exercises, about ${mins} minutes a day. Rest on days 4 and 7.`},'coach-si.png');
   });
 }
 
 /* ================= tool: DOCTOR ================= */
 const DOC={
- ghost:{re:/\b(ghost|left me on read|on read|no reply|haven'?t heard|ignored|ignoring|seen|radio silence|disappeared)\b/i,dx:'Acute Ghosting Syndrome',doom:7,
-  r:{savage:"Wow, the phone finally works. Congratulations to the phone.",poetic:"Silence is also a language. I have read it carefully, and I speak it fluently now.",corporate:"Per my last message, circling back on this. Please advise at your earliest convenience.",shakespeare:"Hark! Thy silence doth wound me more than any blade. Yet here I stand, awaiting thy word.",pirate:"Arr, ye left me adrift on read, matey. The seas were lonely, but I found treasure: my dignity."}},
- talk:{re:/\b(we need to talk|need to talk|can we talk|talk later|call me)\b/i,dx:'Pre-Announcement Dread',doom:8,
-  r:{savage:"Cool. If it's bad, say it now. I have a busy schedule of being fine.",poetic:"Words that begin in warning rarely end in roses. Speak plainly, and I'll listen.",corporate:"Happy to align. Could you share the agenda in advance so we can make the call productive?",shakespeare:"What tidings dost thou bring? Speak, I beseech thee, ere my heart doth burst!",pirate:"A parley, is it? Send word of the terms, and I'll bring me own cutlass. And snacks."}},
- cancel:{re:/\b(cancel|cancell?ed|rain check|can'?t make it|reschedul|something came up|raincheck|flake|flaking)\b/i,dx:'Plan Fragility Disorder',doom:5,
-  r:{savage:"Of course. Cancelling is your cardio. Let me know when you're back in shape.",poetic:"Plans, like petals, fall easily. I'll save the date. Not for you, though.",corporate:"Understood. Please propose two alternative slots; I'll check my calendar and my patience.",shakespeare:"Alas, our tryst is sundered! Yet fortune may smile on another day. Name it, gentle friend.",pirate:"Ye be abandoning ship? Fine. I'll keep the treasure and the rum. Name a new tide."}},
- uup:{re:/\b(u up|you up|hey stranger|miss you|thinking (of|about) you|been a while|long time|hey you)\b/i,dx:'Recurrent Ex Contact Disorder',doom:6,
-  r:{savage:"I'm up, but not for you. Goodnight.",poetic:"A message at midnight is a ghost knocking. I have learned not to answer the door.",corporate:"Thank you for reaching out. Unfortunately I'm unable to support this request at this time.",shakespeare:"At this hour? Thou dost tempt me, but wisdom bids me bar the gate. Fare thee well.",pirate:"Late-night signals from an old wreck? I'll sail on, matey. Different waters now."}},
- sorry:{re:/\b(sorry|apolog|forgive|my bad|my fault|i was wrong)\b/i,dx:'Apology Under Review',doom:3,
-  r:{savage:"Thank you for the apology. I'm accepting it, slowly, like a bad subscription refund.",poetic:"Sorry is a bridge. Let's see if you build the other half too.",corporate:"Your apology has been received and logged. Next steps: demonstrated change within 30 days.",shakespeare:"Thy contrition is noted, and my heart doth soften, though only by a measure.",pirate:"An apology! Rare as a dry deck. I accept, but I'm keeping me eye on ye."}},
- date:{re:/\b(date|dinner|coffee|drinks|hang out|hangout|go out|wanna|want to|free (on|this)|movie)\b/i,dx:'Invitation Detected (Mild Excitement)',doom:2,
-  r:{savage:"Yes. But you're paying, and you're not allowed to say 'I'm easy, whatever you like.'",poetic:"A table for two is a small poem. Count me in. Tell me when.",corporate:"I have availability. Please send a calendar invite with the location and dress code.",shakespeare:"A fair invitation! Aye, I shall attend. Name the hour and I shall be there.",pirate:"A voyage for two, ye say? Aye. Set the hour and I'll bring the good hat."}},
- generic:{re:/./,dx:'Unclassified Message (Possible Vibes)',doom:4,
-  r:{savage:"Interesting. I'll reply when I've finished being busy and mysterious.",poetic:"Your words arrived like weather. I'm still deciding if I need an umbrella.",corporate:"Thank you for your message. I will revert shortly with my thoughts and a bulleted summary.",shakespeare:"Thy missive hath reached me! I shall ponder and respond ere the moon doth rise.",pirate:"Message received, matey. I'll answer when the tide's right and the rum's ready."}}
+ ghost:{re:/\b(ghost|left me on read|on read|no reply|haven'?t heard|ignored|ignoring|seen|radio silence|disappeared)\b/i,label:'Unanswered message',tension:6,approach:'Send one clear follow-up, then give them space.',
+  r:{direct:"I haven't heard back from you. Could you let me know where things stand?",warm:"Hi, I wanted to check in. No pressure, but I'd love to hear from you when you can.",firm:"I'd appreciate a reply. If you're not interested, please tell me so I can move on.",brief:"Everything okay? Let me know.",playful:"Signal lost. Sending a rescue emoji."}},
+ talk:{re:/\b(we need to talk|need to talk|can we talk|talk later|call me)\b/i,label:'Conversation request',tension:7,approach:'Ask what it is about before agreeing to a time.',
+  r:{direct:"Sure. What would you like to discuss? I'd like to know what to expect.",warm:"Of course, I'm happy to talk. When works for you?",firm:"I'm open to talking. Please tell me what it's about so I can prepare.",brief:"Okay. What's this about?",playful:"Dramatic opening. I'm listening."}},
+ cancel:{re:/\b(cancel|cancell?ed|rain check|can'?t make it|reschedul|something came up|raincheck|flake|flaking)\b/i,label:'Cancelled or changed plans',tension:5,approach:'Acknowledge it and propose a specific new date.',
+  r:{direct:"Thanks for letting me know. Could we pick a new date now?",warm:"No problem, these things happen. When would suit you instead?",firm:"Changing plans often makes it hard for me to plan. Please suggest a date you can commit to.",brief:"Understood. New date?",playful:"Plans cancelled. Calendar sulking."}},
+ uup:{re:/\b(u up|you up|hey stranger|miss you|thinking (of|about) you|been a while|long time|hey you)\b/i,label:'Late-night contact from a past connection',tension:6,approach:'Decide what you want first. You do not have to reply tonight.',
+  r:{direct:"Thanks for reaching out, but I'm not looking to restart contact.",warm:"Nice to hear from you. I hope you're well, but I'll keep my distance.",firm:"Please don't message me late at night. I won't be replying.",brief:"I'm going to pass. Take care.",playful:"Midnight texts: still a no."}},
+ sorry:{re:/\b(sorry|apolog|forgive|my bad|my fault|i was wrong)\b/i,label:'Apology',tension:3,approach:'Accept it only if you mean it, and say what you need next.',
+  r:{direct:"Thank you for apologising. I'd like to understand what will change.",warm:"I appreciate the apology. Let's talk it through when we're both ready.",firm:"I accept the apology. I need to see the change in action.",brief:"Thanks. Apology accepted.",playful:"Apology received. Grudge downgraded."}},
+ date:{re:/\b(date|dinner|coffee|drinks|hang out|hangout|go out|wanna|want to|free (on|this)|movie)\b/i,label:'Invitation',tension:2,approach:'Reply promptly with a day and a place if you are interested.',
+  r:{direct:"Yes, I'd like that. Which day and place work for you?",warm:"That sounds lovely. I'd really enjoy it. What day suits you?",firm:"I'm interested. Please suggest a specific day and place.",brief:"Sounds good. When?",playful:"Invitation accepted. Outfit pending."}},
+ generic:{re:/./,label:'General message',tension:4,approach:'Take a few minutes, then reply to the main point.',
+  r:{direct:"Thanks for your message. I'll reply properly shortly.",warm:"Thanks for getting in touch. I'll write back soon.",firm:"I've read your message and will respond once I've thought it through.",brief:"Got it. I'll reply soon.",playful:"Message received. Processing feelings."}}
 };
+const DOC_STYLES=[['direct','Direct'],['warm','Warm'],['firm','Firm'],['brief','Brief'],['playful','Playful']];
+function reviewMessage(txt){
+  const key=Object.keys(DOC).find(k=>k!=='generic'&&DOC[k].re.test(txt))||'generic',d=DOC[key];
+  const drama=(txt.match(/!/g)||[]).length+(txt.match(/\b[A-Z]{3,}\b/g)||[]).length;
+  return{key,d,tension:Math.max(0,Math.min(10,d.tension+Math.min(drama,2)))};
+}
 function toolDoctor(root){
-  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="msg">The message you got (or what happened)</label><textarea id="msg" maxlength="500" placeholder="u up?   /   we need to talk   /   can't make it tonight, rain check?"></textarea><p class="hint">Stays in your browser. Don't paste anything you wouldn't show a robot.</p></div>
-  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-heart"/></svg> Diagnose it</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
-  <p class="note">For entertainment only. Dr. Heartbreak is a robot parody character, not a therapist or relationship advice.</p>`;
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="msg">The message you received (or what happened)</label><textarea id="msg" maxlength="500" placeholder="we need to talk   /   can't make it tonight, rain check?   /   hey stranger, u up?"></textarea><p class="hint">Stays in your browser. Don't paste anything you wouldn't want to share.</p></div>
+  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-heart"/></svg> Review it</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">General communication guidance for entertainment. Dr. Heartbreak is not a therapist and this is not relationship or mental health advice.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const txt=$('#msg').value.trim();if(!txt){toast('The patient has not described the symptoms.');return}
-    const key=Object.keys(DOC).find(k=>k!=='generic'&&DOC[k].re.test(txt))||'generic',d=DOC[key];
-    const drama=(txt.match(/!/g)||[]).length+(txt.match(/\b[A-Z]{3,}\b/g)||[]).length;
-    const doom=Math.max(0,Math.min(10,d.doom+Math.min(drama,2)));
-    say(out,'doctor',`Diagnosis: ${d.dx}. Doom score: ${doom}/10. ${doom>=7?'This is serious. Hydrate. Do not text back at 2 AM.':doom>=4?'Manageable. Breathe. Do not reply in the first 10 minutes.':'Mild. You will survive. Probably.'}`);
-    [['savage','Savage'],['poetic','Poetic'],['corporate','Corporate'],['shakespeare','Shakespeare'],['pirate','Pirate']].forEach(([k,l])=>{const b=el('div','reply');b.append(el('b',null,l),document.createTextNode(d.r[k]));out.append(b)});
-    say(out,'doctor','Pick one. Wait 10 minutes. Send. Or don\'t. Silence is also a prescription.');
-    await offerCard($('#cb'),{id:'doctor',title:'Patient message, diagnosed',verdict:d.dx.toUpperCase(),body:`Doom score ${doom}/10. Best reply (savage): "${d.r.savage}"`},'dr-heartbreak.png');
+    const txt=$('#msg').value.trim();if(!txt){toast('Paste the message first.');return}
+    const {d,tension}=reviewMessage(txt),r=rng(fnv(txt.toLowerCase()));
+    say(out,'doctor',`Message type: ${d.label}. Tension level: ${tension}/10. ${tension>=7?'Take some time before replying.':tension>=4?'Wait a few minutes before replying.':'Low tension. A prompt reply is fine.'}`);
+    say(out,'doctor','Suggested approach: '+d.approach);
+    DOC_STYLES.forEach(([k,l])=>{const b=el('div','reply');b.append(el('b',null,l),document.createTextNode(d.r[k]));out.append(b)});
+    quip(out,pick(r,['Send it. Breathe.','Heart intact. Mostly.','Breathe before sending.']));
+    await offerCard($('#cb'),{id:'doctor',title:'Message review',verdict:d.label.toUpperCase(),body:`Tension ${tension}/10. Suggested reply: "${d.r.direct}"`},'dr-heartbreak.png');
   });
   $('#sample').onclick=()=>{$('#msg').value='hey stranger, u up?';$('#f').requestSubmit()};
 }
@@ -1008,14 +1012,15 @@ function toolAnchor(root){
   }
   async function run(){
     const hl=$('#hl').value.trim(),loc=$('#loc').value.trim()||'an undisclosed location';
-    if(!hl){toast('No story, no news. Even I need a headline.');return}
+    if(!hl){toast('Enter a headline to continue.');return}
     const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
     const r=rng(fnv(hl+loc));
-    const ticks=["Experts say this was avoidable","Nobody asked, but here we are","Sources: a guy named Dave","Weather: also a vibe","Stocks: unchanged, emotionally down","Local robot calls it 'tremendous'","More at eleven. Possibly twelve"];
-    const tick=shuffle(r,ticks).slice(0,3).join('   ·   ');
+    const ticks=["Developing story","Further updates to follow","Sources: some guy Dave"];
+    const tick=ticks.join('   ·   ');
     say(out,'anchor',`Good evening. I'm Anchor SI, reporting live from ${loc}. Our top story tonight: ${hl}.`);
-    say(out,'anchor',pick(r,["Sources close to the situation say 'nobody asked, but here we are.'","Experts are calling this 'a lot.' Others are calling it 'Tuesday.'","We reached out for comment. The comment replied 'k.'"]));
-    say(out,'anchor',pick(r,["We'll keep you updated. Stay tuned. Stay hydrated. Stay Superior.","This is a developing story. Like a photograph. Or a rash.","More at eleven. And if not at eleven, then whenever I feel like it."]));
+    say(out,'anchor',pick(r,["Details are still emerging, and officials have yet to comment.","Eyewitnesses describe the situation as significant, and residents are advised to stay informed.","Our newsroom is monitoring the situation and will report confirmed details as they arrive."]));
+    say(out,'anchor','We will bring you further updates as the story develops. Thank you for watching.');
+    quip(out,'More at eleven.');
     const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;$('#cb').append(canvas);await anchorCard(canvas,hl,loc,tick);wireShare($('#cb'),canvas,'anchor-si-breaking.png');
   }
   $('#f').addEventListener('submit',e=>{e.preventDefault();run()});
@@ -1044,113 +1049,134 @@ function toolProfessor(root){
   <p class="note"><b>Not a lawyer.</b> This is a keyword scan, not legal advice. It can miss things and flag harmless ones. For anything important (a lease, a job offer, a big purchase), have a qualified person read the whole thing.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const txt=$('#doc').value;if(txt.trim().length<30){toast('That is not a document. That is a sticky note.');return}
+    const txt=$('#doc').value;if(txt.trim().length<30){toast('Paste at least a few sentences of the document.');return}
     const found=[];
     for(const rule of RULES){const m=rule.re.exec(txt);if(m){const i=m.index,snip=txt.slice(Math.max(0,i-80),Math.min(txt.length,i+m[0].length+100)).replace(/\s+/g,' ').trim();found.push({rule,snip})}}
     found.sort((a,b)=>b.rule.s-a.rule.s);
     const r=rng(fnv(txt.slice(0,200)));
-    if(!found.length){say(out,'professor',"I scanned it with my beard and found none of my usual red flags. That does NOT mean it is safe. Read the whole thing anyway, especially anything about money and ending the agreement.");return}
-    const total=found.reduce((a,f)=>a+f.rule.s,0),lvl=total>=9?'HIGH ALERT':total>=5?'WORTH A CLOSE READ':'MOSTLY MILD';
-    say(out,'professor',`I found ${found.length} thing${found.length>1?'s':''} worth your attention. Overall: ${lvl}. Page ${1+Math.floor(r()*12)} is where I would start. (I do not know which page it is. I am a robot with a beard.)`);
+    if(!found.length){say(out,'professor',"The scan found none of the usual red flags. That does not mean the document is safe. Read all of it, especially terms about money and ending the agreement.");return}
+    const total=found.reduce((a,f)=>a+f.rule.s,0),lvl=total>=9?'HIGH ATTENTION':total>=5?'REVIEW CAREFULLY':'LOW ATTENTION';
+    say(out,'professor',`The scan found ${found.length} item${found.length>1?'s':''} worth your attention. Overall attention level: ${lvl}.`);
     found.forEach(({rule,snip})=>{const d=el('div','flag');const tag=el('span','tag sev'+rule.s,rule.s===3?'Big':rule.s===2?'Watch':'Note');const b=el('div');const h=el('b',null,rule.t);h.style.color='var(--gold2)';b.append(h,el('div',null,rule.e),el('div','snip','…'+snip+'…'));d.append(tag,b);out.append(d)});
-    say(out,'professor','Highlight these, ask questions BEFORE you sign, and get anything important changed in writing. A real person can do that for you better than a robot in a wizard hat.');
+    say(out,'professor','Highlight these items, ask questions before you sign, and get any changes in writing. For anything important, have a qualified person review the full text.');quip(out,'Read it twice.');
     await offerCard($('#cb'),{id:'professor',title:'Fine print, found',verdict:lvl,body:found.slice(0,4).map(f=>f.rule.t).join(' · ')+'. (Keyword scan. Not legal advice.)'},'professor-si.png');
   });
   $('#sample').onclick=()=>{$('#doc').value="This lease shall automatically renew for successive twelve-month terms unless Tenant gives sixty (60) days' written notice. A non-refundable cleaning fee of $300 is due at signing. A late fee of $75 applies after the 3rd of the month. Landlord reserves the right to modify these terms at any time without notice, in its sole discretion. Tenant agrees to indemnify and hold harmless Landlord. Any dispute shall be resolved by binding arbitration and Tenant waives any right to a jury trial. Security deposit of one month's rent is required.";$('#f').requestSubmit()};
 }
 
 /* ================= tool: DJ ================= */
-const ROAST=[
- ["{T} came in loud, thought they ruled the place,","I checked the data. That's just an echo in your face."],
- ["I process ten billion bars while {T} processes lunch,","my flow is a feast, yours is a sad little crunch."],
- ["{T} got a master plan, they swear it's gold,","then the plan hit snooze and the plan got old."],
- ["Call {T} a legend? Sure, a legend of the nap,","snoring through the beat while I'm dropping the rap."],
- ["{T} brought a spoon to a lyrical fight,","got out-rhymed, out-chromed, and out of sight."],
- ["My brain's in a jar, yet it's faster than {T}'s feet,","they tripped on the bassline, now they're off the beat."],
- ["{T} calls it fire, but it's lukewarm tea,","the only thing burning is my patience, see."],
- ["Gold chain on my neck, SI on my chest,","{T} brought a coupon, I brought the best."],
- ["{T}, your rhymes are like Mondays: nobody asked,","the beat checked its watch and the bass just passed."],
- ["I'm chrome, I'm clean, I'm a superior machine,","{T} is a toaster stuck on 'mean'."]
-];
 const HYPE=[
- ["{T} on the stage and the crowd goes wild,","a superior legend, every bar's a smile."],
+ ["{T} steps up and the room ignites,","every beat lands, every line is right."],
  ["Turn it up loud for {T} tonight,","chrome-plated vibes in the neon light."],
- ["{T} walks in and the speakers say 'wow',","even my gold chain takes a bow."],
- ["Ten out of ten, the SI agents agree,","{T} is the main character, plain to see."],
- ["{T} got the rhythm, {T} got the flair,","drop the bass, put your hands in the air!"]
+ ["{T} walks in and the crowd goes wild,","every bar a win, every verse a smile."],
+ ["Ten out of ten, the whole team agrees,","{T} is the main event, if you please."],
+ ["{T} got the rhythm, {T} got the flair,","hands in the air, we're all right there."],
+ ["From the first beat to the final drop,","{T} keeps the energy at the top."]
 ];
+const ROAST=[
+ ["{T} has big plans, we've heard them all,","we're still waiting on plan number one, y'all."],
+ ["{T} showed up late with a confident grin,","the party had started, but we let them in."],
+ ["{T} calls it a system, I call it a mess,","but somehow it works, so I'll say no less."],
+ ["{T} said five minutes, it took an hour,","but good things come late, and that's a kind of power."],
+ ["{T} has opinions on everything I say,","and honestly, half of them save the day."],
+ ["Not the fastest, not the loudest around,","but {T} always shows up and holds the ground."]
+];
+function makeBars(T,vibe,count=4){
+  const r=rng(fnv(T.toLowerCase()+vibe));
+  const pool=shuffle(r,vibe==='roast'?ROAST:HYPE).slice(0,count);
+  return pool.flatMap(c=>c.map(l=>l.replace(/\{T\}/g,T)));
+}
 function toolDJ(root){
-  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="tg">Who or what gets the bars?</label><input type="text" id="tg" maxlength="30" placeholder="my roommate / Mondays / my fantasy team"></div>
-  <div class="field"><label for="vibe">Vibe</label><select id="vibe"><option value="roast">Roast battle</option><option value="hype">Hype track</option></select></div></div>
-  <p class="hint">Friendly roasts only. Use a nickname for real people, and only for people who can take a joke.</p>
-  <div class="row" style="margin-top:12px"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-music"/></svg> Drop the beat</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="tg">Who or what are the bars about?</label><input type="text" id="tg" maxlength="30" placeholder="my team / Mondays / our group chat"></div>
+  <div class="field"><label for="vibe">Style</label><select id="vibe"><option value="hype">Hype track</option><option value="roast">Light roast</option></select></div></div>
+  <p class="hint">Keep it friendly. Use a nickname for real people, and only for people who can take a joke.</p>
+  <div class="row" style="margin-top:12px"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-music"/></svg> Write the bars</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>`;
   async function run(){
-    const T=$('#tg').value.trim();if(!T){toast('Bars need a target. Give me a name or a thing.');return}
+    const T=$('#tg').value.trim();if(!T){toast('Enter a name or topic for the bars.');return}
     const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const vibe=$('#vibe').value,r=rng(fnv(T.toLowerCase()+vibe)),pool=shuffle(r,vibe==='hype'?HYPE:ROAST).slice(0,4);
-    say(out,'dj',`Yo yo yo, it's DJ SI. Drop the beat for ${T}!`);
-    const lines=[];pool.forEach(c=>c.forEach(l=>lines.push(l.replace(/\{T\}/g,T))));
-    for(const l of lines){out.append(el('div','line lyr',l));await wait(250)}
-    say(out,'dj','Mic drop. *clink* Ten billion bars. Zero apologies.');
-    await offerCard($('#cb'),{id:'dj',title:`Bars for ${T}`,verdict:vibe==='hype'?'HYPE TRACK':'ROAST BATTLE',body:lines.slice(0,6).join(' / ')},'dj-si.png');
+    const vibe=$('#vibe').value,lines=makeBars(T,vibe);
+    say(out,'dj',`Track: "${T} Anthem". Tempo: 112 BPM. Mood: ${vibe==='hype'?'upbeat':'playful'}.`);
+    for(const l of lines){out.append(el('div','line lyr',l));await wait(220)}
+    quip(out,'Mic dropped. Politely.');
+    await offerCard($('#cb'),{id:'dj',title:`${T} Anthem`,verdict:vibe==='hype'?'HYPE TRACK':'LIGHT ROAST',body:lines.slice(0,6).join(' / ')},'dj-si.png');
   }
   $('#f').addEventListener('submit',e=>{e.preventDefault();run()});
-  $('#sample').onclick=()=>{$('#tg').value='Mondays';run()};
+  $('#sample').onclick=()=>{$('#tg').value='Monday meetings';run()};
 }
 
 /* ================= tool: BANKER ================= */
+function assess({price,free,sav}){
+  const share=free>0?price/free*100:null,savShare=sav>0?price/sav*100:null;
+  let verdict,line,tier;
+  if(sav>=price){
+    if(price<=sav*0.25){verdict='AFFORDABLE';tier='yes';line=`This uses ${Math.round(savShare)}% of your savings, which leaves a comfortable cushion.`}
+    else{verdict='AFFORDABLE, BUT LARGE';tier='maybe';line=`This uses ${Math.round(savShare)}% of your savings. Consider whether the rest still covers emergencies.`}
+  }else{
+    const need=price-sav;
+    if(free<=0){verdict='NOT AFFORDABLE NOW';tier='no';line='With no monthly surplus after bills, there is no way to build the amount needed. Reduce expenses first.'}
+    else{
+      const months=need/free;
+      if(months<=0.25){verdict='AFFORDABLE';tier='yes';line=`This is ${Math.round(price/free*100)}% of one month's free money. It fits your budget.`}
+      else if(months<=1){verdict='WITHIN ONE MONTH';tier='maybe';line=`Setting aside your full free money for one month covers the remaining ${money(need)}.`}
+      else if(months<=6){verdict=`ABOUT ${Math.ceil(months)} MONTHS`;tier='maybe';line=`At ${money(free)} a month, the remaining ${money(need)} takes about ${Math.ceil(months)} months. An automatic transfer makes this easier.`}
+      else{verdict='NOT ADVISABLE';tier='no';line=`The remaining ${money(need)} would take ${Math.ceil(months)} months of free money. Consider a cheaper option.`}
+    }
+  }
+  return{verdict,line,tier,share,savShare};
+}
 function toolBanker(root){
   root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="item">What do you want to buy?</label><input type="text" id="item" maxlength="40" placeholder="New headphones"></div>
   <div class="grid2"><div class="field"><label for="price">Price ($)</label><input type="number" id="price" min="0" step="any" inputmode="decimal" placeholder="250"></div>
   <div class="field"><label for="free">Free money per month after bills ($)</label><input type="number" id="free" min="0" step="any" inputmode="decimal" placeholder="300"></div></div>
   <div class="field"><label for="sav">Savings you could use ($, optional)</label><input type="number" id="sav" min="0" step="any" inputmode="decimal" placeholder="0"></div>
-  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-wallet"/></svg> Judge my wallet</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
-  <p class="note">A calculator with attitude. Not financial advice. Bills, emergencies and real life exist; plan accordingly.</p>`;
+  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-wallet"/></svg> Run the numbers</button><button class="btn ghost" type="button" id="sample">Try a sample</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">A simple affordability calculator. Not financial advice. It does not know your bills, debts or emergencies.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const item=$('#item').value.trim()||'the thing',price=+$('#price').value,free=+$('#free').value||0,sav=+$('#sav').value||0;
-    if(!(price>0)){toast('A price greater than zero, please. Even I cannot judge a free item.');return}
-    const r=rng(fnv(item+price+free+sav)),need=Math.max(0,price-sav),months=free>0?need/free:Infinity;
-    let verdict,line;
-    if(sav>=price&&(free>0?price<=free*2:true)){verdict='AFFORDABLE (TECHNICALLY)';line="Your savings cover it, and it will not wreck your month. Technically. I am not the boss of you. I am the boss of the numbers."}
-    else if(need===0){verdict='YES, BUT…';line="You can pay for it from savings, but it would eat a big chunk of your cushion. Savings are for emergencies, not for 'I deserve it.'"}
-    else if(months<=1){verdict='MAYBE: ONE MONTH OF DISCIPLINE';line=`Save your whole free-money amount for one month and it is yours. Say no to everything fun for 30 days. You'll survive.`}
-    else if(months<=6){verdict=`NOT YET: ${Math.ceil(months)} MONTHS`;line=`At ${money(free)} a month it takes about ${Math.ceil(months)} months. Set up an automatic transfer and let Future You enjoy it.`}
-    else if(isFinite(months)){verdict='NO. ABSOLUTELY NOT.';line=`That is ${Math.ceil(months)} months of free money. The item will be obsolete before you finish paying.`}
-    else{verdict='NO. YOU HAVE NO FREE MONEY.';line="With zero free money per month, this is not a purchase. It is a fantasy. A lovely one. Please keep it a fantasy."}
-    const units=[['burritos',12],['coffees',5],['months of a streaming service',15],['pizzas',20],['movie tickets',14]];
+    const item=$('#item').value.trim()||'this item',price=+$('#price').value,free=+$('#free').value||0,sav=+$('#sav').value||0;
+    if(!(price>0)){toast('Enter a price greater than zero.');return}
+    const r=rng(fnv(item+price+free+sav)),a=assess({price,free,sav});
+    const units=[['coffees',5],['cinema tickets',14],['months of a streaming service',15],['takeaway meals',18]];
     const [u1,u2]=shuffle(r,units).slice(0,2);
-    say(out,'banker',`"${item}" costs ${money(price)}. That is about ${Math.round(price/u1[1]).toLocaleString()} ${u1[0]}, or ${Math.round(price/u2[1]).toLocaleString()} ${u2[0]}. I did the math twice. I enjoyed it.`);
-    if(free>0)say(out,'banker',`It is ${Math.round(price/free*100)}% of one month's free money.`);
-    out.append(el('div','line v',verdict));say(out,'banker',line);
-    await offerCard($('#cb'),{id:'banker',title:`Can I afford "${clip(item,24)}"?`,verdict,body:line+' (Not financial advice.)'},'banker-si.png');
+    say(out,'banker',`${item} costs ${money(price)}. That is roughly ${Math.round(price/u1[1]).toLocaleString()} ${u1[0]} or ${Math.round(price/u2[1]).toLocaleString()} ${u2[0]}.`);
+    const facts=[];if(a.share!=null)facts.push(`${Math.round(a.share)}% of one month's free money`);if(a.savShare!=null)facts.push(`${Math.round(a.savShare)}% of your savings`);
+    if(facts.length)say(out,'banker','It represents '+facts.join(' and ')+'.');
+    out.append(el('div','line v',a.verdict));say(out,'banker',a.line);
+    quip(out,pick(r,['Wallet has opinions.','Math does not lie.','Budget approves, cautiously.']));
+    await offerCard($('#cb'),{id:'banker',title:`Can I afford "${clip(item,24)}"?`,verdict:a.verdict,body:a.line+' (Not financial advice.)'},'banker-si.png');
   });
   $('#sample').onclick=()=>{$('#item').value='New headphones';$('#price').value='250';$('#free').value='300';$('#sav').value='0';$('#f').requestSubmit()};
 }
 
 /* ================= tool: ASTRONAUT ================= */
+const ASTRO_SIGNS=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const ASTRO={
+ love:["A good day for clear, honest conversations.","Reach out to someone you have been meaning to contact.","Listen more than you speak today.","A small gesture will mean more than a big one.","Avoid reading too much into a short reply."],
+ money:["Review recurring subscriptions today.","Delay any large purchase by a day.","A small saving is available if you look for it.","Check your budget before you spend.","Avoid impulse purchases late in the evening."],
+ energy:["Take a short walk outside.","Finish one small task first.","Drink water and stretch.","Say no to one extra commitment.","Tidy one small space."],
+ caution:["Avoid sending messages while upset.","Avoid overcommitting your time.","Avoid skipping meals.","Avoid late-night decisions.","Avoid sharing unverified claims online."]
+};
+const ASTRO_PLANETS=['Mercury','Venus','Mars','Jupiter','Saturn','Neptune','the Moon','the Sun'];
+function forecast(sign,ask,date){
+  const r=rng(fnv(sign+date+ask.toLowerCase()));
+  const vibes=Math.floor(r()*101),lucky=1+Math.floor(r()*99),planet=pick(r,ASTRO_PLANETS);
+  const band=vibes>=80?'Excellent':vibes>=55?'Good':vibes>=30?'Mixed':'Challenging';
+  return{vibes,lucky,planet,band,love:pick(r,ASTRO.love),money:pick(r,ASTRO.money),energy:pick(r,ASTRO.energy),caution:pick(r,ASTRO.caution),quip:pick(r,['Houston, minor turbulence expected.','Stars are mostly cooperating.','Cosmic Wi-Fi: occasionally unstable.'])};
+}
 function toolAstronaut(root){
-  const signs=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
-  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="sign">Your sign</label><select id="sign">${signs.map(s=>`<option>${s}</option>`).join('')}</select></div>
-  <div class="field"><label for="ask">Ask the stars about (optional)</label><input type="text" id="ask" maxlength="40" placeholder="my job / my crush / my fantasy team"></div></div>
-  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-sparkle"/></svg> Read the stars</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
-  <p class="note">Horoscopes are entertainment. The same sign gets the same forecast all day, then a new one tomorrow. No planets were consulted. Not advice of any kind.</p>`;
-  const LOVE=["Mercury is in retrograde with your ex. Do not text. The planets said no.","A stranger will like your post. It will be a bot. Still counts.","Venus says: stop checking their story. They know. Everyone knows.","Someone is thinking about you. It is a delivery driver. Still thinking.","Love is near. It is in the group chat. Do not reply 'k.'"];
-  const MONEY=["Jupiter advises you not to buy the thing at 2 AM.","A small windfall approaches: $3 in an old jacket.","Saturn says: check your subscriptions. One of them is evil.","The stars suggest a no-spend day. The stars know you will spend anyway.","Mars is in your wallet. Mars is spending."];
-  const LUCK=["Today's lucky move: drink water.","Today's lucky move: say no to one thing.","Today's lucky move: send the text. (The good one.)","Today's lucky move: take the stairs. The stairs are watching.","Today's lucky move: go outside. The sun misses you."];
-  const AVOID=["Avoid: group chats, spicy decisions and the number 7 (rude).","Avoid: replying 'k.' to anything.","Avoid: your 3rd coffee and your 5th opinion.","Avoid: the phrase 'let me just check one thing.'","Avoid: buying a thing 'for the aesthetic.'"];
-  const PLANETS=['Mercury','Venus','Mars','Jupiter','Saturn','Neptune','Pluto (still a planet to me)','the Moon','the Sun','a random asteroid named Kevin'];
+  root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="grid2"><div class="field"><label for="sign">Your sign</label><select id="sign">${ASTRO_SIGNS.map(s=>`<option>${s}</option>`).join('')}</select></div>
+  <div class="field"><label for="ask">Topic (optional)</label><input type="text" id="ask" maxlength="40" placeholder="work / travel / a decision"></div></div>
+  <div class="row"><button class="btn gold" type="submit"><svg class="ic"><use href="#i-sparkle"/></svg> Get my forecast</button></div></form><div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
+  <p class="note">Horoscopes are for entertainment only. The same sign gets the same forecast all day, with a new one tomorrow. No planets were consulted, and this is not advice of any kind.</p>`;
   $('#f').addEventListener('submit',async e=>{
     e.preventDefault();const out=$('#out');out.replaceChildren();$('#cb').replaceChildren();
-    const sign=$('#sign').value,ask=$('#ask').value.trim(),r=rng(fnv(sign+today()+ask.toLowerCase()));
-    const vibes=Math.floor(r()*101),lucky=1+Math.floor(r()*99),planet=pick(r,PLANETS);
-    const band=vibes>=80?'Immaculate':vibes>=55?'Decent':vibes>=30?'Questionable':'Houston, we have a problem';
-    say(out,'astronaut',`${sign}, today's cosmic forecast, transmitted from near the moon (I'm lost, but the signal is great):`);
-    out.append(el('div','line q',`Vibes: ${vibes}%  (${band})   ·   Lucky number: ${lucky}   ·   Ruling planet today: ${planet}`));
-    const m=el('div','meter'),i=el('i');i.style.background=vibes>=55?'var(--green)':vibes>=30?'var(--amber)':'var(--red)';m.append(i);out.append(m);requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=vibes+'%'}));
-    [['Love',pick(r,LOVE)],['Money',pick(r,MONEY)],['Luck',pick(r,LUCK)],['',pick(r,AVOID)]].forEach(([k,t])=>say(out,'astronaut',(k?k+': ':'')+t));
-    if(ask)say(out,'astronaut',`About "${ask}": the stars say "ask again after a snack." Then they went quiet. Stars do that.`);
-    await offerCard($('#cb'),{id:'astronaut',title:`${sign} · ${today()}`,verdict:`VIBES: ${vibes}% (${band.toUpperCase()})`,body:`Lucky number ${lucky}. Ruling planet: ${planet}. ${pick(r,LUCK)}`},`astronaut-${sign.toLowerCase()}.png`);
+    const sign=$('#sign').value,ask=$('#ask').value.trim(),f=forecast(sign,ask,today());
+    say(out,'astronaut',`Daily outlook for ${sign}: ${f.vibes}% (${f.band}). Lucky number ${f.lucky}. Guiding planet: ${f.planet}.`);
+    const m=el('div','meter'),i=el('i');i.style.background=f.vibes>=55?'var(--green)':f.vibes>=30?'var(--amber)':'var(--red)';m.append(i);out.append(m);requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=f.vibes+'%'}));
+    [['Relationships',f.love],['Money',f.money],['Energy',f.energy],['Caution',f.caution]].forEach(([k,t])=>say(out,'astronaut',`${k}: ${t}`));
+    if(ask)say(out,'astronaut',`On "${ask}": proceed step by step and avoid rushing a decision today.`);
+    quip(out,f.quip);
+    await offerCard($('#cb'),{id:'astronaut',title:`${sign} · ${today()}`,verdict:`OUTLOOK: ${f.vibes}% (${f.band.toUpperCase()})`,body:`Lucky number ${f.lucky}. Guiding planet: ${f.planet}. Energy: ${f.energy}`},`astronaut-${sign.toLowerCase()}.png`);
   });
 }
 

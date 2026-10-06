@@ -2,7 +2,7 @@
 
 A read-only checker for Solana tokens. Give it a token address, get back a risk score, a verdict and a list of findings. It never holds keys, never signs anything and never trades. Zero dependencies, Node 20+.
 
-Verdicts: `SMELLS CLEAN (SO FAR)` · `SNIFFY` · `STINKS TO HIGH HEAVEN` · `NOTHING OBVIOUS (LIMITED CHECK)` (clean, but on-chain checks could not run) · `NOT FOUND`.
+Verdicts: `LOW RISK (SO FAR)` · `ELEVATED RISK` · `HIGH RISK` · `LOW RISK (LIMITED CHECK)` (clean, but on-chain checks could not run) · `NOT FOUND`.
 
 ## Run it
 
@@ -23,7 +23,7 @@ npm run smoke                              # live run against a few real coins
 | On-chain | Mint authority still active, freeze authority present, risky Token-2022 extensions (permanent delegate, transfer hook, transfer fee, non-transferable, pausable) | Solana RPC |
 | Holders | Biggest real holder, top-10 concentration (liquidity pools set aside), creator still holding a large share | Solana RPC (needs a personal key) |
 
-Each finding has a severity (1 note, 2 warning, 3 serious). Score = sum of severities x 10, capped at 100. Over 40 is "stinks", over 10 is "sniffy".
+Each finding has a severity (1 note, 2 warning, 3 serious). Score = sum of severities x 10, capped at 100. Over 40 is high risk, over 10 is elevated.
 
 ## HTTP API
 

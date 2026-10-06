@@ -30,13 +30,13 @@ test('rejects invalid addresses', async () => {
 
 test('clean token with full coverage', async () => {
   const r = await checkToken(MINT, { sources: goodSources(), now: NOW });
-  assert.equal(r.verdict, 'SMELLS CLEAN (SO FAR)');
+  assert.equal(r.verdict, 'LOW RISK (SO FAR)');
   assert.equal(r.score, 0);
   assert.deepEqual(r.coverage.skipped, []);
   assert.equal(r.token.symbol, 'TEST');
   assert.equal(r.creator, 'CREATOR');
   assert.ok(r.holders && r.holders.top1Pct > 0);
-  assert.match(r.summary, /no red flags/);
+  assert.match(r.summary, /No red flags/);
 });
 
 test('risky token is flagged and scored', async () => {
@@ -45,7 +45,7 @@ test('risky token is flagged and scored', async () => {
     mintInfo: async () => ({ program: 'spl-token', decimals: 6, supply: 1000, mintAuthority: 'Mint1111aaaa', freezeAuthority: null, extensions: [] }),
   });
   const r = await checkToken(MINT, { sources, now: NOW });
-  assert.equal(r.verdict, 'STINKS TO HIGH HEAVEN');
+  assert.equal(r.verdict, 'HIGH RISK');
   assert.ok(r.score > 40);
   const ids = r.findings.map((x) => x.id);
   for (const id of ['thin_liquidity', 'one_sided_flow', 'no_socials', 'mint_authority']) assert.ok(ids.includes(id), id);
@@ -54,7 +54,7 @@ test('risky token is flagged and scored', async () => {
 test('holder lookup failing is reported, not fatal, and lowers confidence', async () => {
   const sources = goodSources({ holders: async () => { throw new Error('Indexed requests require a personal token'); } });
   const r = await checkToken(MINT, { sources, now: NOW });
-  assert.equal(r.verdict, 'NOTHING OBVIOUS (LIMITED CHECK)');
+  assert.equal(r.verdict, 'LOW RISK (LIMITED CHECK)');
   assert.deepEqual(r.coverage.skipped.map((s) => s.id), ['holders']);
   assert.match(r.summary, /Could not check: holders/);
 });
@@ -80,15 +80,15 @@ test('market source down is reported', async () => {
 test('score is capped and verdict tiers', () => {
   assert.equal(scoreFindings([{ severity: 3 }, { severity: 3 }, { severity: 3 }, { severity: 3 }]), 100);
   assert.equal(scoreFindings([]), 0);
-  assert.equal(verdictFor(0), 'SMELLS CLEAN (SO FAR)');
-  assert.equal(verdictFor(10), 'SMELLS CLEAN (SO FAR)');
-  assert.equal(verdictFor(20), 'SNIFFY');
-  assert.equal(verdictFor(50), 'STINKS TO HIGH HEAVEN');
-  assert.equal(verdictFor(0, { limited: true }), 'NOTHING OBVIOUS (LIMITED CHECK)');
+  assert.equal(verdictFor(0), 'LOW RISK (SO FAR)');
+  assert.equal(verdictFor(10), 'LOW RISK (SO FAR)');
+  assert.equal(verdictFor(20), 'ELEVATED RISK');
+  assert.equal(verdictFor(50), 'HIGH RISK');
+  assert.equal(verdictFor(0, { limited: true }), 'LOW RISK (LIMITED CHECK)');
 });
 
 test('summary lists findings worst-first and ends with the disclaimer', () => {
-  const s = buildSummary({ symbol: 'X', verdict: 'SNIFFY', score: 20, skipped: [], findings: [{ id: 'no_socials', severity: 1, title: 'No socials', detail: 'none.' }, { id: 'mint_authority', severity: 3, title: 'Mint open', detail: 'open.' }] });
+  const s = buildSummary({ symbol: 'X', verdict: 'ELEVATED RISK', score: 20, skipped: [], findings: [{ id: 'no_socials', severity: 1, title: 'No socials', detail: 'none.' }, { id: 'mint_authority', severity: 3, title: 'Mint open', detail: 'open.' }] });
   assert.ok(s.indexOf('Mint open') < s.indexOf('No socials'));
   assert.match(s, /Not financial advice\.$/);
 });
