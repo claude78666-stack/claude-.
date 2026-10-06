@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 600" width="1080" height="1200">
+<defs><radialGradient id="g" cx="38%" cy="28%" r="85%"><stop offset="0" stop-color="#f0c08a"/><stop offset=".5" stop-color="#c98a52"/><stop offset="1" stop-color="#8f5a30"/></radialGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c3a4a"/><stop offset="1" stop-color="#06141c"/></linearGradient></defs>
+<rect width="540" height="600" fill="url(#bg)"/>
+<ellipse cx="270" cy="548" rx="160" ry="16" fill="#000" opacity=".4"/>
+<path d="M345 505 Q410 578 478 540 Q514 516 496 486" fill="none" stroke="#25140a" stroke-width="34" stroke-linecap="round"/><path d="M345 505 Q410 578 478 540 Q514 516 496 486" fill="none" stroke="#c98a52" stroke-width="20" stroke-linecap="round"/>
+<path d="M410 560 l-4 -18 M450 556 l2 -18" stroke="#8f5a30" stroke-width="8" stroke-linecap="round"/>
+<ellipse cx="270" cy="445" rx="108" ry="100" fill="url(#g)" stroke="#25140a" stroke-width="9"/>
+<ellipse cx="270" cy="465" rx="62" ry="62" fill="#fff0d6" opacity=".9"/>
+<ellipse cx="205" cy="540" rx="42" ry="20" fill="#8f5a30" stroke="#25140a" stroke-width="8"/><ellipse cx="335" cy="540" rx="42" ry="20" fill="#8f5a30" stroke="#25140a" stroke-width="8"/>
+<path d="M178 410 L135 406" stroke="#25140a" stroke-width="40" stroke-linecap="round"/><path d="M178 410 L135 406" stroke="#c98a52" stroke-width="26" stroke-linecap="round"/>
+<path d="M362 410 L405 406" stroke="#25140a" stroke-width="40" stroke-linecap="round"/><path d="M362 410 L405 406" stroke="#c98a52" stroke-width="26" stroke-linecap="round"/>
+<path d="M122 376 C82 344 44 352 32 376.8 C60 379.4 86 392 122 402Z" fill="#ff5a3c" stroke="#25140a" stroke-width="8" stroke-linejoin="round"/><path d="M122 424 C82 456 44 448 32 423.2 C60 420.6 86 408 122 398Z" fill="#ff5a3c" stroke="#25140a" stroke-width="8" stroke-linejoin="round"/>
+<circle cx="122" cy="400" r="34" fill="#ff5a3c" stroke="#25140a" stroke-width="8"/><path d="M140 386 Q126 376 110 384" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".6"/><path d="M418 376 C458 344 496 352 508 376.8 C480 379.4 454 392 418 402Z" fill="#ff5a3c" stroke="#25140a" stroke-width="8" stroke-linejoin="round"/><path d="M418 424 C458 456 496 448 508 423.2 C480 420.6 454 408 418 398Z" fill="#ff5a3c" stroke="#25140a" stroke-width="8" stroke-linejoin="round"/>
+<circle cx="418" cy="400" r="34" fill="#ff5a3c" stroke="#25140a" stroke-width="8"/><path d="M400 386 Q414 376 430 384" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".6"/>
+<circle cx="150" cy="128" r="52" fill="url(#g)" stroke="#25140a" stroke-width="9"/><circle cx="390" cy="128" r="52" fill="url(#g)" stroke="#25140a" stroke-width="9"/>
+<circle cx="152" cy="132" r="26" fill="#e8a7a0" opacity=".85"/><circle cx="388" cy="132" r="26" fill="#e8a7a0" opacity=".85"/>
+<ellipse cx="270" cy="225" rx="146" ry="126" fill="url(#g)" stroke="#25140a" stroke-width="9"/>
+<ellipse cx="190" cy="150" rx="40" ry="16" fill="#fff" opacity=".35" transform="rotate(-25 190 150)"/>
+<ellipse cx="270" cy="296" rx="82" ry="58" fill="#fff0d6" stroke="#25140a" stroke-width="6"/>
+<g fill="none" stroke="#25140a" stroke-width="12" stroke-linecap="round"><path d="M178 228 Q212 182 246 228"/><path d="M294 228 Q328 182 362 228"/></g><path d="M252 262 L288 262 L270 282Z" fill="#ff8aa0" stroke="#25140a" stroke-width="6" stroke-linejoin="round"/><path d="M270 282 L270 296"  stroke="#25140a" stroke-width="6" stroke-linecap="round"/><path d="M232 296 Q270 350 308 296Z" fill="#25140a"/><path d="M250 326 Q270 340 290 326 Q270 332 250 326Z" fill="#ff7a8a"/><g stroke="#25140a" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8"><path d="M205 280 L135 268"/><path d="M205 292 L132 296"/><path d="M207 304 L142 322"/><path d="M335 280 L405 268"/><path d="M335 292 L408 296"/><path d="M333 304 L398 322"/></g>
+<g fill="#ff8aa0" opacity=".4"><ellipse cx="160" cy="288" rx="22" ry="13"/><ellipse cx="380" cy="288" rx="22" ry="13"/></g>
+<text x="270" y="590" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="40" fill="#fff" stroke="#25140a" stroke-width="2">Hugs hard.</text>
+</svg>
