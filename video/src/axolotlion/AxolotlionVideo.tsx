@@ -10,7 +10,7 @@ const ease = (f: number, a: number, b: number, from = 0, to = 1, e = Easing.out(
   interpolate(f, [a, b], [from, to], {...clamp, easing: e});
 const win = (f: number, a: number, b: number, fade = 12) => interpolate(f, [a, a + fade, b - fade, b], [0, 1, 1, 0], clamp);
 
-const RUN_W = 1840, RUN_H = 812, ST_W = 1751, ST_H = 1022;
+const RUN_W = 1851, RUN_H = 818, ST_W = 1406, ST_H = 976;
 const GLOW = 'drop-shadow(0 0 26px rgba(255,120,225,.55)) drop-shadow(0 0 70px rgba(90,200,255,.38))';
 
 /* ---------- gallop pose: bounce, pitch, squash ---------- */
@@ -261,13 +261,13 @@ export const AxolotlionVideo: React.FC = () => {
 
       {/* S2 */}
       <AbsoluteFill style={{opacity: s2}}>
-        <Stander x={560} ground={930} scale={0.6} pulse={ease(f, 300, 320, 0, 1) * (1 - ease(f, 322, 340, 0, 1))} mane={ease(f, 252, 262, 0, 1) * (1 - ease(f, 264, 276, 0, 1))} opacity={ease(f, 150, 180, 0, 1)} />
-        <Line from={[785, 452]} to={[1090, 215]} at={178} color="#ff9ae0" />
-        <Line from={[665, 354]} to={[1090, 425]} at={252} color="#ffd166" />
-        <Line from={[780, 685]} to={[1090, 635]} at={305} color="#6ff2ff" />
-        <Ring x={785} y={452} at={180} color="#ff9ae0" />
-        <Ring x={665} y={354} at={252} color="#ffd166" />
-        <Ring x={780} y={685} at={305} color="#6ff2ff" />
+        <Stander x={520} ground={930} scale={0.7} pulse={ease(f, 300, 320, 0, 1) * (1 - ease(f, 322, 340, 0, 1))} mane={ease(f, 252, 262, 0, 1) * (1 - ease(f, 264, 276, 0, 1))} opacity={ease(f, 150, 180, 0, 1)} />
+        <Line from={[894, 404]} to={[1090, 215]} at={178} color="#ff9ae0" />
+        <Line from={[727, 267]} to={[1090, 425]} at={252} color="#ffd166" />
+        <Line from={[933, 677]} to={[1090, 635]} at={305} color="#6ff2ff" />
+        <Ring x={894} y={404} at={180} color="#ff9ae0" />
+        <Ring x={727} y={267} at={252} color="#ffd166" />
+        <Ring x={933} y={677} at={305} color="#6ff2ff" />
         <InfoCard at={178} y={125} accent="#ff9ae0" kicker="The axolotl" text="A salamander famous for regrowing lost limbs." />
         <InfoCard at={252} y={335} accent="#ffd166" kicker="The lion" text="The mane of a leader. Main-character energy." />
         <InfoCard at={305} y={545} accent="#6ff2ff" kicker="The jellyfish glow" text="A bioluminescent shine that stands out in the dark." />
@@ -314,7 +314,7 @@ export const AxolotlionVideo: React.FC = () => {
 
       {/* S5 */}
       <AbsoluteFill style={{opacity: s5}}>
-        <Stander x={560} ground={945} scale={0.62} pulse={0.35 + Math.sin(f / 10) * 0.2} />
+        <Stander x={500} ground={945} scale={0.58} pulse={0.35 + Math.sin(f / 10) * 0.2} />
         <div style={{position: 'absolute', right: 110, top: 190, width: 900}}>
           <Words text="Axolotlion" size={170} delay={782} gradient />
           <div style={{height: 24}} />
