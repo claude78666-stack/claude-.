@@ -243,7 +243,7 @@ export const AxolotlionVideo: React.FC = () => {
     [431, 508, 'A leader gives a community something to rally around.'],
     [511, 600, 'And a glowing face is easy to turn into memes.'],
     [612, 780, 'The lore: he regrows after every dip and never stops running.'],
-    [790, 890, 'Axolotlion. A joke concept, not an investment.'],
+    [790, 890, 'Axolotlion. Regrows. Leads. Glows.'],
   ];
 
   return (
@@ -321,7 +321,7 @@ export const AxolotlionVideo: React.FC = () => {
           <Words text="Regrows. Leads. Glows." size={56} weight={500} font={body} delay={800} stagger={5} color={C.gold2} />
           <div style={{height: 36}} />
           <div style={{fontFamily: body, fontSize: 28, lineHeight: 1.45, color: C.muted, maxWidth: 760, opacity: ease(f, 822, 840)}}>
-            Joke concept. The coin is not launched. Not an investment. No promised returns.
+            Not financial advice.
           </div>
         </div>
       </AbsoluteFill>
