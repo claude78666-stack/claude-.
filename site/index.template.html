@@ -550,6 +550,7 @@ const IMG=/*IMG_JSON*/{};
 const REAL=/*REAL_JSON*/{};
 const CAN_DL=/*CAN_DL*/true;
 const CAN_LIVE=/*CAN_LIVE*/true;
+const AGENT_URL=/*AGENT_URL*/'';
 function toast(msg){const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=msg;document.body.append(d);setTimeout(()=>d.remove(),3800)}
 
 /* ================= helpers ================= */
@@ -758,15 +759,57 @@ function examine(p,copy){
   if(Math.abs(p.priceChange?.h24||0)>100000)f.push({s:1,t:`A 24h move of ${Math.round(p.priceChange.h24).toLocaleString()}%. Fireworks or a glitch. Either way, I'm hiding under the desk.`});
   return{f,score:Math.min(100,f.reduce((a,x)=>a+x.s,0)*10)};
 }
+async function agentCheck(mint){
+  const ac=new AbortController(),t=setTimeout(()=>ac.abort(),45000);
+  try{
+    const r=await fetch(AGENT_URL.replace(/\/$/,'')+'/check?mint='+encodeURIComponent(mint),{signal:ac.signal});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){const e=new Error(j.error||('HTTP '+r.status));e.status=r.status;throw e}
+    return j;
+  }finally{clearTimeout(t)}
+}
+const SKIP_NAMES={holders:'holder concentration (the server needs an RPC key)',creator:'creator lookup',copycats:'copycat search',market:'market data',mint_authorities:'mint and freeze authority'};
+async function renderAgentReport(r,out,cb){
+  const sym=r.token?.symbol||'?',score=r.score,col=score>40?'var(--red)':score>10?'var(--amber)':'var(--green)';
+  if(r.verdict==='NOT FOUND'){say(out,'sniffles','I sniffed everywhere and found nothing for that address. It may be too new, the address may be wrong, or it may not be on Solana.');return}
+  const head=el('div','card');head.style.marginTop='0';
+  const h3=el('h3',null,`Case file: $${sym}`);h3.style.cssText='margin:0 0 4px;font:700 22px var(--serif);color:var(--gold2)';
+  head.append(h3,el('div','hint',(r.token?.name||'')+'  ·  full check by the SI agent'));
+  const mk=r.market,pct=x=>x==null?'n/a':x.toFixed(1)+'%';
+  if(mk){const g=el('div','pair');[['Market cap',money(mk.marketCap)],['Pool cash',money(mk.liquidityUsd)],['24h volume',money(mk.volume24h)],['Buys / sells',`${mk.buys24h.toLocaleString()} / ${mk.sells24h.toLocaleString()}`],['Age',mk.ageHours==null?'n/a':mk.ageHours<48?mk.ageHours.toFixed(1)+' hours':Math.round(mk.ageHours/24)+' days']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));g.append(s)});head.append(g)}
+  const oc=r.onchain,h=r.holders;
+  if(oc){const g=el('div','pair');[['Mint authority',oc.mintAuthority?'Active':'Renounced'],['Freeze authority',oc.freezeAuthority?'Present':'None'],['Top holder',h?pct(h.top1Pct):'not checked'],['Top 10 holders',h?pct(h.top10Pct):'not checked'],['Creator holds',h&&r.creator?pct(h.creatorPct):'not checked']].forEach(([k,v])=>{const s=el('div','stat');s.append(el('span',null,k),el('b',null,v));g.append(s)});head.append(g)}
+  head.append(el('div','hint',`Stink meter: ${score}/100`));
+  const m=el('div','meter'),i=el('i');i.style.background=col;m.append(i);head.append(m);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=score+'%'}));out.append(head);
+  const fs=[...r.findings].sort((a,b)=>b.severity-a.severity);
+  fs.forEach((x,n)=>{const d=el('div','flag');const b=el('div');const t=el('b',null,x.title);t.style.color='var(--gold2)';b.append(t,el('div',null,x.detail));d.append(el('span','tag sev'+x.severity,'Clue '+String.fromCharCode(65+n)),b);out.append(d)});
+  if(!fs.length)say(out,'sniffles','My nose found no red flags in the data I could reach. Verify everything yourself anyway.');
+  const sk=(r.coverage?.skipped||[]).filter(s=>s.id!=='creator');
+  if(sk.length)out.append(el('div','hint','Not checked: '+sk.map(s=>SKIP_NAMES[s.id]||s.id).join('; ')+'.'));
+  out.append(el('div','line v',r.verdict));
+  const body=fs.length?fs.slice(0,3).map((x,n)=>`${String.fromCharCode(65+n)}. ${x.title}.`).join(' '):'No red flags found in the data reached. Not a safety guarantee.';
+  await offerCard(cb,{id:'sniffles',title:`Case file: $${sym}`,verdict:r.verdict,body:body+' (Opinion based on public data. Not financial advice.)'},`sniffles-${sym}.png`);
+}
 function toolSniffles(root){
   root.innerHTML=`<form class="card" id="f" autocomplete="off"><div class="field"><label for="mint">Token address</label><input type="text" id="mint" placeholder="Paste a Solana token address (pump.fun coins end in …pump)" spellcheck="false" autocapitalize="off"></div>
     <div class="row"><button class="btn gold" type="submit" id="go"><svg class="ic"><use href="#i-search"/></svg> Sniff it</button><button class="btn ghost" type="button" id="snap">Use a snapshot case</button></div>
     <div class="try"><span class="hint" style="margin:0">Live examples:</span><button type="button" class="chip" data-m="SH6SfUf5pPbdq9h7RjnsoGjNvP3onox7P5tKJGEpump">DOTF</button><button type="button" class="chip" data-m="GGMm5EmstNMQh4tvR127joSzBDa5UeE4FkVYZZmtpump">SARP</button><button type="button" class="chip" data-m="yXJ9cYmX2Mp7JFhwZWz9NESbVes3VFAEGPf3rgKpump">UDR</button></div></form>
     <div class="out" id="out" aria-live="polite"></div><div class="cardbox" id="cb"></div>
-    <p class="note"><b>Opinion, not advice.</b> Sniffles reads public market numbers from DexScreener (called from your browser) and can be wrong or out of date. A clean result is not a safety guarantee. Developer-wallet and holder checks are coming. Not financial advice.</p>`;
+    <p class="note"><b>Opinion, not advice.</b> ${AGENT_URL&&CAN_LIVE?'Sniffles runs a full check through the SI coin-check agent: market numbers plus on-chain data such as whether more tokens can be printed and who holds the supply.':'Sniffles reads public market numbers from DexScreener (called from your browser).'} It can be wrong or out of date. A clean result is not a safety guarantee. Not financial advice.</p>`;
   const out=$('#out');
   async function run(target){
     if(!CAN_LIVE&&target!=='SNAPSHOT'){out.replaceChildren();say(out,'sniffles','Live lookups are switched off in this preview. Tap "Use a snapshot case" to see how I work. They run when the site is hosted normally.');return}
+    let agentNote=false;
+    if(AGENT_URL&&CAN_LIVE&&target!=='SNAPSHOT'){
+      out.replaceChildren();$('#cb').replaceChildren();
+      if(!BASE58.test(target)){say(out,'sniffles','That does not look like a Solana token address. My nose is confused and slightly offended.');return}
+      const g=$('#go');g.disabled=true;say(out,'sniffles','Calling the detective agency (running the full check)…');
+      try{const rep=await agentCheck(target);g.disabled=false;out.replaceChildren();await renderAgentReport(rep,out,$('#cb'));return}
+      catch(e){g.disabled=false;
+        if(e.status===400||e.status===429){out.replaceChildren();say(out,'sniffles',e.message);return}
+        agentNote=true}
+    }
     out.replaceChildren();$('#cb').replaceChildren();const go=$('#go');go.disabled=true;let pair,copy=0,err=null;
     try{
       if(target==='SNAPSHOT'){pair=SNAPSHOT;copy=SNAPSHOT._copycats}
@@ -781,6 +824,7 @@ function toolSniffles(root){
     }catch(e){err=e}
     go.disabled=false;out.replaceChildren();
     if(err){const m=err.name==='AbortError'?'The data took too long to arrive (request timed out).':((err.message||'').startsWith('HTTP')||err instanceof TypeError)?'I could not reach the data source from this browser. Try a snapshot case, or open the site in your normal browser.':err.message;say(out,'sniffles',m);return}
+    if(agentNote)out.append(msgEl('sniffles','The detective agency did not answer, so this is the quick check (market numbers only).'));
     const{f,score}=examine(pair,copy),sym=pair.baseToken.symbol;
     const verdict=score<=10?'SMELLS CLEAN (so far)':score<=40?'SNIFFY…':'STINKS TO HIGH HEAVEN';
     const col=score<=10?'var(--green)':score<=40?'var(--amber)':'var(--red)';

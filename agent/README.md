@@ -50,6 +50,19 @@ The RPC URL contains a secret. Keep it in the host's environment settings, never
 - Creator detection is best effort and skipped for very busy tokens. It does not yet look at the creator's other launches.
 - A clean result is not a safety guarantee. It reads public numbers and can be wrong or out of date. Not financial advice.
 
-## Hosting
+## Hosting it and connecting the website
 
-Any small Node host works (Railway, Render, Fly, a $5 VPS): start command `npm run serve`, set the environment variables above. The website's Coin Sniffer could then call `GET /check` instead of DexScreener directly, which adds the on-chain checks.
+1. **Host the agent** on any small Node host. On Render (works from a phone): New, Web Service, pick this repo and the branch, set **Root Directory** to `agent`, Build Command empty, **Start Command** `npm start`. Add the environment variables below. Railway, Fly or a $5 VPS work the same way.
+2. **Set the environment variables:**
+   - `ALLOW_ORIGIN` = the address your website is hosted at (for example `https://yoursite.example.com`). Use `*` only while testing.
+   - `SOLANA_RPC_URL` = your personal RPC URL (optional, turns on the holder checks). Keep it in the host's settings, never in the repo.
+3. **Check it is up:** open `https://your-agent-address/health`. It should say `{"ok":true}`.
+4. **Connect the website** by rebuilding it with the agent's address, then upload the new `site/index.html` to wherever the site is hosted:
+
+```bash
+python3 site/build.py --agent-url=https://your-agent-address
+```
+
+With that address set, the Coin Sniffer sends each address to the agent and shows the full report (market numbers, mint and freeze authority, holder concentration). If the agent is down or unreachable, the page says so and falls back to the quick market-only check. Without the setting the site behaves as before.
+
+The private preview page on claude.ai cannot call outside servers, so the connection only works on a normally hosted copy of the site.

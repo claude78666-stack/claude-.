@@ -24,6 +24,7 @@ export function createServer({ check = checkToken, rateLimit = { max: 20, window
 
     const url = new URL(req.url, 'http://x');
     if (url.pathname === '/health') return send(200, { ok: true });
+    if (url.pathname === '/') return send(200, { name: 'SI coin-check agent', usage: 'GET /check?mint=<solana-token-address>', health: '/health' });
     if (url.pathname !== '/check') return send(404, { error: 'Not found. Try /check?mint=<address>' });
 
     const now = Date.now();

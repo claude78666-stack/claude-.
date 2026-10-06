@@ -4,13 +4,16 @@
 - Embeds all 10 character SVGs as data URIs (so there are no id clashes between them).
 - Swaps in the working name. Change NAME / change it on the command line to rename the whole site:
       python3 site/build.py "SI Agents"
+- Connect the Coin Sniffer to a hosted coin-check agent (see agent/README.md):
+      python3 site/build.py --agent-url=https://your-agent.example.com
 """
 import base64, json, os, subprocess, sys
 from pathlib import Path
 
 here = Path(__file__).parent
 root = here.parent
-args = [a for a in sys.argv[1:] if not a.startswith("--artifact")]
+args = [a for a in sys.argv[1:] if not a.startswith("--artifact") and not a.startswith("--agent-url")]
+AGENT_URL = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--agent-url=")), os.environ.get("AGENT_URL", ""))
 ART = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--artifact=")), None)
 NAME = args[0] if args else "SI Agents"
 
@@ -54,13 +57,14 @@ for k, p in FILES.items():
 
 page = (here / "index.template.html").read_text()
 page = page.replace("/*IMG_JSON*/{}", json.dumps(imgs)).replace("/*REAL_JSON*/{}", json.dumps(real))
+page = page.replace("/*AGENT_URL*/''", json.dumps(AGENT_URL.strip()))
 page = page.replace("{{NAME_UP}}", NAME.upper()).replace("{{NAME}}", NAME)
 (here / "index.html").write_text(page)
 
 if ART:
     # Fragment for the claude.ai page host: no html/head/body wrappers, no downloads, no outside fetches.
     import re
-    a = page.replace("/*CAN_DL*/true", "false").replace("/*CAN_LIVE*/true", "false")
+    a = page.replace("/*CAN_DL*/true", "false").replace("/*CAN_LIVE*/true", "false")  # the preview host blocks outside calls, so no agent there either
     a = re.sub(r"<title>.*?</title>", f"<title>{NAME}</title>", a, count=1, flags=re.S)
     for pat in (r"<!doctype html>\s*", r"<html[^>]*>\s*", r"<head>\s*", r"</head>\s*", r"<body>\s*", r"</body>\s*", r"</html>\s*",
                 r"<meta charset[^>]*>\s*", r'<meta name="viewport"[^>]*>\s*', r'<meta name="color-scheme"[^>]*>\s*',
