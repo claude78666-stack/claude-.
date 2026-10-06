@@ -319,10 +319,7 @@ export const AxolotlionVideo: React.FC = () => {
           <Words text="Axolotlion" size={170} delay={782} gradient />
           <div style={{height: 24}} />
           <Words text="Regrows. Leads. Glows." size={56} weight={500} font={body} delay={800} stagger={5} color={C.gold2} />
-          <div style={{height: 36}} />
-          <div style={{fontFamily: body, fontSize: 28, lineHeight: 1.45, color: C.muted, maxWidth: 760, opacity: ease(f, 822, 840)}}>
-            Not financial advice.
-          </div>
+          
         </div>
       </AbsoluteFill>
 
