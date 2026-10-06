@@ -10,7 +10,7 @@ const ease = (f: number, a: number, b: number, from = 0, to = 1, e = Easing.out(
   interpolate(f, [a, b], [from, to], {...clamp, easing: e});
 const win = (f: number, a: number, b: number, fade = 12) => interpolate(f, [a, a + fade, b - fade, b], [0, 1, 1, 0], clamp);
 
-const RUN_W = 1084, RUN_H = 740, ST_W = 765, ST_H = 789;
+const RUN_W = 1840, RUN_H = 812, ST_W = 1751, ST_H = 1022;
 const GLOW = 'drop-shadow(0 0 26px rgba(255,120,225,.55)) drop-shadow(0 0 70px rgba(90,200,255,.38))';
 
 /* ---------- gallop pose: bounce, pitch, squash ---------- */
@@ -28,7 +28,7 @@ const Runner: React.FC<{pose: (f: number) => RunPose; scale: number; opacity?: n
     const p = pose(fr), g = gallop(fr);
     const w = RUN_W * scale, h = RUN_H * scale;
     return (
-      <div key={key} style={{position: 'absolute', left: p.x - w / 2, top: p.ground - h + g.dy, width: w, height: h, opacity: o, transform: `rotate(${g.rot + (rotExtra ? rotExtra(fr) : 0)}deg) scaleY(${g.sy}) scaleX(-1)`, transformOrigin: '50% 90%', filter: `${blur ? `blur(${blur}px) ` : ''}${glow ? GLOW : ''}`}}>
+      <div key={key} style={{position: 'absolute', left: p.x - w / 2, top: p.ground - h + g.dy, width: w, height: h, opacity: o, transform: `rotate(${g.rot + (rotExtra ? rotExtra(fr) : 0)}deg) scaleY(${g.sy})`, transformOrigin: '50% 90%', filter: `${blur ? `blur(${blur}px) ` : ''}${glow ? GLOW : ''}`}}>
         <Img src={staticFile('axolotlion/run-a-cut.png')} style={{width: '100%', height: '100%'}} />
       </div>
     );
@@ -196,7 +196,7 @@ const Memes: React.FC<{at: number}> = ({at}) => {
         const p = spring({frame: f - at - i * 6, fps, config: {damping: 14, stiffness: 160}});
         return (
           <div key={i} style={{position: 'absolute', left: 1010 + i * 195, top: 500 + (i % 2) * 36, width: 175, height: 215, borderRadius: 22, overflow: 'hidden', background: bg as string, border: '3px solid rgba(255,255,255,.7)', transform: `scale(${p}) rotate(${(i - 1.5) * 4}deg)`, opacity: p, boxShadow: '0 20px 40px -14px rgba(0,0,0,.7)'}}>
-            <Img src={staticFile('axolotlion/stand-cut.png')} style={{position: 'absolute', left: 4, top: 22 + (i % 2) * 6, width: 168, height: 173, objectFit: 'contain'}} />
+            <Img src={staticFile('axolotlion/stand-cut.png')} style={{position: 'absolute', left: 4, top: 22 + (i % 2) * 6, width: 168, height: 173, objectFit: 'cover', objectPosition: '60% 30%'}} />
             <div style={{position: 'absolute', left: 0, right: 0, bottom: 8, textAlign: 'center', fontFamily: display, fontWeight: 700, fontSize: 30, color: '#fff', textShadow: '0 2px 6px #000'}}>{t}</div>
           </div>
         );
@@ -252,7 +252,7 @@ export const AxolotlionVideo: React.FC = () => {
 
       {/* S1 */}
       <AbsoluteFill style={{opacity: s1 * s1o}}>
-        <Runner pose={run1} scale={0.86} />
+        <Runner pose={run1} scale={0.52} />
         <div style={{position: 'absolute', right: 120, top: 120, textAlign: 'right'}}>
           <div style={{fontFamily: body, fontWeight: 600, fontSize: 28, letterSpacing: '0.24em', textTransform: 'uppercase', color: C.gold, opacity: ease(f, 24, 44)}}>Meet</div>
           <Words text="Axolotlion" size={190} delay={30} gradient align="center" />
@@ -261,13 +261,13 @@ export const AxolotlionVideo: React.FC = () => {
 
       {/* S2 */}
       <AbsoluteFill style={{opacity: s2}}>
-        <Stander x={640} ground={930} scale={0.92} pulse={ease(f, 300, 320, 0, 1) * (1 - ease(f, 322, 340, 0, 1))} mane={ease(f, 252, 262, 0, 1) * (1 - ease(f, 264, 276, 0, 1))} opacity={ease(f, 150, 180, 0, 1)} />
-        <Line from={[800, 560]} to={[1090, 215]} at={178} color="#ff9ae0" />
-        <Line from={[650, 330]} to={[1090, 425]} at={252} color="#ffd166" />
-        <Line from={[760, 640]} to={[1090, 635]} at={305} color="#6ff2ff" />
-        <Ring x={800} y={560} at={180} color="#ff9ae0" />
-        <Ring x={650} y={330} at={252} color="#ffd166" />
-        <Ring x={760} y={640} at={305} color="#6ff2ff" />
+        <Stander x={560} ground={930} scale={0.6} pulse={ease(f, 300, 320, 0, 1) * (1 - ease(f, 322, 340, 0, 1))} mane={ease(f, 252, 262, 0, 1) * (1 - ease(f, 264, 276, 0, 1))} opacity={ease(f, 150, 180, 0, 1)} />
+        <Line from={[785, 452]} to={[1090, 215]} at={178} color="#ff9ae0" />
+        <Line from={[665, 354]} to={[1090, 425]} at={252} color="#ffd166" />
+        <Line from={[780, 685]} to={[1090, 635]} at={305} color="#6ff2ff" />
+        <Ring x={785} y={452} at={180} color="#ff9ae0" />
+        <Ring x={665} y={354} at={252} color="#ffd166" />
+        <Ring x={780} y={685} at={305} color="#6ff2ff" />
         <InfoCard at={178} y={125} accent="#ff9ae0" kicker="The axolotl" text="A salamander famous for regrowing lost limbs." />
         <InfoCard at={252} y={335} accent="#ffd166" kicker="The lion" text="The mane of a leader. Main-character energy." />
         <InfoCard at={305} y={545} accent="#6ff2ff" kicker="The jellyfish glow" text="A bioluminescent shine that stands out in the dark." />
@@ -276,7 +276,7 @@ export const AxolotlionVideo: React.FC = () => {
       {/* S3 */}
       <AbsoluteFill style={{opacity: s3}}>
         <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(2,8,20,0) 40%, rgba(2,8,20,.6) 100%)'}} />
-        <Runner pose={run3} scale={0.82} />
+        <Runner pose={run3} scale={0.5} />
         <div style={{position: 'absolute', right: 110, top: 110, width: 800}}>
           <div style={{fontFamily: body, fontWeight: 600, fontSize: 26, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.gold, opacity: ease(f, 336, 352), textShadow: '0 2px 10px #000'}}>Why it works as a crypto mascot</div>
           {[[345, 428, 'It comes back.', C.cyan], [428, 508, 'It leads.', C.gold2], [508, 600, 'It glows.', '#ff9ae0']].map(([a, b, t, col], i) => (
@@ -299,7 +299,7 @@ export const AxolotlionVideo: React.FC = () => {
         <svg width={1920} height={1080} style={{position: 'absolute', inset: 0}}>
           <polyline points={shownChart.map((p) => p.join(',')).join(' ')} fill="none" stroke="#6ff2ff" strokeWidth={8} strokeLinejoin="round" strokeLinecap="round" style={{filter: 'drop-shadow(0 0 16px #6ff2ff)'}} />
         </svg>
-        <Runner pose={run4} scale={0.5} rotExtra={slope4} />
+        <Runner pose={run4} scale={0.3} rotExtra={slope4} />
         <div style={{position: 'absolute', left: 110, top: 100}}>
           <div style={{fontFamily: body, fontWeight: 600, fontSize: 26, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.gold}}>Lore file</div>
           {[['Hybrid', 'axolotl + lion + jellyfish glow', 640], ['Power', 'regrows after every dip', 676], ['Flaw', 'cannot stop running', 712]].map(([k, v, at], i) => (
@@ -314,7 +314,7 @@ export const AxolotlionVideo: React.FC = () => {
 
       {/* S5 */}
       <AbsoluteFill style={{opacity: s5}}>
-        <Stander x={560} ground={940} scale={0.95} pulse={0.35 + Math.sin(f / 10) * 0.2} />
+        <Stander x={560} ground={945} scale={0.62} pulse={0.35 + Math.sin(f / 10) * 0.2} />
         <div style={{position: 'absolute', right: 110, top: 190, width: 900}}>
           <Words text="Axolotlion" size={170} delay={782} gradient />
           <div style={{height: 24}} />
