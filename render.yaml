@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: si-coin-check-agent
+    runtime: node
+    rootDir: agent
+    plan: free
+    buildCommand: "true"
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: ALLOW_ORIGIN
+        value: "*"
+      - key: SOLANA_RPC_URL
+        sync: false
