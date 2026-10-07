@@ -13,7 +13,7 @@ Rebuild: `python3 prep_assets.py` (only if art changed) then `python3 build.py`.
 - Drag the character sideways to turn him. Three real views (front, three-quarter, side) blend, and mirrored copies cover the other side. A tap or hold still makes him toot.
 - His head turns in 3D toward your cursor or finger. When nobody is touching the screen he looks around on his own.
 - "Spin him" sweeps him through all the angles.
-- Only the front half (+/- 90 degrees) exists so far. To complete the 360, generate a rear three-quarter view and a back view, add them as images, and extend `render()` in the turntable block of `index.template.html`.
+- He now turns +/- 135 degrees (270 degrees in total): front, three-quarter, side and rear three-quarter views, mirrored for the other side. The only missing slice is the straight-back view at 180 degrees. To finish the 360, generate a view from directly behind, add it like `v135` (see `make_v34.py` for the alignment recipe), and extend `render()` and the +/-135 clamps in the turntable block of `index.template.html`.
 
 ## Showroom stand
 The hero is a display case with spotlight beams (no platform or floor reflection). Drag and release to flick him; he keeps turning with momentum. If nobody touches the page for about 7 seconds he sweeps slowly left and right like a car on a display plinth, and stops the moment you move.

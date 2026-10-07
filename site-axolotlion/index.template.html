@@ -497,22 +497,26 @@ const TT=(function(){
   const front=view(false);front.appendChild(host);
   const mk34=m=>{const v=view(m),i=document.createElement('img');i.src=A.v34;i.alt='';i.draggable=false;const b=SR.v34;i.style.cssText=`left:${b.x/W*100}%;top:${b.y/H*100}%;width:${b.w/W*100}%;height:${b.h/H*100}%`;v.appendChild(i);return v};
   const r34=mk34(false),l34=mk34(true);
+  const mk135=m=>{const v=view(m,50),i=document.createElement('img');i.src=A.v135;i.alt='';i.draggable=false;const b=SR.v135;i.style.cssText=`left:${b.x/W*100}%;top:${b.y/H*100}%;width:${b.w/W*100}%;height:${b.h/H*100}%`;v.appendChild(i);return v};
+  const r135=mk135(true),l135=mk135(false);   // the photo shows him turned away to the left, so the right side is the mirror
   const mkProf=m=>{const v=view(m,48),box=document.createElement('div');box.className='prof';v.appendChild(box);const rig=document.createElement('div');box.appendChild(rig);buildRig(rig);return {v,box}};
   const rp=mkProf(false),lp=mkProf(true);
   function fit(){const s=tt.clientWidth/W*1.0;[rp,lp].forEach(p=>{p.box.style.width=RIG.w+'px';p.box.style.height=RIG.h+'px';p.box.style.transform=`translateX(-50%) scale(${s})`;p.box.style.left='48%'})}
   fit();addEventListener('resize',fit);
   const st={ang:0,tgt:0,idle:performance.now(),auto:0};
   function show(v,o){v.style.opacity=o;v.style.visibility=o<=.01?'hidden':'visible'}
+  const rise=x=>Math.min(1,Math.max(0,x)*1.2),fall=x=>1-Math.max(0,(Math.min(1,Math.max(0,x))-.5)*2);
   function render(a){
-    const ab=Math.abs(a),right=a>=0,f=ab/45;
-    show(front,ab<45?1-Math.max(0,(f-.5)*2):0);
-    const o34=ab<=45?Math.min(1,f*1.2):ab<90?1-Math.max(0,(((ab-45)/45)-.5)*2):0;
+    const ab=Math.abs(a),right=a>=0;
+    const o0=ab<45?fall(ab/45):0;
+    const o34=ab<=45?rise(ab/45):ab<90?fall((ab-45)/45):0;
+    const op=ab<=45?0:ab<=90?rise((ab-45)/45):ab<135?fall((ab-90)/45):0;
+    const o135=ab>90?rise((ab-90)/45):0;
+    show(front,o0);
     show(r34,right?o34:0);show(l34,right?0:o34);
-    const op=ab>45?Math.min(1,((ab-45)/45)*1.2):0;
     show(rp.v,right?op:0);show(lp.v,right?0:op);
-    rp.box.style.animationPlayState='';
+    show(r135,right?o135:0);show(l135,right?0:o135);
     [rp,lp].forEach(p=>p.v.classList.toggle('still',p.v.style.visibility==='hidden'));
-    
   }
   render(0);
   return {st,render,tt,front};
@@ -524,12 +528,12 @@ addEventListener('pointermove',e=>setLook(e.clientX,e.clientY),{passive:true});
 addEventListener('pointerdown',e=>setLook(e.clientX,e.clientY),{passive:true});
 (function loop(now){
   const st=TT.st,t=now/1000;
-  if(st.auto){const k=(now-st.auto)/4200;if(k>=1){st.auto=0;st.tgt=0}else st.tgt=Math.sin(k*Math.PI*2)*88*(1-Math.pow(k,3)*.35)}
+  if(st.auto){const k=(now-st.auto)/6000;if(k>=1){st.auto=0;st.tgt=0}else st.tgt=Math.sin(k*Math.PI*2)*130*(1-Math.pow(k,3)*.2)}
   else if(!dragging){
     const quiet=Math.min(now-st.idle,now-(st.touch||0));
-    if(quiet>7000){if(!st.show){st.show=now;st.showA=st.tgt}st.tgt=Math.sin((now-st.show)/1000*.6)*70}
+    if(quiet>7000){if(!st.show){st.show=now;st.showA=st.tgt}st.tgt=Math.sin((now-st.show)/1000*.5)*105}
     else{ if(st.show){st.show=0;st.idle=now-2200}
-      if(Math.abs(st.vel||0)>.04){st.tgt+=st.vel;st.vel*=.94;if(Math.abs(st.tgt)>90){st.tgt=Math.sign(st.tgt)*90;st.vel*=-.35}}
+      if(Math.abs(st.vel||0)>.04){st.tgt+=st.vel;st.vel*=.94;if(Math.abs(st.tgt)>135){st.tgt=Math.sign(st.tgt)*135;st.vel*=-.35}}
       else if(now-st.idle>2200&&Math.abs(st.tgt)>0.5)st.tgt*=.96}
   }
   st.ang+=(st.tgt-st.ang)*.14;
@@ -578,13 +582,13 @@ let pid=null,sx=0,sAng=0;
 cr.addEventListener('pointerdown',e=>{pid=e.pointerId;try{cr.setPointerCapture(pid)}catch(_){}sx=e.clientX;sAng=TT.st.tgt;dragging=false;TT.st.auto=0;TT.st.idle=performance.now();holdStart=performance.now();if(!reduced)holdRAF=requestAnimationFrame(holdLoop);try{audio()}catch(_){}});
 cr.addEventListener('pointermove',e=>{if(pid!==e.pointerId)return;const dx=e.clientX-sx;
   if(!dragging&&Math.abs(dx)>10){dragging=true;holdStart=0;cancelAnimationFrame(holdRAF);cr.style.transform='';}
-  if(dragging){const nt=Math.max(-90,Math.min(90,sAng+dx*.5));TT.st.vel=(nt-TT.st.tgt)*.55+(TT.st.vel||0)*.45;TT.st.tgt=nt;TT.st.idle=performance.now();TT.st.show=0}});
+  if(dragging){const nt=Math.max(-135,Math.min(135,sAng+dx*.5));TT.st.vel=(nt-TT.st.tgt)*.55+(TT.st.vel||0)*.45;TT.st.tgt=nt;TT.st.idle=performance.now();TT.st.show=0}});
 ['pointerup','pointercancel'].forEach(ev=>cr.addEventListener(ev,e=>{if(pid!==e.pointerId)return;pid=null;
   if(dragging){dragging=false;TT.st.idle=performance.now();return}
   if(!holdStart)return;const m=Math.min(1,(performance.now()-holdStart)/1400);holdStart=0;
   if(ev==='pointercancel'){cancelAnimationFrame(holdRAF);cr.style.transform='';return}release(m)}));
 cr.addEventListener('keydown',e=>{
-  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();TT.st.tgt=Math.max(-90,Math.min(90,TT.st.tgt+(e.key==='ArrowLeft'?-30:30)));TT.st.idle=performance.now();return}
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();TT.st.tgt=Math.max(-135,Math.min(135,TT.st.tgt+(e.key==='ArrowLeft'?-30:30)));TT.st.idle=performance.now();return}
   if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();release(rnd(0,.7))}});
 $('#spin').onclick=()=>{TT.st.auto=performance.now();try{audio()}catch(_){}};
 $('#mute').textContent=muted?'🔇':'🔊';
