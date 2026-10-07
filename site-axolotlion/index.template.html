@@ -68,7 +68,13 @@ nav .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
 .stage{position:relative;display:grid;place-items:center;min-height:420px}
 .aura{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,150,230,.4),rgba(90,200,255,.2) 50%,transparent 70%);filter:blur(10px);animation:aura 4s ease-in-out infinite}
 @keyframes aura{50%{transform:scale(1.08);opacity:.75}}
-#creature{position:relative;background:none;border:0;padding:0;cursor:pointer;width:min(560px,92%);touch-action:manipulation;outline-offset:8px;user-select:none;-webkit-user-select:none;will-change:transform}
+#creature{position:relative;background:none;border:0;padding:0;cursor:pointer;width:min(560px,92%);touch-action:pan-y;outline-offset:8px;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform}
+.tt{position:relative;width:100%;aspect-ratio:900/625;transform-style:preserve-3d;will-change:transform}
+.tt .view{position:absolute;inset:0;pointer-events:none}
+.tt .view img{position:absolute;max-width:none}
+.tt .prof{position:absolute;left:50%;bottom:3%;transform-origin:50% 100%}
+.srig .look{will-change:transform}
+#creature:active{cursor:grabbing}
 .srig{position:relative;width:100%;aspect-ratio:900/625;--k:1;pointer-events:none;animation:breathe calc(4s*var(--k)) ease-in-out infinite;transform-origin:50% 100%}
 .srig .w{position:absolute;inset:0}
 .srig img{position:absolute;max-width:none}
@@ -129,12 +135,13 @@ h2{font:700 clamp(38px,6vw,76px)/1 var(--display);letter-spacing:-.04em;margin:1
 .streak{position:absolute;height:3px;border-radius:3px;background:rgba(200,240,255,.5);animation:zoom linear infinite}
 @keyframes zoom{from{transform:translateX(0)}to{transform:translateX(-140vw)}}
 .runbox.sprint .streak{animation-duration:.5s!important}
-#rig{position:absolute;left:50%;bottom:8%;transform-origin:50% 100%}
-#rig .bob{position:absolute;inset:0;animation:bob var(--T,.4545s) cubic-bezier(.3,0,.7,1) infinite}
+#rig{position:absolute;left:50%;bottom:8%}
+.rigx{transform-origin:50% 100%}
+.rigx .bob{position:absolute;inset:0;animation:bob var(--T,.4545s) cubic-bezier(.3,0,.7,1) infinite}
 @keyframes bob{50%{transform:translateY(-30px)}}
-#rig .part{position:absolute;left:0;top:0;width:100%;height:100%}
-#rig img{position:absolute;max-width:none}
-#rig .sw{animation:sw var(--H,.2272s) ease-in-out infinite alternate}
+.rigx .part{position:absolute;left:0;top:0;width:100%;height:100%}
+.rigx img{position:absolute;max-width:none}
+.rigx .sw{animation:sw var(--H,.2272s) ease-in-out infinite alternate}
 @keyframes sw{from{transform:rotate(calc(var(--m) - var(--a)))}to{transform:rotate(calc(var(--m) + var(--a)))}}
 .runbtn{position:absolute;right:20px;bottom:18px}
 .dust{position:absolute;bottom:7%;width:70px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(235,225,200,.55),transparent 70%);filter:blur(4px);animation:dust .45s linear infinite}
@@ -211,6 +218,7 @@ footer .badges{justify-content:center}
       <div class="cta">
         <a class="btn gold" href="#meet">Meet him</a>
         <a class="btn ghost" href="#memes">Make a meme</a>
+        <button class="btn ghost" id="spin" type="button">Spin him</button>
       </div>
       <div class="badges">
         <div class="badge"><img data-src="solana" alt="Solana"> Solana</div>
@@ -223,7 +231,7 @@ footer .badges{justify-content:center}
         <div class="srig" id="srig" role="img" aria-label="Axolotlion, a pink axolotl with a golden glowing lion mane"></div>
       </button>
       <div class="shadow"></div>
-      <div class="hint">Tap him. Hold for more.</div>
+      <div class="hint">Tap him. Hold for more. Drag to turn him.</div>
     </div>
   </div>
 </header>
@@ -459,9 +467,56 @@ function popword(origin,size){
   SR.eyes.forEach((e,i)=>{const l=document.createElement('div');l.className='lid';const w=34,h=26;l.style.cssText=`left:${(e[0]-w/2)/W*100}%;top:${(e[1]-h/2)/H*100}%;width:${w/W*100}%;height:${h/H*100}%;animation-delay:${i*.02}s`;head.appendChild(l)});
   const gl=el('gl',SR.gillL.pivot);gl.appendChild(im(A.st_gillL,SR.gillL));head.appendChild(gl);
   const gr=el('gr',SR.gillR.pivot);gr.appendChild(im(A.st_gillR,SR.gillR));head.appendChild(gr);
-  host.appendChild(head);
+  const look=el('look',SR.neck);look.id='look';look.appendChild(head);host.appendChild(look);
   const sh=document.createElement('div');sh.className='sheen';sh.style.webkitMaskImage=sh.style.maskImage=`url(${A.st_base})`;host.appendChild(sh);
 })();
+
+/* ---------- turntable: front, three-quarter and side views blend as you drag; the head follows your finger ---------- */
+const TT=(function(){
+  const host=$('#srig'),W=SR.w,H=SR.h,tt=document.createElement('div');tt.className='tt';host.parentNode.insertBefore(tt,host);
+  const view=(mirror,ox)=>{const v=document.createElement('div');v.className='view';if(mirror){v.style.transformOrigin=(ox??SR.cx/W*100)+'% 50%';v.style.transform='scaleX(-1)'}tt.appendChild(v);return v};
+  const front=view(false);front.appendChild(host);
+  const mk34=m=>{const v=view(m),i=document.createElement('img');i.src=A.v34;i.alt='';i.draggable=false;const b=SR.v34;i.style.cssText=`left:${b.x/W*100}%;top:${b.y/H*100}%;width:${b.w/W*100}%;height:${b.h/H*100}%`;v.appendChild(i);return v};
+  const r34=mk34(false),l34=mk34(true);
+  const mkProf=m=>{const v=view(m,48),box=document.createElement('div');box.className='prof';v.appendChild(box);const rig=document.createElement('div');box.appendChild(rig);buildRig(rig);return {v,box}};
+  const rp=mkProf(false),lp=mkProf(true);
+  function fit(){const s=tt.clientWidth/W*1.12;[rp,lp].forEach(p=>{p.box.style.width=RIG.w+'px';p.box.style.height=RIG.h+'px';p.box.style.transform=`translateX(-50%) scale(${s})`;p.box.style.left='48%'})}
+  fit();addEventListener('resize',fit);
+  const st={ang:0,tgt:0,idle:performance.now(),auto:0};
+  function show(v,o){v.style.opacity=o;v.style.visibility=o<=.01?'hidden':'visible'}
+  function render(a){
+    const ab=Math.abs(a),right=a>=0,f=ab/45;
+    show(front,ab<45?1-Math.max(0,(f-.5)*2):0);
+    const o34=ab<=45?Math.min(1,f*1.2):ab<90?1-Math.max(0,(((ab-45)/45)-.5)*2):0;
+    show(r34,right?o34:0);show(l34,right?0:o34);
+    const op=ab>45?Math.min(1,((ab-45)/45)*1.2):0;
+    show(rp.v,right?op:0);show(lp.v,right?0:op);
+    rp.box.style.animationPlayState='';
+    [rp,lp].forEach(p=>p.v.classList.toggle('still',p.v.style.visibility==='hidden'));
+    tt.style.transform=`perspective(1100px) rotateY(${a*.08}deg) rotateX(${st.pitch||0}deg)`;
+  }
+  render(0);
+  return {st,render,tt,front};
+})();
+let dragging=false;
+let yaw=0,pitch=0,ly=0,lp2=0,lastLook=performance.now(),lookX=0,lookY=0,haveLook=false;
+function setLook(x,y){const r=TT.tt.getBoundingClientRect(),cx=r.left+r.width*.74,cy=r.top+r.height*.5;lookX=Math.max(-1,Math.min(1,(x-cx)/Math.max(220,r.width*.8)));lookY=Math.max(-1,Math.min(1,(y-cy)/Math.max(200,r.height*.8)));lastLook=performance.now();haveLook=true}
+addEventListener('pointermove',e=>setLook(e.clientX,e.clientY),{passive:true});
+addEventListener('pointerdown',e=>setLook(e.clientX,e.clientY),{passive:true});
+(function loop(now){
+  const st=TT.st,t=now/1000;
+  if(st.auto){const k=(now-st.auto)/4200;if(k>=1){st.auto=0;st.tgt=0}else st.tgt=Math.sin(k*Math.PI*2)*88*(1-Math.pow(k,3)*.35)}
+  else if(now-st.idle>2200&&Math.abs(st.tgt)>0.5&&!dragging)st.tgt*=.96;
+  st.ang+=(st.tgt-st.ang)*.14;
+  // finger/cursor glance, drifting back to a wander when nobody is touching the screen
+  let gx=lookX,gy=lookY;if(!haveLook||now-lastLook>3500){gx=Math.sin(t*.45)*.55;gy=Math.sin(t*.31+1)*.25}
+  const w=Math.max(0,1-Math.abs(st.ang)/30);yaw+=(gx*w-yaw)*.09;pitch+=(gy*w-pitch)*.09;
+  const look=$('#look');if(look)look.style.transform=`perspective(620px) rotateY(${yaw*17}deg) rotateX(${-pitch*10}deg) translate(${yaw*.9}%,${pitch*.6}%)`;
+  const ttw=TT.front.firstElementChild;if(ttw)ttw.style.transform=`rotateY(${yaw*4}deg)`;
+  TT.st.pitch=-pitch*3+(Math.sin(t*.7)*.4);
+  TT.render(st.ang);
+  if(!reduced)requestAnimationFrame(loop);
+})(performance.now());
 
 /* ---------- the creature: tap = toot, hold = bigger ---------- */
 const cr=$('#creature'),img=$('#srig');
@@ -494,19 +549,29 @@ function release(mag){
   if(BADGES[toots])toast('💨 '+BADGES[toots]);
   document.querySelector('.hint').style.display='none';
 }
-cr.addEventListener('pointerdown',e=>{e.preventDefault();holdStart=performance.now();if(!reduced)holdRAF=requestAnimationFrame(holdLoop);try{audio()}catch(_){}});
-['pointerup','pointercancel','pointerleave'].forEach(ev=>cr.addEventListener(ev,e=>{if(!holdStart)return;const m=Math.min(1,(performance.now()-holdStart)/1400);holdStart=0;if(ev==='pointercancel'){cancelAnimationFrame(holdRAF);cr.style.transform='';return}release(m)}));
-cr.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();release(rnd(0,.7))}});
+let pid=null,sx=0,sAng=0;
+cr.addEventListener('pointerdown',e=>{pid=e.pointerId;try{cr.setPointerCapture(pid)}catch(_){}sx=e.clientX;sAng=TT.st.tgt;dragging=false;TT.st.auto=0;TT.st.idle=performance.now();holdStart=performance.now();if(!reduced)holdRAF=requestAnimationFrame(holdLoop);try{audio()}catch(_){}});
+cr.addEventListener('pointermove',e=>{if(pid!==e.pointerId)return;const dx=e.clientX-sx;
+  if(!dragging&&Math.abs(dx)>10){dragging=true;holdStart=0;cancelAnimationFrame(holdRAF);cr.style.transform='';}
+  if(dragging){TT.st.tgt=Math.max(-90,Math.min(90,sAng+dx*.5));TT.st.idle=performance.now()}});
+['pointerup','pointercancel'].forEach(ev=>cr.addEventListener(ev,e=>{if(pid!==e.pointerId)return;pid=null;
+  if(dragging){dragging=false;TT.st.idle=performance.now();return}
+  if(!holdStart)return;const m=Math.min(1,(performance.now()-holdStart)/1400);holdStart=0;
+  if(ev==='pointercancel'){cancelAnimationFrame(holdRAF);cr.style.transform='';return}release(m)}));
+cr.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();TT.st.tgt=Math.max(-90,Math.min(90,TT.st.tgt+(e.key==='ArrowLeft'?-30:30)));TT.st.idle=performance.now();return}
+  if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();release(rnd(0,.7))}});
+$('#spin').onclick=()=>{TT.st.auto=performance.now();try{audio()}catch(_){}};
 $('#mute').textContent=muted?'🔇':'🔊';
 $('#mute').onclick=()=>{muted=!muted;store.set('axl-mute',muted?'1':'0');$('#mute').textContent=muted?'🔇':'🔊';if(bus)bus.gain.value=muted?0:1.25;if(!muted){audio();toast('Sound on')}};
 
 /* ---------- rigged run cycle (CSS only) ---------- */
-(function(){
-  const rig=$('#rig'),W=RIG.w,H=RIG.h,box=$('#runbox');
+function buildRig(rig){
+  const W=RIG.w,H=RIG.h;rig.classList.add('rigx');
   rig.style.width=W+'px';rig.style.height=H+'px';
   const bob=document.createElement('div');bob.className='bob';rig.appendChild(bob);
-  const add=(parent,src,b)=>{const i=document.createElement('img');i.src=src;i.style.cssText=`left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px`;parent.appendChild(i)};
-  const base=document.createElement('img');base.src=A.rig_base;base.style.cssText=`left:0;top:0;width:${W}px;height:${H}px`;bob.appendChild(base);
+  const add=(parent,src,b)=>{const i=document.createElement('img');i.src=src;i.alt='';i.draggable=false;i.style.cssText=`left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px`;parent.appendChild(i)};
+  const base=document.createElement('img');base.src=A.rig_base;base.alt='';base.draggable=false;base.style.cssText=`left:0;top:0;width:${W}px;height:${H}px`;bob.appendChild(base);
   const part=(parent,origin,m,a,delay)=>{const d=document.createElement('div');d.className='part sw';d.style.cssText=`transform-origin:${origin[0]}px ${origin[1]}px;--m:${m}deg;--a:${a}deg;animation-delay:${delay}s`;parent.appendChild(d);return d};
   const T=.4545;
   const tail=part(bob,RIG.tail.pivot,0,6,0);add(tail,A.rig_tail,RIG.tail);
@@ -516,9 +581,11 @@ $('#mute').onclick=()=>{muted=!muted;store.set('axl-mute',muted?'1':'0');$('#mut
     const up=part(bob,L.hip,m,a,delay);add(up,A['rig_'+n+'_up'],L.upper);
     const lo=part(up,L.knee,0,18,delay-.1);add(lo,A['rig_'+n+'_lo'],L.lower);
   });
+}
+(function(){
+  const rig=$('#rig'),W=RIG.w,box=$('#runbox');buildRig(rig);
   function fit(){const s=Math.min(1,box.clientWidth*.82/W);rig.style.transform=`translateX(-50%) scale(${s})`}
   fit();addEventListener('resize',fit);
-  // streaks & dust
   const st=$('#streaks');for(let i=0;i<22;i++){const s=document.createElement('div');s.className='streak';s.style.cssText=`top:${rnd(6,86)}%;left:${rnd(40,140)}%;width:${rnd(60,200)}px;opacity:${rnd(.2,.6)};animation-duration:${rnd(1.2,3)}s;animation-delay:${-rnd(0,3)}s`;st.appendChild(s)}
   const dd=$('#dusts');for(let i=0;i<3;i++){const d=document.createElement('div');d.className='dust';d.style.left=`calc(50% - ${W*.22}px)`;d.style.animationDelay=(-i*.15)+'s';dd.appendChild(d)}
   let sprint=false;
