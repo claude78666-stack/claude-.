@@ -5,7 +5,7 @@ from PIL import Image
 SRC = pathlib.Path('../video/public/axolotlion')
 OUT = pathlib.Path('assets'); OUT.mkdir(exist_ok=True)
 
-def save(img, name, q=86, size=None):
+def save(img, name, q=90, size=None):
     if size: img = img.resize(size, Image.LANCZOS)
     img.save(OUT / name, 'WEBP', quality=q, method=6)
     return img.size
@@ -19,7 +19,7 @@ pf = Image.open(SRC / 'pumpfun.png').convert('RGBA'); save(pf, 'pumpfun.webp', 9
 
 # rig at half resolution
 rig = json.load(open(SRC / 'rig/rig.json'))
-half = lambda v: round(v / 2)
+half = lambda v: round(v * 0.6)
 meta = {'w': half(rig['w']), 'h': half(rig['h']), 'legs': {}}
 def conv(name, b):
     im = Image.open(SRC / f'rig/{name}.png')

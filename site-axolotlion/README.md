@@ -14,3 +14,7 @@ Rebuild: `python3 prep_assets.py` (only if art changed) then `python3 build.py`.
 - His head turns in 3D toward your cursor or finger. When nobody is touching the screen he looks around on his own.
 - "Spin him" sweeps him through all the angles.
 - Only the front half (+/- 90 degrees) exists so far. To complete the 360, generate a rear three-quarter view and a back view, add them as images, and extend `render()` in the turntable block of `index.template.html`.
+
+## Showroom stand
+The hero is a display stand: spotlight beams, a glossy turntable whose markings turn with him, and a reflection under him (reflection works in Chrome, Edge and Safari). Drag and release to flick him; he keeps turning with momentum. If nobody touches the page for about 7 seconds he sweeps slowly left and right like a car on a display plinth, and stops the moment you move.
+Art is stored at 1100 px wide (`make_stand_rig.py`, `make_v34.py`, `prep_assets.py`) so it stays sharp on high-density screens.

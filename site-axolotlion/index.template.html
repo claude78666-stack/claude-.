@@ -56,7 +56,31 @@ nav .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
   mask-image:linear-gradient(180deg,#000,transparent);-webkit-mask-image:linear-gradient(180deg,#000,transparent);animation:sway 9s ease-in-out infinite alternate}
 @keyframes sway{from{transform:translateX(-3%) skewX(-4deg)}to{transform:translateX(3%) skewX(4deg)}}
 .hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;align-items:center}
-@media(max-width:900px){.hero{padding-top:84px}.hero .grid{grid-template-columns:1fr;text-align:center}.hero .cta,.badges{justify-content:center}.stage{order:-1;min-height:0}#creature{width:min(430px,84%)}.meter{position:fixed;top:11px;right:12px;z-index:60}.chip{padding:7px 12px;font-size:14px}.hero h1{margin-top:4px}}
+@media(max-width:900px){.stage{min-height:0;padding:20px 0 96px}.hero{padding-top:84px}.hero .grid{grid-template-columns:1fr;text-align:center}.hero .cta,.badges{justify-content:center}.stage{order:-1;min-height:0}#creature{width:min(430px,84%)}.meter{position:fixed;top:11px;right:12px;z-index:60}.chip{padding:7px 12px;font-size:14px}.hero h1{margin-top:4px}}
+.hero h1{font:700 clamp(64px,11vw,148px)/.92 var(--display);letter-spacing:-.045em;margin:10px 0 18px}
+.hero .si{font:600 clamp(24px,3.4vw,40px)/1.15 var(--display);letter-spacing:-.02em}
+.hero .si b{color:var(--pink)}
+.hero .tag{margin-top:10px;color:var(--gold2);font-weight:600;letter-spacing:.04em;font-size:clamp(18px,2.2vw,24px)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.badges{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-radius:999px;background:rgba(3,10,24,.6);border:1px solid var(--line);font:700 17px var(--display)}
+.badge img{height:28px;width:auto}
+.stage{position:relative;display:grid;place-items:end center;container-type:inline-size;min-height:420px;padding:34px 0 96px;border-radius:44px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 0%,rgba(190,225,255,.30),transparent 58%),linear-gradient(180deg,rgba(10,26,46,.82),rgba(2,8,18,.95));
+  border:1px solid rgba(190,225,255,.18);box-shadow:inset 0 0 110px rgba(0,0,0,.65),0 50px 100px -50px rgba(0,0,0,.9)}
+.stage:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 70px);mask-image:linear-gradient(180deg,#000,transparent 70%);-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%)}
+.beam{position:absolute;top:-8%;width:44%;height:96%;background:linear-gradient(180deg,rgba(255,248,230,.42),rgba(255,248,230,0) 86%);clip-path:polygon(41% 0,59% 0,100% 100%,0 100%);mix-blend-mode:screen;opacity:.5;filter:blur(7px);pointer-events:none;animation:beamp 6s ease-in-out infinite alternate}
+.beam.b1{left:-2%;transform:rotate(15deg);transform-origin:50% 0}
+.beam.b2{right:-2%;transform:rotate(-15deg);transform-origin:50% 0;animation-delay:-3s}
+@keyframes beamp{to{opacity:.34}}
+.platform{position:absolute;left:50%;bottom:55px;bottom:calc(96px - 9.9cqw);width:104%;aspect-ratio:1;transform:translateX(-50%) scaleY(.19);transform-origin:50% 100%;pointer-events:none}
+.circ{position:absolute;inset:0;border-radius:50%;transform:rotate(calc(var(--rot,0)*1deg));
+  background:repeating-conic-gradient(from 0deg,rgba(190,228,255,.55) 0 .5deg,transparent .5deg 7.5deg),radial-gradient(circle,#26446a 0%,#112238 58%,#08121f 100%);
+  box-shadow:0 0 0 14px rgba(200,230,255,.10),0 0 0 30px rgba(200,230,255,.05),0 0 140px 30px rgba(120,200,255,.28),inset 0 0 120px 20px rgba(0,0,0,.55)}
+.platform:after{content:"";position:absolute;inset:6%;border-radius:50%;border:10px solid rgba(190,230,255,.45);box-shadow:0 0 60px rgba(120,200,255,.55),inset 0 0 60px rgba(120,200,255,.4)}
+.platform:before{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle,rgba(255,150,230,.28),transparent 68%);z-index:1}
+.shadow{position:absolute;bottom:84px;left:22%;right:22%;height:26px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,6,14,.8),transparent 70%);filter:blur(2px);pointer-events:none}
+#creature{width:min(430px,84%)}.meter{position:fixed;top:11px;right:12px;z-index:60}.chip{padding:7px 12px;font-size:14px}.hero h1{margin-top:4px}}
 .hero h1{font:700 clamp(64px,11vw,148px)/.92 var(--display);letter-spacing:-.045em;margin:10px 0 18px}
 .hero .si{font:600 clamp(24px,3.4vw,40px)/1.15 var(--display);letter-spacing:-.02em}
 .hero .si b{color:var(--pink)}
@@ -69,7 +93,7 @@ nav .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
 .aura{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,150,230,.4),rgba(90,200,255,.2) 50%,transparent 70%);filter:blur(10px);animation:aura 4s ease-in-out infinite}
 @keyframes aura{50%{transform:scale(1.08);opacity:.75}}
 #creature{position:relative;background:none;border:0;padding:0;cursor:pointer;width:min(560px,92%);touch-action:pan-y;outline-offset:8px;cursor:grab;user-select:none;-webkit-user-select:none;will-change:transform}
-.tt{position:relative;width:100%;aspect-ratio:900/625;transform-style:preserve-3d;will-change:transform}
+.tt{position:relative;width:100%;aspect-ratio:900/625;-webkit-box-reflect:below 0 linear-gradient(transparent 64%,rgba(255,255,255,.26))}
 .tt .view{position:absolute;inset:0;pointer-events:none}
 .tt .view img{position:absolute;max-width:none}
 .tt .prof{position:absolute;left:50%;bottom:3%;transform-origin:50% 100%}
@@ -99,7 +123,7 @@ nav .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
 @keyframes sheen{from{background-position:130% 0}to{background-position:-30% 0}}
 .srig.gust{--k:.4}
 .shadow{position:absolute;bottom:2%;left:14%;right:10%;height:5%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,8,16,.65),transparent 70%)}
-.hint{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:999px;background:rgba(3,10,24,.72);border:1px solid var(--line);font-weight:600;font-size:15px;white-space:nowrap;animation:hintp 2s ease-in-out infinite;pointer-events:none}
+.hint{position:absolute;top:16px;bottom:auto;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:999px;background:rgba(3,10,24,.72);border:1px solid var(--line);font-weight:600;font-size:15px;white-space:nowrap;animation:hintp 2s ease-in-out infinite;pointer-events:none}
 @keyframes hintp{50%{transform:translateX(-50%) translateY(-5px)}}
 #puffs{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
 .puff{position:absolute;border-radius:50%;pointer-events:none;mix-blend-mode:screen;filter:blur(2px)}
@@ -138,7 +162,7 @@ h2{font:700 clamp(38px,6vw,76px)/1 var(--display);letter-spacing:-.04em;margin:1
 #rig{position:absolute;left:50%;bottom:8%}
 .rigx{transform-origin:50% 100%}
 .rigx .bob{position:absolute;inset:0;animation:bob var(--T,.4545s) cubic-bezier(.3,0,.7,1) infinite}
-@keyframes bob{50%{transform:translateY(-30px)}}
+@keyframes bob{50%{transform:translateY(-36px)}}
 .rigx .part{position:absolute;left:0;top:0;width:100%;height:100%}
 .rigx img{position:absolute;max-width:none}
 .rigx .sw{animation:sw var(--H,.2272s) ease-in-out infinite alternate}
@@ -226,7 +250,8 @@ footer .badges{justify-content:center}
       </div>
     </div>
     <div class="stage">
-      <div class="aura"></div>
+      <div class="beam b1"></div><div class="beam b2"></div>
+      <div class="platform" id="platform"><div class="circ"></div></div>
       <button id="creature" aria-label="Tap Axolotlion. Hold for a bigger one.">
         <div class="srig" id="srig" role="img" aria-label="Axolotlion, a pink axolotl with a golden glowing lion mane"></div>
       </button>
@@ -481,7 +506,7 @@ const TT=(function(){
   const r34=mk34(false),l34=mk34(true);
   const mkProf=m=>{const v=view(m,48),box=document.createElement('div');box.className='prof';v.appendChild(box);const rig=document.createElement('div');box.appendChild(rig);buildRig(rig);return {v,box}};
   const rp=mkProf(false),lp=mkProf(true);
-  function fit(){const s=tt.clientWidth/W*1.12;[rp,lp].forEach(p=>{p.box.style.width=RIG.w+'px';p.box.style.height=RIG.h+'px';p.box.style.transform=`translateX(-50%) scale(${s})`;p.box.style.left='48%'})}
+  function fit(){const s=tt.clientWidth/W*1.0;[rp,lp].forEach(p=>{p.box.style.width=RIG.w+'px';p.box.style.height=RIG.h+'px';p.box.style.transform=`translateX(-50%) scale(${s})`;p.box.style.left='48%'})}
   fit();addEventListener('resize',fit);
   const st={ang:0,tgt:0,idle:performance.now(),auto:0};
   function show(v,o){v.style.opacity=o;v.style.visibility=o<=.01?'hidden':'visible'}
@@ -494,20 +519,26 @@ const TT=(function(){
     show(rp.v,right?op:0);show(lp.v,right?0:op);
     rp.box.style.animationPlayState='';
     [rp,lp].forEach(p=>p.v.classList.toggle('still',p.v.style.visibility==='hidden'));
-    tt.style.transform=`perspective(1100px) rotateY(${a*.08}deg) rotateX(${st.pitch||0}deg)`;
+    $('#platform').style.setProperty('--rot',(a*1.8).toFixed(2));
   }
   render(0);
   return {st,render,tt,front};
 })();
 let dragging=false;
 let yaw=0,pitch=0,ly=0,lp2=0,lastLook=performance.now(),lookX=0,lookY=0,haveLook=false;
-function setLook(x,y){const r=TT.tt.getBoundingClientRect(),cx=r.left+r.width*.74,cy=r.top+r.height*.5;lookX=Math.max(-1,Math.min(1,(x-cx)/Math.max(220,r.width*.8)));lookY=Math.max(-1,Math.min(1,(y-cy)/Math.max(200,r.height*.8)));lastLook=performance.now();haveLook=true}
+function setLook(x,y){TT.st.touch=performance.now();const r=TT.tt.getBoundingClientRect(),cx=r.left+r.width*.74,cy=r.top+r.height*.5;lookX=Math.max(-1,Math.min(1,(x-cx)/Math.max(220,r.width*.8)));lookY=Math.max(-1,Math.min(1,(y-cy)/Math.max(200,r.height*.8)));lastLook=performance.now();haveLook=true}
 addEventListener('pointermove',e=>setLook(e.clientX,e.clientY),{passive:true});
 addEventListener('pointerdown',e=>setLook(e.clientX,e.clientY),{passive:true});
 (function loop(now){
   const st=TT.st,t=now/1000;
   if(st.auto){const k=(now-st.auto)/4200;if(k>=1){st.auto=0;st.tgt=0}else st.tgt=Math.sin(k*Math.PI*2)*88*(1-Math.pow(k,3)*.35)}
-  else if(now-st.idle>2200&&Math.abs(st.tgt)>0.5&&!dragging)st.tgt*=.96;
+  else if(!dragging){
+    const quiet=Math.min(now-st.idle,now-(st.touch||0));
+    if(quiet>7000){if(!st.show){st.show=now;st.showA=st.tgt}st.tgt=Math.sin((now-st.show)/1000*.6)*70}
+    else{ if(st.show){st.show=0;st.idle=now-2200}
+      if(Math.abs(st.vel||0)>.04){st.tgt+=st.vel;st.vel*=.94;if(Math.abs(st.tgt)>90){st.tgt=Math.sign(st.tgt)*90;st.vel*=-.35}}
+      else if(now-st.idle>2200&&Math.abs(st.tgt)>0.5)st.tgt*=.96}
+  }
   st.ang+=(st.tgt-st.ang)*.14;
   // finger/cursor glance, drifting back to a wander when nobody is touching the screen
   let gx=lookX,gy=lookY;if(!haveLook||now-lastLook>3500){gx=Math.sin(t*.45)*.55;gy=Math.sin(t*.31+1)*.25}
@@ -554,7 +585,7 @@ let pid=null,sx=0,sAng=0;
 cr.addEventListener('pointerdown',e=>{pid=e.pointerId;try{cr.setPointerCapture(pid)}catch(_){}sx=e.clientX;sAng=TT.st.tgt;dragging=false;TT.st.auto=0;TT.st.idle=performance.now();holdStart=performance.now();if(!reduced)holdRAF=requestAnimationFrame(holdLoop);try{audio()}catch(_){}});
 cr.addEventListener('pointermove',e=>{if(pid!==e.pointerId)return;const dx=e.clientX-sx;
   if(!dragging&&Math.abs(dx)>10){dragging=true;holdStart=0;cancelAnimationFrame(holdRAF);cr.style.transform='';}
-  if(dragging){TT.st.tgt=Math.max(-90,Math.min(90,sAng+dx*.5));TT.st.idle=performance.now()}});
+  if(dragging){const nt=Math.max(-90,Math.min(90,sAng+dx*.5));TT.st.vel=(nt-TT.st.tgt)*.55+(TT.st.vel||0)*.45;TT.st.tgt=nt;TT.st.idle=performance.now();TT.st.show=0}});
 ['pointerup','pointercancel'].forEach(ev=>cr.addEventListener(ev,e=>{if(pid!==e.pointerId)return;pid=null;
   if(dragging){dragging=false;TT.st.idle=performance.now();return}
   if(!holdStart)return;const m=Math.min(1,(performance.now()-holdStart)/1400);holdStart=0;

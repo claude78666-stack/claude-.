@@ -5,7 +5,7 @@ from PIL import Image
 
 SRC = pathlib.Path('../video/public/axolotlion/stand-cut.png')
 OUT = pathlib.Path('assets'); OUT.mkdir(exist_ok=True)
-K = 900 / 1406.0            # page art is 900px wide
+K = 1100 / 1406.0           # page art is 1100px wide so it stays sharp on high-density screens
 im = Image.open(SRC).convert('RGBA'); A = np.array(im); H, W = A.shape[:2]
 alpha = A[..., 3].astype(np.float32) / 255
 yy, xx = np.mgrid[0:H, 0:W]
@@ -39,17 +39,17 @@ base = np.dstack([rgb, (base_alpha * 255).astype(np.uint8)])
 fill_alpha = (ellipse(1040, 352, 200, 190, 6) > 0)
 base[..., 3] = np.where(fill_alpha, np.maximum(base[..., 3], 255), base[..., 3])  # face hole is inside the body, keep opaque
 
-meta = {'w': 900, 'h': round(H * K)}
+meta = {'w': 1100, 'h': round(H * K)}
 def save(name, mask, src_rgb=None):
     rgb_ = A[..., :3] if src_rgb is None else src_rgb
     layer = np.dstack([rgb_, (alpha * mask * 255).astype(np.uint8)])
     ys, xs = np.where(layer[..., 3] > 3)
     x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
     crop = Image.fromarray(layer[y0:y1, x0:x1]).resize((max(1, round((x1 - x0) * K)), max(1, round((y1 - y0) * K))), Image.LANCZOS)
-    crop.save(OUT / f'st_{name}.webp', 'WEBP', quality=88, method=6)
+    crop.save(OUT / f'st_{name}.webp', 'WEBP', quality=90, method=6)
     return {'x': round(x0 * K), 'y': round(y0 * K), 'w': crop.width, 'h': crop.height}
 
-Image.fromarray(base).resize((meta['w'], meta['h']), Image.LANCZOS).save(OUT / 'st_base.webp', 'WEBP', quality=88, method=6)
+Image.fromarray(base).resize((meta['w'], meta['h']), Image.LANCZOS).save(OUT / 'st_base.webp', 'WEBP', quality=90, method=6)
 p = lambda x, y: [round(x * K), round(y * K)]
 meta['face'] = {**save('face', FACE), 'pivot': p(1040, 500)}
 meta['gillL'] = {**save('gillL', GILL_L), 'pivot': p(935, 355)}
