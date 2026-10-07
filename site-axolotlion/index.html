@@ -375,13 +375,15 @@ let ac,inp,bus,muted=store.get('axl-mute')==='1';
 function audio(){
   if(!ac){
     ac=new (window.AudioContext||window.webkitAudioContext)();
-    const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=110;
-    const pk=ac.createBiquadFilter();pk.type='peaking';pk.frequency.value=720;pk.Q.value=.7;pk.gain.value=9;
-    const sh=ac.createBiquadFilter();sh.type='highshelf';sh.frequency.value=2600;sh.gain.value=5;
+    const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=60;
+    const pk=ac.createBiquadFilter();pk.type='peaking';pk.frequency.value=430;pk.Q.value=.8;pk.gain.value=8;
+    const sh=ac.createBiquadFilter();sh.type='highshelf';sh.frequency.value=1800;sh.gain.value=-6;
+    const lo=ac.createBiquadFilter();lo.type='lowshelf';lo.frequency.value=160;lo.gain.value=6;
+    const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=3200;lp.Q.value=.6;
     const ws=ac.createWaveShaper(),cur=new Float32Array(2048),k=3.4;for(let i=0;i<2048;i++){const x=i/1024-1;cur[i]=Math.tanh(k*x)/Math.tanh(k)}ws.curve=cur;ws.oversample='2x';
     const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.knee.value=4;comp.ratio.value=10;comp.attack.value=.002;comp.release.value=.2;
     bus=ac.createGain();bus.gain.value=muted?0:1.25;
-    hp.connect(pk);pk.connect(sh);sh.connect(ws);ws.connect(comp);comp.connect(bus);bus.connect(ac.destination);inp=hp;
+    hp.connect(lo);lo.connect(pk);pk.connect(sh);sh.connect(lp);lp.connect(ws);ws.connect(comp);comp.connect(bus);bus.connect(ac.destination);inp=hp;
   }
   if(ac.state==='suspended')ac.resume();return ac;
 }
@@ -412,26 +414,25 @@ function fartBuf(c,o){
 }
 function join(c,parts,gap){const sr=c.sampleRate;let n=0;parts.forEach(p=>n+=p.length+Math.floor(gap*sr));const b=c.createBuffer(1,n,sr),d=b.getChannelData(0);let o=0;parts.forEach(p=>{d.set(p.getChannelData(0),o);o+=p.length+Math.floor(gap*sr)});return b}
 function play(c,buf,t,vol,rate){const s=c.createBufferSource();s.buffer=buf;s.playbackRate.value=rate||1;const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(inp);s.start(t)}
-function boing(c,t,vol){const o=c.createOscillator();o.type='sine';o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(560,t+.12);o.frequency.exponentialRampToValueAtTime(230,t+.4);
+function boing(c,t,vol){const o=c.createOscillator();o.type='sine';o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(330,t+.12);o.frequency.exponentialRampToValueAtTime(140,t+.4);
   const v=c.createOscillator();v.frequency.value=26;const vg=c.createGain();vg.gain.value=42;v.connect(vg);vg.connect(o.frequency);
   const g=c.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.42);o.connect(g);g.connect(inp);o.start(t);v.start(t);o.stop(t+.45);v.stop(t+.45)}
-function bloops(c,t,n){for(let i=0;i<n;i++){const o=c.createOscillator(),g=c.createGain(),tt=t+.1+i*rnd(.09,.16),f=rnd(520,900);o.frequency.setValueAtTime(f,tt);o.frequency.exponentialRampToValueAtTime(f*1.8,tt+.07);
+function bloops(c,t,n){for(let i=0;i<n;i++){const o=c.createOscillator(),g=c.createGain(),tt=t+.1+i*rnd(.09,.16),f=rnd(300,520);o.frequency.setValueAtTime(f,tt);o.frequency.exponentialRampToValueAtTime(f*1.8,tt+.07);
   g.gain.setValueAtTime(.0001,tt);g.gain.exponentialRampToValueAtTime(.22,tt+.01);g.gain.exponentialRampToValueAtTime(.0001,tt+.09);o.connect(g);g.connect(inp);o.start(tt);o.stop(tt+.1)}}
 const PRE={
-  toot:c=>join(c,[fartBuf(c,{dur:.11,f0:330,f1:240,wob:.04,jit:.05,wet:.2,sput:.1}),fartBuf(c,{dur:.09,f0:300,f1:210,wob:.04,jit:.05,wet:.2,sput:.1})],.05),
-  squeaker:c=>fartBuf(c,{dur:.55,f0:1150,f1:480,wob:.07,wr:38,jit:.04,wet:.6,sput:.3}),
-  whoopee:c=>fartBuf(c,{dur:.7,f0:170,f1:110,bump:560,wob:.08,wr:9,jit:.07,wet:.35,sput:.22}),
-  trumpet:c=>fartBuf(c,{dur:.95,f0:310,f1:240,wob:.035,wr:6,jit:.05,wet:.18,sput:.18}),
-  stutter:c=>join(c,[.12,.12,.16,.5].map((d,i)=>fartBuf(c,{dur:d,f0:230-i*14,f1:170-i*12,wob:.06,wr:11,jit:.08,wet:.45,sput:i===3?.4:.1})),.045),
-  longboi:c=>fartBuf(c,{dur:2.1,f0:210,f1:120,bump:90,wob:.2,wr:10,jit:.14,wet:.5,sput:.32})
+  toot:c=>join(c,[fartBuf(c,{dur:.13,f0:175,f1:125,wob:.04,jit:.05,wet:.2,sput:.1}),fartBuf(c,{dur:.1,f0:155,f1:110,wob:.04,jit:.05,wet:.2,sput:.1})],.05),
+  blub:c=>fartBuf(c,{dur:.5,f0:240,f1:105,wob:.07,wr:14,jit:.06,wet:.55,sput:.3}),
+  whoopee:c=>fartBuf(c,{dur:.8,f0:100,f1:66,bump:170,wob:.08,wr:8,jit:.07,wet:.35,sput:.24}),
+  trumpet:c=>fartBuf(c,{dur:1.05,f0:150,f1:104,wob:.035,wr:5,jit:.05,wet:.2,sput:.2}),
+  stutter:c=>join(c,[.13,.13,.18,.55].map((d,i)=>fartBuf(c,{dur:d,f0:122-i*8,f1:88-i*7,wob:.06,wr:10,jit:.08,wet:.45,sput:i===3?.4:.1})),.05),
+  longboi:c=>fartBuf(c,{dur:2.3,f0:98,f1:54,bump:40,wob:.2,wr:9,jit:.14,wet:.5,sput:.34})
 };
 function sound(kind){
   if(muted)return;const c=audio(),t=c.currentTime+.02,buf=(PRE[kind]||PRE.whoopee)(c);
-  play(c,buf,t,1,1);play(c,buf,t+.012,.55,.965);            // doubled and detuned so it sounds fatter
-  if(kind==='longboi'||kind==='trumpet')play(c,buf,t,.35,2);  // an octave up so small speakers carry it
+  play(c,buf,t,1,.94);play(c,buf,t+.014,.6,.88);             // doubled and detuned a little lower so it sounds fatter and deeper
   bloops(c,t,kind==='toot'?1:3);
 }
-const KINDS={small:['toot','squeaker','whoopee'],mid:['whoopee','trumpet','stutter','squeaker'],big:['longboi','stutter','trumpet']};
+const KINDS={small:['toot','blub','whoopee'],mid:['whoopee','trumpet','stutter','blub'],big:['longboi','stutter','trumpet']};
 window.__axl={fartBuf,PRE,get ac(){return ac}};
 
 /* ---------- gas clouds + pop words ---------- */
