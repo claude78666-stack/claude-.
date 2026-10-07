@@ -78,9 +78,21 @@ export const Banner: React.FC<{t: number; w?: number; h?: number}> = ({t, w = 15
         <div style={{width: RUN_W, height: RUN_H, transform: `scale(${scale})`, transformOrigin: '0 0'}}><RigBody frame={frame} fps={20} freq={2.0} /></div>
       </div>
       <AbsoluteFill style={{background: 'linear-gradient(90deg, rgba(2,8,20,.78) 0%, rgba(2,8,20,.35) 32%, rgba(2,8,20,0) 52%)'}} />
-      <div style={{position: 'absolute', left: 84, top: 118}}>
-        <div style={{fontFamily: display, fontWeight: 700, fontSize: 112, letterSpacing: '-0.035em', lineHeight: 1, background: 'linear-gradient(180deg,#ffe9a3 0%,#f4c242 55%,#c8921e 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', filter: 'drop-shadow(0 4px 18px rgba(0,0,0,.6))'}}>Axolotlion</div>
-        <div style={{marginTop: 14, fontFamily: body, fontWeight: 600, fontSize: 34, letterSpacing: '0.04em', color: C.gold2, textShadow: '0 2px 10px #000'}}>Regrows. Leads. Glows.</div>
+      <div style={{position: 'absolute', left: 84, top: 56}}>
+        <div style={{fontFamily: body, fontWeight: 700, fontSize: 26, letterSpacing: '0.28em', textTransform: 'uppercase', color: C.cyan, textShadow: '0 2px 10px #000'}}>The first SI animal</div>
+        <div style={{marginTop: 6, fontFamily: display, fontWeight: 700, fontSize: 118, letterSpacing: '-0.035em', lineHeight: 1.05, background: 'linear-gradient(180deg,#ffe9a3 0%,#f4c242 55%,#c8921e 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', filter: 'drop-shadow(0 4px 18px rgba(0,0,0,.6))'}}>Axolotlion</div>
+        <div style={{marginTop: 8, fontFamily: display, fontWeight: 600, fontSize: 38, letterSpacing: '-0.01em', color: '#fff', textShadow: '0 2px 12px #000'}}>Superior Intelligence. <span style={{color: '#ff9ae0'}}>Not AI.</span></div>
+        <div style={{marginTop: 10, fontFamily: body, fontWeight: 600, fontSize: 30, letterSpacing: '0.04em', color: C.gold2, textShadow: '0 2px 10px #000'}}>Regrows. Leads. Glows.</div>
+      </div>
+      <div style={{position: 'absolute', left: 84, bottom: 34, display: 'flex', alignItems: 'center', gap: 30}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '8px 18px 8px 14px', borderRadius: 999, background: 'rgba(3,10,24,.72)', border: `1.5px solid ${C.line}`}}>
+          <Img src={staticFile('axolotlion/solana.svg')} style={{width: 34, height: 30}} />
+          <span style={{fontFamily: display, fontWeight: 700, fontSize: 26, color: '#fff'}}>Solana</span>
+        </div>
+        <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '4px 20px 4px 12px', borderRadius: 999, background: 'rgba(3,10,24,.72)', border: `1.5px solid ${C.line}`}}>
+          <Img src={staticFile('axolotlion/pumpfun.png')} style={{width: 46, height: 46}} />
+          <span style={{fontFamily: display, fontWeight: 700, fontSize: 26, color: '#fff'}}>pump.fun</span>
+        </div>
       </div>
     </AbsoluteFill>
   );
