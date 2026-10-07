@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Easing, Img, interpolate, random, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {body, C, display, GOLD, Words} from '../ui';
+import {RIG} from './rig';
 
 export const AX_FPS = 30;
 export const AX_TOTAL = 900; // 30 seconds
@@ -20,16 +21,46 @@ const gallop = (f: number) => {
   return {h, dy: -h * 34, rot: Math.sin(t * Math.PI * 4.4) * 2.4, sy: 1 + (h - 0.5) * 0.035};
 };
 
+/* ---------- rigged run cycle: body, tail, and four two-segment legs ---------- */
+const LEG_ORDER = ['hindA', 'foreC', 'hindB', 'foreD'] as const;
+// mean angle, swing, phase offset (radians) for the upper leg; lower leg flexes with a phase lead
+const GAIT: Record<(typeof LEG_ORDER)[number], [number, number, number]> = {hindA: [-10, 20, 0], hindB: [-8, 18, 0.35], foreC: [5, 22, 3.3], foreD: [5, 20, 3.0]};
+const rigImg = (name: string, b: {x: number; y: number; w: number; h: number}) => (
+  <Img src={staticFile(`axolotlion/rig/${name}.png`)} style={{position: 'absolute', left: b.x, top: b.y, width: b.w, height: b.h}} />
+);
+const RigBody: React.FC<{frame: number}> = ({frame}) => {
+  const ph = (off: number) => 2 * Math.PI * ((frame / AX_FPS) * 2.2) + off;
+  const full: React.CSSProperties = {position: 'absolute', left: 0, top: 0, width: RIG.w, height: RIG.h};
+  return (
+    <div style={{...full, transform: `rotate(${Math.sin(ph(0.6)) * 0.8}deg)`, transformOrigin: '60% 50%'}}>
+      <Img src={staticFile('axolotlion/rig/base.png')} style={full} />
+      <div style={{...full, transformOrigin: `${RIG.tail.pivot[0]}px ${RIG.tail.pivot[1]}px`, transform: `rotate(${6 * Math.sin(ph(1.0))}deg)`}}>{rigImg('tail', RIG.tail)}</div>
+      {LEG_ORDER.map((n) => {
+        const L = RIG.legs[n];
+        const [mean, amp, off] = GAIT[n];
+        const a1 = mean + amp * Math.sin(ph(off));
+        const a2 = 18 * Math.sin(ph(off + 1.1));
+        return (
+          <div key={n} style={{...full, transformOrigin: `${L.hip[0]}px ${L.hip[1]}px`, transform: `rotate(${a1}deg)`}}>
+            {rigImg(`${n}_up`, L.upper)}
+            <div style={{...full, transformOrigin: `${L.knee[0]}px ${L.knee[1]}px`, transform: `rotate(${a2}deg)`}}>{rigImg(`${n}_lo`, L.lower)}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 type RunPose = {x: number; ground: number};
 
 const Runner: React.FC<{pose: (f: number) => RunPose; scale: number; opacity?: number; rotExtra?: (f: number) => number; glow?: boolean}> = ({pose, scale, opacity = 1, rotExtra, glow = true}) => {
   const f = useCurrentFrame();
-  const draw = (fr: number, o: number, blur: number, key: string) => {
+  const draw = (fr: number, o: number, blur: number, key: string, withGlow = true) => {
     const p = pose(fr), g = gallop(fr);
     const w = RUN_W * scale, h = RUN_H * scale;
     return (
-      <div key={key} style={{position: 'absolute', left: p.x - w / 2, top: p.ground - h + g.dy, width: w, height: h, opacity: o, transform: `rotate(${g.rot + (rotExtra ? rotExtra(fr) : 0)}deg) scaleY(${g.sy})`, transformOrigin: '50% 90%', filter: `${blur ? `blur(${blur}px) ` : ''}${glow ? GLOW : ''}`}}>
-        <Img src={staticFile('axolotlion/run-a-cut.png')} style={{width: '100%', height: '100%'}} />
+      <div key={key} style={{position: 'absolute', left: p.x - w / 2, top: p.ground - h + g.dy, width: w, height: h, opacity: o, transform: `rotate(${g.rot + (rotExtra ? rotExtra(fr) : 0)}deg) scaleY(${g.sy})`, transformOrigin: '50% 90%', filter: `${blur ? `blur(${blur}px) ` : ''}${glow && withGlow ? GLOW : ''}`}}>
+        <div style={{width: RUN_W, height: RUN_H, transform: `scale(${scale})`, transformOrigin: '0 0'}}><RigBody frame={fr} /></div>
       </div>
     );
   };
@@ -48,7 +79,7 @@ const Runner: React.FC<{pose: (f: number) => RunPose; scale: number; opacity?: n
     <AbsoluteFill style={{opacity}}>
       {puffs}
       <div style={{position: 'absolute', left: p.x - RUN_W * scale * 0.4, top: p.ground - 22, width: RUN_W * scale * 0.8, height: 44, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,10,20,.55), rgba(0,10,20,0) 70%)', transform: `scale(${1 - g.h * 0.22})`, opacity: 0.6}} />
-      {[9, 6, 3].map((d, i) => draw(f - d, [0.07, 0.12, 0.2][i], 5, `gh${i}`))}
+      {[8, 4].map((d, i) => draw(f - d, [0.1, 0.18][i], 5, `gh${i}`, false))}
       {draw(f, 1, 0, 'main')}
     </AbsoluteFill>
   );
