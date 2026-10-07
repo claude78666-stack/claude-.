@@ -11,8 +11,8 @@ const ease = (f: number, a: number, b: number, from = 0, to = 1, e = Easing.out(
   interpolate(f, [a, b], [from, to], {...clamp, easing: e});
 const win = (f: number, a: number, b: number, fade = 12) => interpolate(f, [a, a + fade, b - fade, b], [0, 1, 1, 0], clamp);
 
-const RUN_W = 1851, RUN_H = 818, ST_W = 1406, ST_H = 976;
-const GLOW = 'drop-shadow(0 0 26px rgba(255,120,225,.55)) drop-shadow(0 0 70px rgba(90,200,255,.38))';
+export const RUN_W = 1851, RUN_H = 818, ST_W = 1406, ST_H = 976;
+export const GLOW = 'drop-shadow(0 0 26px rgba(255,120,225,.55)) drop-shadow(0 0 70px rgba(90,200,255,.38))';
 
 /* ---------- gallop pose: bounce, pitch, squash ---------- */
 const gallop = (f: number) => {
@@ -28,8 +28,8 @@ const GAIT: Record<(typeof LEG_ORDER)[number], [number, number, number]> = {hind
 const rigImg = (name: string, b: {x: number; y: number; w: number; h: number}) => (
   <Img src={staticFile(`axolotlion/rig/${name}.png`)} style={{position: 'absolute', left: b.x, top: b.y, width: b.w, height: b.h}} />
 );
-const RigBody: React.FC<{frame: number}> = ({frame}) => {
-  const ph = (off: number) => 2 * Math.PI * ((frame / AX_FPS) * 2.2) + off;
+export const RigBody: React.FC<{frame: number; fps?: number; freq?: number}> = ({frame, fps = AX_FPS, freq = 2.2}) => {
+  const ph = (off: number) => 2 * Math.PI * ((frame / fps) * freq) + off;
   const full: React.CSSProperties = {position: 'absolute', left: 0, top: 0, width: RIG.w, height: RIG.h};
   return (
     <div style={{...full, transform: `rotate(${Math.sin(ph(0.6)) * 0.8}deg)`, transformOrigin: '60% 50%'}}>
