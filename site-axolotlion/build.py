@@ -10,8 +10,9 @@ for p in sorted(A.iterdir()):
         key = {'solana.svg': 'solana', 'pumpfun.webp': 'pumpfun', 'bg.jpg': 'bg', 'stand.webp': 'stand', 'face.webp': 'face'}.get(p.name, p.stem)
         assets[key] = f'data:{mime[p.suffix]};base64,' + base64.b64encode(p.read_bytes()).decode()
 rig = json.load(open(A / 'rig.json'))
+srig = json.load(open(A / 'stand_rig.json'))
 t = open('index.template.html').read()
-t = t.replace('/*ASSETS*/{}', json.dumps(assets)).replace('/*RIG*/{}', json.dumps(rig))
+t = t.replace('/*ASSETS*/{}', json.dumps(assets)).replace('/*RIG*/{}', json.dumps(rig)).replace('/*SRIG*/{}', json.dumps(srig))
 if len(sys.argv) > 2 and sys.argv[1] == '--artifact':
     t = t.replace('<title>Axolotlion</title>', '<title>Axolotlion World</title>')
     head = re.search(r'<head>(.*?)</head>', t, re.S).group(1)

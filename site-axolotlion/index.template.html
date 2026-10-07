@@ -69,8 +69,29 @@ nav .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
 .aura{position:absolute;width:86%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,150,230,.4),rgba(90,200,255,.2) 50%,transparent 70%);filter:blur(10px);animation:aura 4s ease-in-out infinite}
 @keyframes aura{50%{transform:scale(1.08);opacity:.75}}
 #creature{position:relative;background:none;border:0;padding:0;cursor:pointer;width:min(560px,92%);touch-action:manipulation;outline-offset:8px;user-select:none;-webkit-user-select:none;will-change:transform}
-#creature img{width:100%;pointer-events:none;animation:breathe 3.4s ease-in-out infinite;transform-origin:50% 100%;filter:drop-shadow(0 0 26px rgba(255,120,225,.6)) drop-shadow(0 0 60px rgba(90,200,255,.45))}
-@keyframes breathe{50%{transform:scale(1.015) rotate(-.8deg)}}
+.srig{position:relative;width:100%;aspect-ratio:900/625;--k:1;pointer-events:none;animation:breathe calc(4s*var(--k)) ease-in-out infinite;transform-origin:50% 100%}
+.srig .w{position:absolute;inset:0}
+.srig img{position:absolute;max-width:none}
+.srig .glowcopy{position:absolute;inset:0;width:100%;height:100%;filter:blur(22px) saturate(1.7) brightness(1.15);opacity:.55;animation:glowp 3.6s ease-in-out infinite}
+@keyframes glowp{50%{opacity:.85}}
+@keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.008,1.016)}}
+.srig .base{animation:mane calc(6s*var(--k)) ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes mane{from{transform:skewX(-.7deg) scaleY(1)}to{transform:skewX(.7deg) scaleY(1.006)}}
+.srig .head{animation:head calc(11s*var(--k)) ease-in-out infinite}
+@keyframes head{0%,100%{transform:rotate(0) translate(0,0)}15%{transform:rotate(-2.4deg) translate(-.3%,.2%)}38%{transform:rotate(1.6deg) translate(.25%,-.3%)}55%{transform:rotate(3.8deg) translate(.5%,0)}72%{transform:rotate(-1deg) translate(-.15%,.25%)}}
+.srig .gl{animation:flutL calc(2.3s*var(--k)) ease-in-out infinite alternate}
+.srig .gr{animation:flutR calc(2.9s*var(--k)) ease-in-out infinite alternate}
+@keyframes flutL{from{transform:rotate(-3.5deg)}to{transform:rotate(4.5deg)}}
+@keyframes flutR{from{transform:rotate(3.5deg)}to{transform:rotate(-4.5deg)}}
+.srig .ta{animation:tailA calc(3.2s*var(--k)) ease-in-out infinite alternate}
+.srig .tb{animation:tailB calc(3.2s*var(--k)) ease-in-out infinite alternate;animation-delay:calc(-.55s*var(--k))}
+@keyframes tailA{from{transform:rotate(-2.4deg)}to{transform:rotate(2.4deg)}}
+@keyframes tailB{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.srig .lid{position:absolute;border-radius:50%;background:radial-gradient(ellipse,#dfa0a6 55%,rgba(223,160,166,0) 74%);transform:scaleY(0);transform-origin:50% 40%;animation:blink 5.2s infinite}
+@keyframes blink{0%,91%,100%{transform:scaleY(0)}94%{transform:scaleY(1)}97%{transform:scaleY(.2)}}
+.srig .sheen{position:absolute;inset:0;mix-blend-mode:soft-light;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.55) 47%,transparent 62%);background-size:260% 100%;animation:sheen 7s ease-in-out infinite;-webkit-mask-size:100% 100%;mask-size:100% 100%}
+@keyframes sheen{from{background-position:130% 0}to{background-position:-30% 0}}
+.srig.gust{--k:.4}
 .shadow{position:absolute;bottom:2%;left:14%;right:10%;height:5%;border-radius:50%;background:radial-gradient(ellipse,rgba(0,8,16,.65),transparent 70%)}
 .hint{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);padding:8px 16px;border-radius:999px;background:rgba(3,10,24,.72);border:1px solid var(--line);font-weight:600;font-size:15px;white-space:nowrap;animation:hintp 2s ease-in-out infinite;pointer-events:none}
 @keyframes hintp{50%{transform:translateX(-50%) translateY(-5px)}}
@@ -199,7 +220,7 @@ footer .badges{justify-content:center}
     <div class="stage">
       <div class="aura"></div>
       <button id="creature" aria-label="Tap Axolotlion. Hold for a bigger one.">
-        <img data-src="stand" alt="Axolotlion, a pink axolotl with a golden glowing lion mane" width="900" height="625">
+        <div class="srig" id="srig" role="img" aria-label="Axolotlion, a pink axolotl with a golden glowing lion mane"></div>
       </button>
       <div class="shadow"></div>
       <div class="hint">Tap him. Hold for more.</div>
@@ -302,6 +323,7 @@ footer .badges{justify-content:center}
 const CONFIG={ca:'',pump:'',dex:'',x:'',telegram:''};
 const A=/*ASSETS*/{};
 const RIG=/*RIG*/{};
+const SR=/*SRIG*/{};
 
 /* ---------- assets ---------- */
 document.querySelectorAll('[data-src]').forEach(i=>i.src=A[i.dataset.src]);
@@ -340,46 +362,69 @@ chartIO.observe($('#chart'));
   addEventListener('pointermove',e=>{const dx=(e.clientX/innerWidth-.5)*-14,dy=(e.clientY/innerHeight-.5)*-10;$('#seaImg').style.transform=`translate(${dx}px,${dy}px)`});
 })();
 
-/* ---------- sound: every toot is synthesised, nothing to download ---------- */
-let ac,master,muted=store.get('axl-mute')==='1';
+/* ---------- sound: synthesised toots, tuned to be loud on phone speakers ---------- */
+let ac,inp,bus,muted=store.get('axl-mute')==='1';
 function audio(){
-  if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();const comp=ac.createDynamicsCompressor();master=ac.createGain();master.gain.value=muted?0:.9;master.connect(comp);comp.connect(ac.destination);}
+  if(!ac){
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    const hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=110;
+    const pk=ac.createBiquadFilter();pk.type='peaking';pk.frequency.value=720;pk.Q.value=.7;pk.gain.value=9;
+    const sh=ac.createBiquadFilter();sh.type='highshelf';sh.frequency.value=2600;sh.gain.value=5;
+    const ws=ac.createWaveShaper(),cur=new Float32Array(2048),k=3.4;for(let i=0;i<2048;i++){const x=i/1024-1;cur[i]=Math.tanh(k*x)/Math.tanh(k)}ws.curve=cur;ws.oversample='2x';
+    const comp=ac.createDynamicsCompressor();comp.threshold.value=-16;comp.knee.value=4;comp.ratio.value=10;comp.attack.value=.002;comp.release.value=.2;
+    bus=ac.createGain();bus.gain.value=muted?0:1.25;
+    hp.connect(pk);pk.connect(sh);sh.connect(ws);ws.connect(comp);comp.connect(bus);bus.connect(ac.destination);inp=hp;
+  }
   if(ac.state==='suspended')ac.resume();return ac;
 }
-function noiseBuf(c,s){const b=c.createBuffer(1,c.sampleRate*s,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b}
-function rasp(c,t,dur,f0,f1,depth,rate,vol,type){
-  const o=c.createOscillator();o.type=type||'sawtooth';
-  o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
-  const lfo=c.createOscillator();lfo.frequency.setValueAtTime(rate,t);lfo.frequency.linearRampToValueAtTime(rate*rnd(1.2,1.8),t+dur);
-  const ld=c.createGain();ld.gain.value=depth;lfo.connect(ld);ld.connect(o.frequency);
-  const am=c.createOscillator();am.type='square';am.frequency.value=rate*rnd(.8,1.2);
-  const amd=c.createGain();amd.gain.value=.42;const g=c.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.03);
-  g.gain.setValueAtTime(vol,t+dur*.7);g.gain.exponentialRampToValueAtTime(.001,t+dur);
-  const base=c.createConstantSource?c.createConstantSource():null;
-  am.connect(amd);amd.connect(g.gain);
-  const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=f0*7;lp.Q.value=2;
-  o.connect(lp);lp.connect(g);g.connect(master);
-  const n=c.createBufferSource();n.buffer=noiseBuf(c,dur+.1);const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=f0*2.2;bp.Q.value=1.4;
-  const ng=c.createGain();ng.gain.setValueAtTime(0,t);ng.gain.linearRampToValueAtTime(vol*.35,t+.04);ng.gain.exponentialRampToValueAtTime(.001,t+dur);
-  n.connect(bp);bp.connect(ng);ng.connect(master);
-  [o,lfo,am,n].forEach(s=>{s.start(t);s.stop(t+dur+.1)});
+/* A fart is lips flapping: an irregular pulse train with a wet crackle at every flap. Pitch contour, wobble and sputter shape the joke. */
+function fartBuf(c,o){
+  const sr=c.sampleRate,n=Math.floor(o.dur*sr),b=c.createBuffer(1,n,sr),d=b.getChannelData(0);
+  let ph=0,slow=0,slowT=0,slowN=0,env=0,peak=0;
+  const {f0,f1,bump=0,wob=.1,wr=7,jit=.1,wet=.4,sput=.2}=o;
+  for(let i=0;i<n;i++){
+    const t=i/sr,u=t/o.dur;
+    if(i%Math.floor(sr*.006)===0){slow=slowN;slowN=Math.random()*2-1}
+    const sn=slow+(slowN-slow)*((i%Math.floor(sr*.006))/Math.floor(sr*.006));
+    const tail=u>1-sput?(u-(1-sput))/sput:0;
+    let f=f0+(f1-f0)*Math.pow(u,.85)+bump*Math.sin(Math.PI*u);
+    f*=1+wob*Math.sin(2*Math.PI*wr*t)+(jit+tail*.5)*sn;
+    ph+=Math.max(30,f)/sr;
+    let flap=0;
+    if(ph>=1){ph-=1;flap=1}
+    const p=ph;
+    let s=Math.exp(-p*5)*Math.sin(2*Math.PI*p*2.6)+.55*(1-2*p)*Math.exp(-p*2.2)+(Math.random()*2-1)*wet*Math.exp(-p*14);
+    let a=Math.min(1,t/.012)*(1-Math.pow(Math.max(0,u-.88)/.12,2));
+    a*=.72+.28*sn;
+    if(tail>0&&Math.random()<tail*.55)a=0;               // sputter: ppt-ppt-pt
+    d[i]=s*a;peak=Math.max(peak,Math.abs(d[i]));
+  }
+  for(let i=0;i<n;i++)d[i]=d[i]/(peak||1)*.95;
+  return b;
 }
-function squeak(c,t,dur,f0,f1,vol){
-  const o=c.createOscillator();o.type='triangle';o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
-  const v=c.createOscillator();v.frequency.value=rnd(34,52);const vg=c.createGain();vg.gain.value=rnd(25,60);v.connect(vg);vg.connect(o.frequency);
-  const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=.9;
-  const g=c.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+dur);
-  o.connect(bp);bp.connect(g);g.connect(master);[o,v].forEach(s=>{s.start(t);s.stop(t+dur+.05)});
-}
+function join(c,parts,gap){const sr=c.sampleRate;let n=0;parts.forEach(p=>n+=p.length+Math.floor(gap*sr));const b=c.createBuffer(1,n,sr),d=b.getChannelData(0);let o=0;parts.forEach(p=>{d.set(p.getChannelData(0),o);o+=p.length+Math.floor(gap*sr)});return b}
+function play(c,buf,t,vol,rate){const s=c.createBufferSource();s.buffer=buf;s.playbackRate.value=rate||1;const g=c.createGain();g.gain.value=vol;s.connect(g);g.connect(inp);s.start(t)}
+function boing(c,t,vol){const o=c.createOscillator();o.type='sine';o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(560,t+.12);o.frequency.exponentialRampToValueAtTime(230,t+.4);
+  const v=c.createOscillator();v.frequency.value=26;const vg=c.createGain();vg.gain.value=42;v.connect(vg);vg.connect(o.frequency);
+  const g=c.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.42);o.connect(g);g.connect(inp);o.start(t);v.start(t);o.stop(t+.45);v.stop(t+.45)}
+function bloops(c,t,n){for(let i=0;i<n;i++){const o=c.createOscillator(),g=c.createGain(),tt=t+.1+i*rnd(.09,.16),f=rnd(520,900);o.frequency.setValueAtTime(f,tt);o.frequency.exponentialRampToValueAtTime(f*1.8,tt+.07);
+  g.gain.setValueAtTime(.0001,tt);g.gain.exponentialRampToValueAtTime(.22,tt+.01);g.gain.exponentialRampToValueAtTime(.0001,tt+.09);o.connect(g);g.connect(inp);o.start(tt);o.stop(tt+.1)}}
+const PRE={
+  toot:c=>join(c,[fartBuf(c,{dur:.11,f0:330,f1:240,wob:.04,jit:.05,wet:.2,sput:.1}),fartBuf(c,{dur:.09,f0:300,f1:210,wob:.04,jit:.05,wet:.2,sput:.1})],.05),
+  squeaker:c=>fartBuf(c,{dur:.55,f0:1150,f1:480,wob:.07,wr:38,jit:.04,wet:.6,sput:.3}),
+  whoopee:c=>fartBuf(c,{dur:.7,f0:170,f1:110,bump:560,wob:.08,wr:9,jit:.07,wet:.35,sput:.22}),
+  trumpet:c=>fartBuf(c,{dur:.95,f0:310,f1:240,wob:.035,wr:6,jit:.05,wet:.18,sput:.18}),
+  stutter:c=>join(c,[.12,.12,.16,.5].map((d,i)=>fartBuf(c,{dur:d,f0:230-i*14,f1:170-i*12,wob:.06,wr:11,jit:.08,wet:.45,sput:i===3?.4:.1})),.045),
+  longboi:c=>fartBuf(c,{dur:2.1,f0:210,f1:120,bump:90,wob:.2,wr:10,jit:.14,wet:.5,sput:.32})
+};
 function sound(kind){
-  if(muted)return;const c=audio(),t=c.currentTime+.01;
-  if(kind==='toot'){squeak(c,t,.11,rnd(330,420),rnd(220,260),.5);squeak(c,t+.14,.09,rnd(300,380),rnd(200,240),.45)}
-  else if(kind==='squeak'){squeak(c,t,rnd(.3,.5),rnd(560,720),rnd(180,260),.5)}
-  else if(kind==='classic'){rasp(c,t,rnd(.5,.8),rnd(110,150),rnd(48,62),14,rnd(26,38),.55)}
-  else if(kind==='double'){rasp(c,t,.3,130,70,10,30,.5);rasp(c,t+.38,.5,115,52,12,34,.55)}
-  else if(kind==='rumble'){rasp(c,t,rnd(1.6,2.2),rnd(95,120),rnd(34,42),9,rnd(16,22),.7);squeak(c,t+1.5,.25,220,120,.3)}
+  if(muted)return;const c=audio(),t=c.currentTime+.02,buf=(PRE[kind]||PRE.whoopee)(c);
+  play(c,buf,t,1,1);play(c,buf,t+.012,.55,.965);            // doubled and detuned so it sounds fatter
+  if(kind==='longboi'||kind==='trumpet')play(c,buf,t,.35,2);  // an octave up so small speakers carry it
+  bloops(c,t,kind==='toot'?1:3);
 }
-const KINDS={small:['toot','squeak','toot'],mid:['classic','double','squeak','classic'],big:['rumble','double']};
+const KINDS={small:['toot','squeaker','whoopee'],mid:['whoopee','trumpet','stutter','squeaker'],big:['longboi','stutter','trumpet']};
+window.__axl={fartBuf,PRE,get ac(){return ac}};
 
 /* ---------- gas clouds + pop words ---------- */
 const PAL=[[255,150,225],[111,242,255],[255,224,138],[190,160,255],[240,235,215]];
@@ -402,8 +447,24 @@ function popword(origin,size){
   el.animate([{transform:'translateY(0) scale(.4) rotate(-8deg)',opacity:0},{transform:'translateY(-30px) scale(1.15) rotate(-4deg)',opacity:1,offset:.25},{transform:'translateY(-120px) scale(1) rotate(3deg)',opacity:0}],{duration:1400,easing:'ease-out'}).onfinish=()=>el.remove();
 }
 
+/* ---------- standing rig: head, gills, tail segments, blinking, breathing, light sweep ---------- */
+(function(){
+  const host=$('#srig'),W=SR.w,H=SR.h,pc=(x,y)=>`${(x/W*100).toFixed(2)}% ${(y/H*100).toFixed(2)}%`;
+  const el=(cls,origin)=>{const d=document.createElement('div');d.className='w '+cls;if(origin)d.style.transformOrigin=pc(origin[0],origin[1]);return d};
+  const im=(src,b)=>{const i=document.createElement('img');i.src=src;i.alt='';i.draggable=false;i.style.cssText=`left:${b.x/W*100}%;top:${b.y/H*100}%;width:${b.w/W*100}%;height:${b.h/H*100}%`;return i};
+  const glow=document.createElement('img');glow.src=A.st_base;glow.className='glowcopy';glow.alt='';host.appendChild(glow);
+  const base=el('base');const bi=document.createElement('img');bi.src=A.st_base;bi.style.cssText='left:0;top:0;width:100%;height:100%';bi.alt='';base.appendChild(bi);host.appendChild(base);
+  const ta=el('ta',SR.tailA.pivot);ta.appendChild(im(A.st_tailA,SR.tailA));const tb=el('tb',SR.tailB.pivot);tb.appendChild(im(A.st_tailB,SR.tailB));ta.appendChild(tb);host.appendChild(ta);
+  const head=el('head',SR.neck);head.appendChild(im(A.st_face,SR.face));
+  SR.eyes.forEach((e,i)=>{const l=document.createElement('div');l.className='lid';const w=34,h=26;l.style.cssText=`left:${(e[0]-w/2)/W*100}%;top:${(e[1]-h/2)/H*100}%;width:${w/W*100}%;height:${h/H*100}%;animation-delay:${i*.02}s`;head.appendChild(l)});
+  const gl=el('gl',SR.gillL.pivot);gl.appendChild(im(A.st_gillL,SR.gillL));head.appendChild(gl);
+  const gr=el('gr',SR.gillR.pivot);gr.appendChild(im(A.st_gillR,SR.gillR));head.appendChild(gr);
+  host.appendChild(head);
+  const sh=document.createElement('div');sh.className='sheen';sh.style.webkitMaskImage=sh.style.maskImage=`url(${A.st_base})`;host.appendChild(sh);
+})();
+
 /* ---------- the creature: tap = toot, hold = bigger ---------- */
-const cr=$('#creature'),img=cr.querySelector('img');
+const cr=$('#creature'),img=$('#srig');
 let toots=+store.get('axl-toots')||0;$('#count').textContent=toots;
 const BADGES={10:'Gas Cub unlocked',25:'Glow Gust unlocked',50:'Lion of Wind unlocked',100:'Superior Intelligence unlocked',250:'Legend of the Deep unlocked'};
 let holdStart=0,holdRAF=0;
@@ -414,6 +475,7 @@ function release(mag){
   cancelAnimationFrame(holdRAF);cr.style.transform='';
   const size=mag<.25?'small':mag<.65?'mid':'big';
   sound(pick(KINDS[size]));
+  if(!muted&&!reduced){try{boing(audio(),audio().currentTime+.01,.28)}catch(_){}}
   if(navigator.vibrate)navigator.vibrate(size==='big'?[60,40,90]:30);
   const o=rear();cloud(o,mag);popword(o,size);
   if(!reduced){
@@ -424,9 +486,8 @@ function release(mag){
       {transform:`translate(${dx}px,${-h}px) rotate(${rot}deg) scale(.95,1.08)`,offset:.5},
       {transform:`translate(${dx*.4}px,0) rotate(${-rot/3}deg) scale(1.08,.9)`,offset:.78},
       {transform:'translate(0,0) scale(1,1)'}],{duration:620+mag*500,easing:'cubic-bezier(.3,.6,.4,1)'});
-    img.animate([{filter:img.style.filter||'drop-shadow(0 0 26px rgba(255,120,225,.6)) drop-shadow(0 0 60px rgba(90,200,255,.45))'},
-      {filter:'drop-shadow(0 0 60px rgba(255,200,255,1)) drop-shadow(0 0 120px rgba(111,242,255,.9)) brightness(1.25)',offset:.3},
-      {filter:'drop-shadow(0 0 26px rgba(255,120,225,.6)) drop-shadow(0 0 60px rgba(90,200,255,.45))'}],{duration:900});
+    img.querySelector('.glowcopy').animate([{opacity:.55,transform:'scale(1)'},{opacity:1,transform:'scale(1.07)',offset:.3},{opacity:.55,transform:'scale(1)'}],{duration:900});
+    img.classList.add('gust');setTimeout(()=>img.classList.remove('gust'),1100);
   }
   if(size==='big'){document.body.classList.remove('shake');void document.body.offsetWidth;document.body.classList.add('shake')}
   toots++;store.set('axl-toots',toots);$('#count').textContent=toots;
@@ -437,7 +498,7 @@ cr.addEventListener('pointerdown',e=>{e.preventDefault();holdStart=performance.n
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>cr.addEventListener(ev,e=>{if(!holdStart)return;const m=Math.min(1,(performance.now()-holdStart)/1400);holdStart=0;if(ev==='pointercancel'){cancelAnimationFrame(holdRAF);cr.style.transform='';return}release(m)}));
 cr.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();release(rnd(0,.7))}});
 $('#mute').textContent=muted?'🔇':'🔊';
-$('#mute').onclick=()=>{muted=!muted;store.set('axl-mute',muted?'1':'0');$('#mute').textContent=muted?'🔇':'🔊';if(master)master.gain.value=muted?0:.9;if(!muted){audio();toast('Sound on')}};
+$('#mute').onclick=()=>{muted=!muted;store.set('axl-mute',muted?'1':'0');$('#mute').textContent=muted?'🔇':'🔊';if(bus)bus.gain.value=muted?0:1.25;if(!muted){audio();toast('Sound on')}};
 
 /* ---------- rigged run cycle (CSS only) ---------- */
 (function(){
