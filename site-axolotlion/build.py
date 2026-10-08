@@ -6,7 +6,7 @@ A = pathlib.Path('assets')
 mime = {'.webp': 'image/webp', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.png': 'image/png'}
 assets = {}
 for p in sorted(A.iterdir()):
-    if p.suffix in mime:
+    if p.suffix in mime and p.stem not in ('v34', 'v135'):
         key = {'solana.svg': 'solana', 'pumpfun.webp': 'pumpfun', 'bg.jpg': 'bg', 'stand.webp': 'stand', 'face.webp': 'face'}.get(p.name, p.stem)
         assets[key] = f'data:{mime[p.suffix]};base64,' + base64.b64encode(p.read_bytes()).decode()
 rig = json.load(open(A / 'rig.json'))

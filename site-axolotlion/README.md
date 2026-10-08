@@ -10,11 +10,11 @@ One self-contained page (`index.html`, about 550 KB). Open it in a browser or up
 Rebuild: `python3 prep_assets.py` (only if art changed) then `python3 build.py`.
 
 ## Turn him around, and he looks at you
-- Drag the character sideways to turn him. Three real views (front, three-quarter, side) blend, and mirrored copies cover the other side. A tap or hold still makes him toot.
+- Drag sideways to spin him a full 360 degrees, as many turns as you like. `make_turntable.py` builds 72 frames (every 5 degrees) by optical-flow morphing between the real views (front, three-quarter, rear three-quarter) and mirroring them for the other side; the page crossfades neighbouring frames on a canvas. When he faces you, the live rig (moving head, tail, blinking) takes over. A tap or hold still makes him toot.
 - His head turns in 3D toward your cursor or finger. When nobody is touching the screen he looks around on his own.
 - "Spin him" sweeps him through all the angles.
-- He now turns +/- 135 degrees (270 degrees in total): front, three-quarter, side and rear three-quarter views, mirrored for the other side. The only missing slice is the straight-back view at 180 degrees. To finish the 360, generate a view from directly behind, add it like `v135` (see `make_v34.py` for the alignment recipe), and extend `render()` and the +/-135 clamps in the turntable block of `index.template.html`.
+- The straight-back stretch (about 150-210 degrees) is synthesised from the rear three-quarter photo (`back_warp`), not a real photo. To improve it, generate a true rear view, add it as a keyframe in `make_turntable.py`, and re-run `python3 make_turntable.py 5` then convert `turntable/*.png` to `assets/tt_NNN.webp` (1000px wide).
 
 ## Showroom stand
-The hero is a display case with spotlight beams (no platform or floor reflection). Drag and release to flick him; he keeps turning with momentum. If nobody touches the page for about 7 seconds he sweeps slowly left and right like a car on a display plinth, and stops the moment you move.
+The hero is a display case with spotlight beams (no platform or floor reflection). Drag and release to flick him; he keeps turning with momentum. If nobody touches the page for about 6 seconds he starts a slow endless turn like a car on a showroom turntable, and stops the moment you touch him. The Spin button does one smooth full turn.
 Art is stored at 1100 px wide (`make_stand_rig.py`, `make_v34.py`, `prep_assets.py`) so it stays sharp on high-density screens.
