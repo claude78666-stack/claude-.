@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, Img, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Easing, Img, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {body, C, display} from '../ui';
 import MANE from './mane.json';
 
@@ -106,6 +106,43 @@ const Jelly: React.FC<{t: number; x: number; y: number; size: number; hue: numbe
   );
 };
 
+
+/* ---------- AI-animated footage of the character (Runway Seedance), cut to the narration ---------- */
+type Shot = {a: number; b: number; src: string; from: number; rate: number; x: number; y: number; s: number};
+const SHOTS: Shot[] = [
+  {a: 0, b: 5.6, src: 'clip1', from: 0, rate: 1, x: 40, y: 150, s: 0.86},
+  {a: 5.6, b: 10.4, src: 'clip3', from: 0, rate: 1, x: -380, y: 80, s: 0.54},
+  {a: 10.4, b: 18.4, src: 'clip2', from: 0, rate: 1, x: -400, y: 50, s: 0.72},
+  {a: 18.4, b: 26.0, src: 'clip4', from: 0, rate: 1, x: 20, y: -70, s: 0.84},
+  {a: 26.0, b: 33.6, src: 'clip1', from: 1.5, rate: 0.85, x: -420, y: 70, s: 0.72},
+  {a: 33.6, b: 42.4, src: 'clip3', from: 2, rate: 0.7, x: -380, y: 80, s: 0.5},
+  {a: 42.4, b: 50, src: 'clip1', from: 0, rate: 0.8, x: 0, y: -330, s: 0.5},
+];
+const Footage: React.FC<{t: number}> = ({t}) => (
+  <AbsoluteFill style={{mixBlendMode: 'lighten'}}>
+    {SHOTS.map((s, i) => {
+      const fade = 0.6;
+      const op = interpolate(t, [s.a - fade, s.a, s.b, s.b + fade], [i === 0 ? 1 : 0, 1, 1, i === SHOTS.length - 1 ? 1 : 0], clamp);
+      if (op <= 0) return null;
+      const from = Math.round((s.a - fade) * PRO_FPS);
+      const dur = Math.round((s.b - s.a + fade * 2) * PRO_FPS);
+      const k = (t - s.a) / (s.b - s.a);
+      const drift = 1 + k * 0.035;
+      return (
+        <Sequence key={i} from={Math.max(0, from)} durationInFrames={dur} layout="none">
+          <AbsoluteFill style={{opacity: op, transform: `translate(${s.x}px, ${s.y}px) scale(${s.s * drift})`, transformOrigin: '50% 80%'}}>
+            <div style={{width: 1920, height: 1080, WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)', maskImage: 'linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)'}}>
+              <div style={{width: 1920, height: 1080, WebkitMaskImage: 'linear-gradient(180deg,transparent,#000 20%,#000 82%,transparent)', maskImage: 'linear-gradient(180deg,transparent,#000 20%,#000 82%,transparent)'}}>
+                <OffthreadVideo src={staticFile(`axolotlion/pro/${s.src}.mp4`)} muted startFrom={Math.round(s.from * PRO_FPS)} playbackRate={s.rate} style={{width: 1920, height: 1080}} />
+              </div>
+            </div>
+          </AbsoluteFill>
+        </Sequence>
+      );
+    })}
+  </AbsoluteFill>
+);
+
 const Particles: React.FC<{t: number}> = ({t}) => (
   <AbsoluteFill>
     {Array.from({length: 46}, (_, i) => {
@@ -160,7 +197,7 @@ export const ProVideo: React.FC = () => {
       {/* floor glow under the hero */}
       <div style={{position: 'absolute', left: 560, top: 870, width: 800, height: 90, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(255,140,230,.28), transparent 70%)', filter: 'blur(14px)', opacity: win(t, 0, 43, 1)}} />
 
-      <Hero t={t} />
+      <Footage t={t} />
 
       {/* A: title */}
       <div style={{position: 'absolute', left: 0, right: 0, top: 78, textAlign: 'center', opacity: win(t, 0.2, 5.4, 0.7)}}>
