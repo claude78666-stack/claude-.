@@ -114,9 +114,9 @@ const SHOTS: Shot[] = [
   {a: 5.6, b: 10.4, src: 'clip3', from: 0, rate: 1, x: -380, y: 80, s: 0.54},
   {a: 10.4, b: 18.4, src: 'clip2', from: 0, rate: 1, x: -400, y: 50, s: 0.72},
   {a: 18.4, b: 26.0, src: 'clip4', from: 0, rate: 1, x: 20, y: -70, s: 0.84},
-  {a: 26.0, b: 33.6, src: 'clip1', from: 1.5, rate: 0.85, x: -420, y: 70, s: 0.72},
-  {a: 33.6, b: 42.4, src: 'clip3', from: 2, rate: 0.7, x: -380, y: 80, s: 0.5},
-  {a: 42.4, b: 50, src: 'clip1', from: 0, rate: 0.8, x: 0, y: -330, s: 0.5},
+  {a: 26.0, b: 33.6, src: 'clip5', from: 0, rate: 1, x: -400, y: 60, s: 0.72},
+  {a: 33.6, b: 42.4, src: 'clip6', from: 0, rate: 0.8, x: -400, y: 60, s: 0.56},
+  {a: 42.4, b: 50, src: 'clip7', from: 0, rate: 1, x: 0, y: -330, s: 0.5},
 ];
 const Footage: React.FC<{t: number}> = ({t}) => (
   <AbsoluteFill style={{mixBlendMode: 'lighten'}}>
@@ -225,7 +225,7 @@ export const ProVideo: React.FC = () => {
       </div>
 
       {/* D: three animals */}
-      <div style={{position: 'absolute', left: 120, right: 120, top: 720, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 34, opacity: win(t, 18.3, 25.8, 0.6)}}>
+      <div style={{position: 'absolute', left: 120, right: 120, top: 70, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 34, opacity: win(t, 18.3, 25.8, 0.6)}}>
         <Card t={t} at={18.7} title="Axolotl" sub="Regrowth" accent={C.pink} icon="🦎" />
         <Card t={t} at={21.3} title="Lion" sub="Leadership" accent={C.gold} icon="🦁" />
         <Card t={t} at={23.5} title="Jellyfish" sub="Glow" accent={C.cyan} icon="🪼" />
