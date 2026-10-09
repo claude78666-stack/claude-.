@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Easing, Img, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
 import {body, C, display} from '../ui';
+import MANE from './mane.json';
 
 export const PRO_FPS = 30;
 export const PRO_TOTAL = 1500; // 50 seconds, narration is 49 s
@@ -43,22 +44,65 @@ const CAPS: Array<[number, number, string]> = [
 ];
 
 /* ---------- hero: the 72-frame turntable, blended between neighbouring angles ---------- */
+// jellyfish riding in the fur around the head: offsets are fractions of the frame width from the mane centre
+const JELLIES = [
+  {dx: -0.15, dy: -0.06, size: 0.15, hue: 300, front: false},
+  {dx: 0.15, dy: -0.08, size: 0.17, hue: 190, front: false},
+  {dx: -0.045, dy: -0.15, size: 0.13, hue: 270, front: false},
+  {dx: -0.12, dy: -0.05, size: 0.1, hue: 330, front: true},
+  {dx: 0.115, dy: -0.04, size: 0.09, hue: 210, front: true},
+];
 const Hero: React.FC<{t: number}> = ({t}) => {
-  const ang = kf(t, [0, 4.6, 10, 18, 26, 34, 42, 44.5, 49.5], [0, 0, 100, 215, 330, 360, 360, 360, 360]);
-  const f = ang / 5, i0 = Math.floor(f) % 72, i1 = (i0 + 1) % 72, k = f - Math.floor(f);
+  const ang = kf(t, [0, 4.6, 10, 18, 26, 34, 42, 44.5, 49.5], [0, 0, 120, 180, 90, 0, 0, 0, 0]);
+  const f = Math.min(ang, 180) / 2.5, i0 = Math.min(72, Math.floor(f)), i1 = Math.min(72, i0 + 1), k = f - Math.floor(f);
   const src = (i: number) => staticFile(`axolotlion/tt/tt_${String(i).padStart(3, '0')}.webp`);
   const T = [0, 5.2, 6.4, 10, 11.2, 18, 19.2, 25.6, 26.8, 33, 34.2, 42.2, 43.4, 49.5];
-  const X = kf(t, T, [0, 0, -370, -370, -390, -390, 0, 0, -380, -380, -380, -380, 0, 0]);
-  const Y = kf(t, T, [130, 130, 40, 40, 40, 40, -150, -150, 20, 20, 20, 20, -170, -170]);
-  const S = kf(t, T, [0.92, 0.92, 0.8, 0.8, 0.8, 0.8, 0.84, 0.84, 0.8, 0.8, 0.8, 0.8, 0.7, 0.7]);
+  const X = kf(t, T, [0, 0, -340, -340, -350, -350, 0, 0, -350, -350, -350, -350, 0, 0]);
+  const Y = kf(t, T, [165, 165, 40, 40, 40, 40, -85, -85, 20, 20, 20, 20, -150, -150]);
+  const S = kf(t, T, [0.92, 0.92, 0.8, 0.8, 0.8, 0.8, 0.78, 0.78, 0.8, 0.8, 0.8, 0.8, 0.66, 0.66]);
   const bob = Math.sin(t * 1.6) * 5;
   const W = 1500, H = W * 764 / 1400;
+  const m0 = MANE[i0], m1 = MANE[i1], mx = (m0[0] + (m1[0] - m0[0]) * k) * W, my = (m0[1] + (m1[1] - m0[1]) * k) * H;
   const box: React.CSSProperties = {position: 'absolute', left: 960 - W / 2, top: 540 - H / 2, width: W, height: H};
   return (
     <div style={{...box, transform: `translate(${X}px, ${Y + bob}px) scale(${S * (1 + Math.sin(t * 1.1) * 0.006)})`}}>
-      <Img src={src(i0)} style={{...box, left: 0, top: 0, filter: 'drop-shadow(0 0 30px rgba(255,120,225,.45)) drop-shadow(0 0 90px rgba(90,200,255,.32))'}} />
+      {JELLIES.map((j, n) => !j.front && <Jelly key={n} t={t} seed={n + 1} hue={j.hue} size={j.size * W} x={mx + j.dx * W} y={my + j.dy * H} />)}
+      <Img src={src(i0)} style={{...box, left: 0, top: 0, filter: 'drop-shadow(0 0 36px rgba(255,130,230,.4))'}} />
       {k > 0.02 && <Img src={src(i1)} style={{...box, left: 0, top: 0, opacity: k}} />}
+      {JELLIES.map((j, n) => j.front && <Jelly key={n} t={t} seed={n + 1} hue={j.hue} size={j.size * W} x={mx + j.dx * W} y={my + j.dy * H} front />)}
     </div>
+  );
+};
+
+
+/* ---------- bioluminescent jellyfish: pulsing translucent bell + trailing tentacles ---------- */
+const Jelly: React.FC<{t: number; x: number; y: number; size: number; hue: number; seed: number; front?: boolean}> = ({t, x, y, size, hue, seed, front}) => {
+  const ph = t * 1.5 + seed * 2.3;
+  const pulse = Math.sin(ph), sq = 1 - pulse * 0.07, st = 1 + pulse * 0.05;
+  const bx = Math.sin(t * 0.6 + seed) * size * 0.12, by = Math.sin(t * 0.8 + seed * 1.7) * size * 0.1;
+  const col = `hsl(${hue},95%,72%)`, col2 = `hsl(${hue + 55},90%,65%)`;
+  const strands = Array.from({length: 9}, (_, i) => {
+    const sx = -34 + i * 8.5, len = 110 + (i % 3) * 38 + Math.sin(i * 3.1 + seed) * 16;
+    let d = `M${sx},44`;
+    for (let k = 1; k <= 6; k++) d += ` L${sx + Math.sin(ph * 0.9 - k * 0.8 + i) * (4 + k * 2.2)},${44 + (len * k) / 6}`;
+    return <path key={i} d={d} fill="none" stroke={i % 2 ? col : col2} strokeWidth={i % 3 === 0 ? 2.4 : 1.4} strokeLinecap="round" opacity={0.55} />;
+  });
+  return (
+    <svg width={size} height={size * 2.1} viewBox="-70 -10 140 290" style={{position: 'absolute', left: x - size / 2 + bx, top: y - size * 0.4 + by, overflow: 'visible', mixBlendMode: 'screen', filter: `drop-shadow(0 0 ${size * 0.2}px ${col})`, opacity: front ? 0.9 : 0.85}}>
+      <defs>
+        <radialGradient id={`jb${seed}`} cx="50%" cy="70%" r="65%">
+          <stop offset="0%" stopColor={col2} stopOpacity="0.08" />
+          <stop offset="60%" stopColor={col} stopOpacity="0.28" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0.75" />
+        </radialGradient>
+      </defs>
+      <g transform={`translate(0,0) scale(${st},${sq})`}>
+        {strands}
+        <path d="M-52,46 C-58,-10 -26,-12 0,-12 C26,-12 58,-10 52,46 C36,38 -36,38 -52,46 Z" fill={`url(#jb${seed})`} stroke={col} strokeWidth="1.6" strokeOpacity="0.8" />
+        <path d="M-34,20 C-30,0 -10,-4 8,-3" fill="none" stroke="#fff" strokeOpacity="0.55" strokeWidth="3" strokeLinecap="round" />
+        {[-22, -8, 8, 22].map((o, i) => <path key={i} d={`M${o},42 q${Math.sin(ph + i) * 10},40 ${Math.sin(ph * 0.8 + i * 2) * 8},${78 + i * 6}`} stroke="#fff" strokeOpacity="0.45" strokeWidth="5" fill="none" strokeLinecap="round" />)}
+      </g>
+    </svg>
   );
 };
 
@@ -78,7 +122,7 @@ const Kicker: React.FC<{children: React.ReactNode; style?: React.CSSProperties}>
 );
 
 const Card: React.FC<{t: number; at: number; title: string; sub: string; accent: string; icon: string; style?: React.CSSProperties}> = ({t, at, title, sub, accent, icon, style}) => (
-  <div style={{...rise(t, at), padding: '26px 30px', borderRadius: 26, background: 'linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.035))', border: `1px solid ${C.line}`, boxShadow: `0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.18), 0 0 50px ${accent}22`, backdropFilter: 'blur(14px)', ...style}}>
+  <div style={{...rise(t, at), padding: '26px 30px', borderRadius: 26, background: 'linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.035))', border: `1px solid ${C.line}`, boxShadow: `0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.18), 0 0 50px ${accent}22`, ...style}}>
     <div style={{display: 'flex', alignItems: 'center', gap: 20}}>
       <div style={{width: 74, height: 74, borderRadius: 22, display: 'grid', placeItems: 'center', fontSize: 40, background: `${accent}26`, border: `1px solid ${accent}77`}}>{icon}</div>
       <div>
@@ -172,7 +216,7 @@ export const ProVideo: React.FC = () => {
       </div>
 
       {/* G: sign-off */}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 640, textAlign: 'center', opacity: interpolate(t, [42.5, 43.4], [0, 1], clamp)}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 585, textAlign: 'center', opacity: interpolate(t, [42.5, 43.4], [0, 1], clamp)}}>
         <div style={{...rise(t, 42.6, 1), fontFamily: display, fontWeight: 700, fontSize: 150, letterSpacing: -3, lineHeight: 1, ...gradText}}>AXOLOTLION</div>
         <div style={{...rise(t, 44.5, 1), fontFamily: body, fontWeight: 600, fontSize: 38, letterSpacing: 9, textTransform: 'uppercase', color: C.text, marginTop: 20}}>The first SI animal</div>
         <div style={{...rise(t, 46.2, 1), fontFamily: body, fontWeight: 500, fontSize: 28, letterSpacing: 4, color: C.muted, marginTop: 18}}>Superior Intelligence · Regrows · Leads · Glows</div>
@@ -181,7 +225,7 @@ export const ProVideo: React.FC = () => {
       {/* captions */}
       {cap && (
         <div style={{position: 'absolute', left: 0, right: 0, bottom: 58, textAlign: 'center', opacity: interpolate(capT, [0, 0.18], [0, 1], clamp) * (t > cap[1] ? interpolate(t, [cap[1], cap[1] + 0.15], [1, 0], clamp) : 1)}}>
-          <span style={{display: 'inline-block', padding: '12px 34px', borderRadius: 18, background: 'rgba(6,4,15,.62)', border: `1px solid ${C.line}`, fontFamily: display, fontWeight: 500, fontSize: 46, color: C.text, backdropFilter: 'blur(10px)'}}>{cap[2]}</span>
+          <span style={{display: 'inline-block', padding: '12px 34px', borderRadius: 18, background: 'rgba(6,4,15,.62)', border: `1px solid ${C.line}`, fontFamily: display, fontWeight: 500, fontSize: 46, color: C.text}}>{cap[2]}</span>
         </div>
       )}
 
