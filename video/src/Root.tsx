@@ -4,6 +4,7 @@ import {FPS, TOTAL, Video} from './Video';
 import {AgentVideo, AGENT_FRAMES} from './agents/AgentVideo';
 import {AGENTS} from './agents/data';
 import {AxolotlionVideo, AX_FPS, AX_TOTAL} from './axolotlion/AxolotlionVideo';
+import {ProVideo, PRO_FPS, PRO_TOTAL} from './axolotlion/ProVideo';
 import {Banner, FaceLogo} from './axolotlion/Brand';
 import {useCurrentFrame} from 'remotion';
 
@@ -20,6 +21,7 @@ export const Root: React.FC = () => (
     <Composition id="AxLogoLoop" component={LogoLoop} durationInFrames={40} fps={20} width={512} height={512} />
     <Composition id="AxBannerLoop" component={BannerLoop} durationInFrames={40} fps={20} width={1500} height={500} />
     <Composition id="Axolotlion" component={AxolotlionVideo} durationInFrames={AX_TOTAL} fps={AX_FPS} width={1920} height={1080} />
+    <Composition id="AxolotlionPro" component={ProVideo} durationInFrames={PRO_TOTAL} fps={PRO_FPS} width={1920} height={1080} />
     {AGENTS.map((a) => (
       <Composition key={a.id} id={`Agent-${a.id}`} component={AgentVideo} durationInFrames={AGENT_FRAMES} fps={FPS} width={1920} height={1080} defaultProps={{agent: a}} />
     ))}
