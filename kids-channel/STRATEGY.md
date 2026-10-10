@@ -101,3 +101,72 @@ Criteria: short, easy for a 5-year-old to say, about learning or curiosity, avai
 1. Check that the handle is free on YouTube, Instagram and TikTok, and that the `.com` domain is free (namecheckr.com or namechk.com check them all at once).
 2. Search the trademark databases: USPTO (US), IP India or UKIPO for your country, and WIPO Global Brand Database, in classes 41 (education/entertainment) and 9/16 (videos, books).
 3. Say it to a few real 5 to 8 year olds. If they can't repeat it back, pick another name.
+
+---
+
+# Update (2026-10-10): kindness and good-values channel
+
+The channel's focus is now **good values**: kindness, helping others, sharing, honesty, saying sorry, and making good choices. The aim is for kids to learn something and to keep coming back.
+
+## How the best values shows teach without preaching
+
+| Show | What it does | Lesson for us |
+|---|---|---|
+| **Daniel Tiger's Neighborhood** | Gives every lesson a short, singable "strategy song" ("When you feel so mad that you want to roar, take a deep breath and count to four") | One song per value that kids can sing in real life |
+| **Bluey** | Characters make real mistakes and work them out through play. There is no lecture at the end. | Show the lesson, don't tell it |
+| **Sesame Street** | Has a whole neighbourhood of lovable characters, each with their own personality and flaw | Build a world with a cast, not a single host |
+| **Peppa Pig / Masha and the Bear** | Small everyday problems (sharing a toy, losing a game) that kids recognise | Use stories from a kid's own day |
+
+## Name ideas
+
+| Name | Idea | Quick web check |
+|---|---|---|
+| **Kindlings** ⭐ | "Kind" + "kindle" (a little spark). The characters *are* the Kindlings, tiny friends who light up when they do something kind. | No existing kids' show found |
+| **Heartville** ⭐ | A town where everyone learns to be kind, like Sesame Street. Pairs well with Kindlings: "The Kindlings of Heartville". | No existing kids' channel found |
+| **Kind Kingdom** | A kingdom where kindness is the real superpower | No kids' channel found |
+| **Bee Kind Buddies** | Bee mascots: "Bee kind, bee honest, bee helpful" | Common phrase, so the handle may be taken |
+| **Goody Grove** | A forest of animal friends who do good deeds | Not checked |
+| **Little Kind Heroes** | Kids see helping others as being a hero | Not checked |
+| **Helping Paws** | Animal friends who help each other | Name is common for pet charities. Check it first. |
+| **Sunny Hearts** | Warm and positive, good for toddlers | Not checked |
+| **Good Deed Gang** | Easy to remember | Close to *The Good Deed Crew* book series. Keep it as a backup only. |
+| **Kindness Crew** | Clear meaning | Widely used by school clubs, so it's hard to own as a brand. Avoid. |
+
+**Recommendation: "Kindlings"** as the channel name and the name of the characters, with **Heartville** as the town they live in.
+- Title format: *"Kindlings: Milo Learns to Share"*
+- Catchphrase: *"Little spark, big heart!"*
+- Every time a Kindling does something kind, their heart glows. That gives each episode a visual payoff kids wait for.
+
+## What keeps kids coming back
+
+1. **Lovable characters with flaws.** One is shy, one is bossy, one doesn't like sharing, and one tells fibs. Kids love a character who is *learning*, not one who is already perfect.
+2. **Mistake, then feeling, then fix.** The character gets it wrong, sees how it makes someone feel, and makes it right. Never shame anyone, and never end with a lecture.
+3. **One song per value**, the Daniel Tiger method. Parents will sing it at home ("Sharing is caring, take a turn, then it's mine…").
+4. **A recurring signature moment.** For example, the heart glows and the "Kindness Meter" in the town square fills up.
+5. **A Kindness Challenge at the end of every video.** "This week, help someone carry something!" Parents can post photos on Instagram, and kids come back to see the next one.
+6. **A collectible "Kindness Badge"** for each value. Offer printable badge charts for parents through your Instagram bio link.
+7. **A story across episodes.** Fill the town's Kindness Meter to 100 to unlock a festival or a new character. This gives kids a reason to watch the next one.
+8. **Same day, same time.** For example, a new episode every Friday.
+
+## First 12 episode ideas
+
+1. Milo Learns to Share (his toy truck)
+2. The Broken Vase (telling the truth)
+3. Saying Sorry (and meaning it)
+4. The New Kid in Heartville (including others)
+5. Helping Grandma (helping at home)
+6. When I Lose a Game (being a good sport)
+7. The Angry Volcano Feeling (calming down instead of hitting)
+8. Please and Thank You Day
+9. Being Brave Enough to Say No (when friends want to do something wrong)
+10. Taking Care of Nature (no littering, being kind to animals)
+11. Waiting My Turn (patience)
+12. Kindness Festival (the season finale, when the meter reaches 100)
+
+## Format mix
+
+- **Main episodes:** 4 to 7 minute animated stories, one value each
+- **Songs:** 1 to 2 minute music video for each value. Songs get replayed the most.
+- **Shorts and Reels:** a 30 second "What would you do?" moment. Pause and ask: share or not share? Then show the kind choice.
+- **Compilations:** "All Sharing Stories – 30 min", "Kindlings Season 1"
+- **Instagram (parents):** the weekly Kindness Challenge, printable reward charts, and "talk about it with your child" carousels
