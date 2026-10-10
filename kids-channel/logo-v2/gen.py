@@ -47,32 +47,33 @@ def svg(w, h, body, bg):
             f'{bg}{body}</svg>')
 
 
-# 1. Wide wordmark: banner, watermark, end screens.
-toon_w = sum(W[c] for c in "TOON") + 3 * GAP
-noon_w = sum(W[c] for c in "NOON") + 3 * GAP
-w1, h1 = 2000, 640
-x = (w1 - (toon_w + 90 + noon_w)) / 2
-body = word("TOON", x, 220, [CORAL, SUN], INK) + \
-       word("NOON", x + toon_w + 90, 220, [TEAL, GRAPE], INK, lambda cx, cy: clock(cx, cy, INK))
-logos = {"toon-noon-wordmark.svg": svg(w1, h1, body, f'<rect width="{w1}" height="{h1}" fill="{CREAM}"/>')}
+if __name__ == "__main__":
+    # 1. Wide wordmark: banner, watermark, end screens.
+    toon_w = sum(W[c] for c in "TOON") + 3 * GAP
+    noon_w = sum(W[c] for c in "NOON") + 3 * GAP
+    w1, h1 = 2000, 640
+    x = (w1 - (toon_w + 90 + noon_w)) / 2
+    body = word("TOON", x, 220, [CORAL, SUN], INK) + \
+           word("NOON", x + toon_w + 90, 220, [TEAL, GRAPE], INK, lambda cx, cy: clock(cx, cy, INK))
+    logos = {"toon-noon-wordmark.svg": svg(w1, h1, body, f'<rect width="{w1}" height="{h1}" fill="{CREAM}"/>')}
 
-# 2 and 3. Stacked square: the four O's line up into a 2x2 grid of colour.
-def stacked(bg_color, ink, last_o):
-    size = 1200
-    x_noon = (size - noon_w) / 2
-    x_toon = x_noon + (W["N"] - W["T"])          # align the O columns
-    top = (size - (200 * 2 + 70)) / 2
-    b = word("TOON", x_toon, top, [CORAL, SUN], ink) + \
-        word("NOON", x_noon, top + 270, [TEAL, last_o[0]], ink, last_o[1])
-    bg = f'<rect width="{size}" height="{size}" rx="0" fill="{bg_color}"/>'
-    return svg(size, size, b, bg)
+    # 2 and 3. Stacked square: the four O's line up into a 2x2 grid of colour.
+    def stacked(bg_color, ink, last_o):
+        size = 1200
+        x_noon = (size - noon_w) / 2
+        x_toon = x_noon + (W["N"] - W["T"])          # align the O columns
+        top = (size - (200 * 2 + 70)) / 2
+        b = word("TOON", x_toon, top, [CORAL, SUN], ink) + \
+            word("NOON", x_noon, top + 270, [TEAL, last_o[0]], ink, last_o[1])
+        bg = f'<rect width="{size}" height="{size}" rx="0" fill="{bg_color}"/>'
+        return svg(size, size, b, bg)
 
-logos["toon-noon-stacked.svg"] = stacked(CREAM, INK, (GRAPE, lambda cx, cy: clock(cx, cy, INK)))
-# Dark version: the last O becomes a solid sun with a heart in it (noon sun + kindness).
-logos["toon-noon-stacked-dark.svg"] = stacked(
-    INK, CREAM,
-    (SUN, lambda cx, cy: f'<circle cx="{cx}" cy="{cy}" r="74" fill="{SUN}"/>' + heart(cx, cy + 4, 3.6, INK)))
+    logos["toon-noon-stacked.svg"] = stacked(CREAM, INK, (GRAPE, lambda cx, cy: clock(cx, cy, INK)))
+    # Dark version: the last O becomes a solid sun with a heart in it (noon sun + kindness).
+    logos["toon-noon-stacked-dark.svg"] = stacked(
+        INK, CREAM,
+        (SUN, lambda cx, cy: f'<circle cx="{cx}" cy="{cy}" r="74" fill="{SUN}"/>' + heart(cx, cy + 4, 3.6, INK)))
 
-for name, s in logos.items():
-    open(os.path.join(D, name), "w").write(s)
-print("wrote", ", ".join(logos))
+    for name, s in logos.items():
+        open(os.path.join(D, name), "w").write(s)
+    print("wrote", ", ".join(logos))
