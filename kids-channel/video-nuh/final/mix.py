@@ -24,7 +24,7 @@ ass = ["[Script Info]", "ScriptType: v4.00+", "PlayResX: 1920", "PlayResY: 1080"
        "Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
        "Style: Sub,Fredoka Light SemiBold,46,&H00FFFFFF,&H00FFFFFF,&H00301E14,&H96000000,0,0,0,0,100,100,0,0,1,3.5,1.5,2,160,160,60,1",
        "Style: Title,Fredoka Light SemiBold,92,&H00FFFFFF,&H00FFFFFF,&H00301E14,&H96000000,0,0,0,0,100,100,1,0,1,5,3,5,100,100,0,1",
-       "Style: Card,Fredoka Light SemiBold,64,&H0050C8FF,&H00FFFFFF,&H00301E14,&H96000000,0,0,0,0,100,100,0,0,1,4.5,2,8,120,120,120,1",
+       "Style: Card,Fredoka Light SemiBold,64,&H0050D8FF,&H00FFFFFF,&H70201008,&H70201008,0,0,0,0,100,100,0,0,3,18,0,8,120,120,110,1",
        "", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text"]
 delays = []
 for sid, (s0, s1) in shots.items():
@@ -82,7 +82,7 @@ vf = (f"[0:v]subtitles={os.path.join(D, 'final.ass')}:fontsdir={os.path.join(PV,
 cmd = (["ffmpeg", "-y", "-i", os.path.join(D, "video_silent.mp4")] + ins +
        ["-loop", "1", "-framerate", "24", "-t", str(TOTAL), "-i", LOGO,
         "-filter_complex", fc + ";" + vf, "-map", "[vout]", "-map", "[aout]",
-        "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
+        "-c:v", "libx264", "-preset", "slow", "-b:v", "6M", "-maxrate", "8M", "-bufsize", "12M", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k", "-t", str(TOTAL), os.path.join(D, "nuh_and_the_ark.mp4")])
 subprocess.run(cmd, check=True)
 print("wrote nuh_and_the_ark.mp4", TOTAL)
