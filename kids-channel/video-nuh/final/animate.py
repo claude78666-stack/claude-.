@@ -53,11 +53,11 @@ def nuh_glow(frame, t_abs, x, y, s):
     """Soft faceless pillar of white light at (x, y) in 0..1 screen units, height s."""
     px, py, hh = x * W, y * H, s * H
     pulse = 1 + 0.08 * math.sin(t_abs * 2.2)
-    dx, dy = (XX - px) / (hh * 0.17), (YY - py) / (hh * 0.5)
-    core = np.exp(-(dx ** 2 + dy ** 2) * 2.2) * 1.6 * pulse
-    halo = np.exp(-((XX - px) ** 2 + (YY - py) ** 2) / (2 * (hh * 0.7) ** 2)) * 0.55 * pulse
+    dx, dy = (XX - px) / (hh * 0.14), (YY - py) / (hh * 0.5)
+    core = np.exp(-(dx ** 2 + np.abs(dy) ** 3) * 2.0) * 1.4 * pulse     # tall soft pillar, no features
+    halo = np.exp(-((XX - px) ** 2 + ((YY - py) * 0.7) ** 2) / (2 * (hh * 0.45) ** 2)) * 0.4 * pulse
     ang = np.arctan2(YY - py, XX - px)
-    rays = (0.5 + 0.5 * np.cos(ang * 14 + t_abs * 0.6)) ** 6 * np.exp(-np.hypot(XX - px, YY - py) / (hh * 0.9)) * 0.25
+    rays = (0.5 + 0.5 * np.cos(ang * 10 + t_abs * 0.4)) ** 10 * np.exp(-np.hypot(XX - px, YY - py) / (hh * 0.6)) * 0.07
     g = np.clip(core + halo + rays, 0, None)[..., None]
     tint = np.array([0.92, 0.98, 1.0], np.float32)   # BGR: warm white
     return frame + g * tint
@@ -161,5 +161,28 @@ def render():
     print("wrote", out)
 
 
+def stills(times):
+    """Quick preview: write single frames at the given seconds (no video)."""
+    for ta in times:
+        c = next(x for x in clips if x["start"] <= ta < x["end"])
+        img = load(c["image"])
+        t = (ta - c["start"]) / (c["end"] - c["start"])
+        f = camera(img, t, c.get("cam", [1.0, 1.08, 0, 0, 0, 0]))
+        fx = c.get("fx", {})
+        if "shimmer" in fx: f = shimmer(f, ta, fx["shimmer"])
+        if "daynight" in fx: f = daynight(f, ta - c["start"], fx["daynight"])
+        if "mist" in fx: f = mist(f, ta, fx["mist"])
+        if "glow" in fx:
+            g = fx["glow"]
+            gx1, gy1 = g[3:5] if len(g) == 5 else g[:2]
+            e = ease(t)
+            f = nuh_glow(f, ta, g[0] + (gx1 - g[0]) * e, g[1] + (gy1 - g[1]) * e, g[2])
+        if "rain" in fx: f = Rain().draw(f, fx["rain"])
+        cv2.imwrite(os.path.join(D, f"still_{ta:06.1f}.png"), (np.clip(f * VIGNETTE, 0, 1) * 255).astype(np.uint8))
+
+
 if __name__ == "__main__":
-    render()
+    if len(sys.argv) > 1:
+        stills([float(x) for x in sys.argv[1:]])
+    else:
+        render()

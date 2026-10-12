@@ -4,3 +4,4 @@ previz/*.blend1
 previz/render.log
 final/video_silent.mp4
 final/flashes.json
+final/still_*.png
