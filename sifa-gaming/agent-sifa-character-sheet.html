@@ -73,7 +73,7 @@
   .grid { display: grid; gap: 14px; }
   .turn { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
   .expr { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-  .pal  { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+  .pal  { grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); }
   .two  { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
@@ -126,11 +126,11 @@
   </header>
 
   <h2>Turnaround</h2>
-  <p class="sub">Neutral pose for reference. Keep proportions, the gold cuffs and the SG patch consistent across every view.</p>
+  <p class="sub">Neutral pose for reference. Keep proportions, the gold accents and the SG patch consistent across every view.</p>
   <div class="grid turn">
     <div class="card"><div class="stage" id="front"></div><div class="label"><b>Front</b><span>SG patch on her left chest</span></div></div>
     <div class="card"><div class="stage" id="side"></div><div class="label"><b>Side</b><span>Earpiece on her right ear</span></div></div>
-    <div class="card"><div class="stage" id="back"></div><div class="label"><b>Back</b><span>SG emblem between the shoulders</span></div></div>
+    <div class="card"><div class="stage" id="back"></div><div class="label"><b>Back</b><span>SG emblem on the lower back</span></div></div>
   </div>
 
   <h2>Expressions</h2>
@@ -160,7 +160,7 @@
     <div class="card panel">
       <h3>Design rules</h3>
       <ul>
-        <li>Dark brown hair in a long braided high ponytail with gold cuffs near the end.</li>
+        <li>Long, loose honey-blonde waves past the shoulders, with a small gold hair clip.</li>
         <li>Deep-teal tactical jacket with dashed gold stitching, worn open over a black high-neck top.</li>
         <li>Gold SG patch on her left chest; large SG emblem on the back.</li>
         <li>Teal earpiece on her right ear, HUD smartwatch on her left wrist.</li>
@@ -177,7 +177,7 @@
 const C = {
   teal: '#0E5E6F', tealDark: '#0A4552', gold: '#F2B632', ink: '#111418',
   pants: '#1F252C', pantsBack: '#181D23', pocket: '#2A323B',
-  skin: '#F2CDB0', skinShade: '#DCA98A', hair: '#3B2418', hairLine: '#5A3A28',
+  skin: '#F2CDB0', skinShade: '#DCA98A', hair: '#C99A5B', hairLine: '#A87A42', hairLight: '#E4C38C', brow: '#9C7444', iris: '#7E98A3',
   cream: '#FFF3D6', hud: '#5FE3F0', mouth: '#9A4A44', tongue: '#D9706B'
 };
 
@@ -200,14 +200,27 @@ function braid(x0, y0, cx, cy, x1, y1, n) {
   return segs;
 }
 
+function hairBackFront() {
+  return `<path d="M70 58 C58 100 56 150 60 198 Q70 210 80 200 Q90 210 100 202 Q110 210 120 200 Q130 210 140 198 C144 150 142 100 130 58 Z" fill="${C.hair}"/>
+    <path d="M66 110 Q62 150 66 190 M134 110 Q138 150 134 190" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>`;
+}
+
+function hairFrontStrands() {
+  return `<path d="M71 66 C64 100 62 140 66 182 Q70 190 75 178 C77 150 77 112 78 80 Z" fill="${C.hair}"/>
+    <path d="M129 66 C136 100 138 140 134 182 Q130 190 125 178 C123 150 123 112 122 80 Z" fill="${C.hair}"/>
+    <path d="M72 90 Q68 130 71 175 M128 90 Q132 130 129 175" stroke="${C.hairLight}" stroke-width="1.4" fill="none" opacity=".8"/>
+    <path d="M76 96 Q74 140 76 178 M124 96 Q126 140 124 178" stroke="${C.hairLine}" stroke-width="1" fill="none"/>`;
+}
+
 function eye(x, y, ry) {
-  return `<ellipse cx="${x}" cy="${y}" rx="3.4" ry="${ry}" fill="${C.ink}"/>
+  return `<ellipse cx="${x}" cy="${y}" rx="3.4" ry="${ry}" fill="${C.iris}"/>
+    <ellipse cx="${x}" cy="${y}" rx="1.6" ry="${Math.min(ry, 1.8)}" fill="${C.ink}"/>
     <circle cx="${x + 1.1}" cy="${y - 1.1}" r="1.1" fill="#fff"/>
     <path d="M${x - 4.6} ${y - ry + 0.6} Q${x} ${y - ry - 2.4} ${x + 4.6} ${y - ry + 0.6}" stroke="${C.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
 }
 
 function face(expr) {
-  const brow = d => `<path d="${d}" stroke="${C.hair}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`;
+  const brow = d => `<path d="${d}" stroke="${C.brow}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`;
   const line = (d, w = 1.8) => `<path d="${d}" stroke="${C.mouth}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
   let f = `<ellipse cx="85" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
     <ellipse cx="115" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
@@ -243,8 +256,8 @@ function headFront(expr) {
     <ellipse cx="100" cy="70" rx="28" ry="32" fill="${C.skin}"/>
     <path d="M71 76 C66 46 82 32 100 32 C120 32 135 46 129 76 C127 64 123 56 116 52 C104 58 88 56 80 52 C75 58 72 66 71 76 Z" fill="${C.hair}"/>
     <path d="M84 41 Q100 34 117 41" stroke="${C.hairLine}" stroke-width="1.4" fill="none"/>
-    <path d="M90 37 Q101 33 112 37" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
-    <rect x="93" y="25" width="14" height="7" rx="2" fill="${C.gold}"/>
+    <path d="M90 37 Q101 33 112 37" stroke="${C.hairLight}" stroke-width="1.4" fill="none"/>
+    <rect x="114" y="45" width="12" height="4" rx="2" transform="rotate(25 120 47)" fill="${C.gold}"/>
     ${face(expr)}`;
 }
 
@@ -290,7 +303,7 @@ function ground() {
 function front(expr = 'smirk') {
   return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, front view">
     ${ground()}
-    ${braid(104, 28, 150, 30, 140, 180, 13)}
+    ${hairBackFront()}
     ${legsAndBoots()}
     ${arms(false)}
     <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
@@ -300,11 +313,12 @@ function front(expr = 'smirk') {
     <path d="M88 120 L86 248 M112 120 L114 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
     <rect x="89" y="236" width="22" height="8" fill="#2A2F35"/>
     <rect x="96" y="235" width="8" height="10" rx="1.5" fill="${C.gold}"/>
-    <rect x="114" y="138" width="15" height="12" rx="2" fill="${C.gold}"/>
-    <text x="121.5" y="147.5" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="7.5" fill="${C.ink}">SG</text>
+    <rect x="109.5" y="150" width="13" height="11" rx="2" fill="${C.gold}"/>
+    <text x="116" y="158.4" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="6.8" fill="${C.ink}">SG</text>
     ${keychain(106, 244)}
     <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
     <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
+    ${hairFrontStrands()}
     ${headFront(expr)}
   </svg>`;
 }
@@ -312,7 +326,8 @@ function front(expr = 'smirk') {
 function side() {
   return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, side view">
     ${ground()}
-    ${braid(92, 30, 52, 50, 66, 180, 19)}
+    <path d="M80 46 C62 90 58 140 64 186 Q74 196 84 186 Q92 192 98 182 C98 150 96 116 98 90 Z" fill="${C.hair}"/>
+    <path d="M70 100 Q66 140 70 180 M80 100 Q78 140 82 182" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
     <path d="M90 248 L106 248 L102 372 L88 372 Z" fill="${C.pantsBack}"/>
     <rect x="84" y="368" width="24" height="24" rx="4" fill="#0B0D10"/>
     <path d="M96 248 L114 248 L116 372 L100 372 Z" fill="${C.pants}"/>
@@ -336,11 +351,11 @@ function side() {
     <ellipse cx="96" cy="74" rx="4.5" ry="6.5" fill="${C.skinShade}"/>
     <rect x="92.5" y="69" width="6" height="11" rx="3" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
     <circle cx="95.5" cy="72" r="1.4" fill="${C.gold}"/>
-    <rect x="89" y="27" width="14" height="7" rx="2" transform="rotate(-20 96 30)" fill="${C.gold}"/>
-    <ellipse cx="116" cy="71" rx="2.6" ry="3.4" fill="${C.ink}"/>
+    <path d="M84 44 Q98 36 114 42" stroke="${C.hairLight}" stroke-width="1.4" fill="none"/>
+    <ellipse cx="116" cy="71" rx="2.6" ry="3.4" fill="${C.iris}"/><ellipse cx="116.6" cy="71" rx="1.3" ry="1.6" fill="${C.ink}"/>
     <circle cx="117" cy="70" r=".9" fill="#fff"/>
     <path d="M111 66.5 Q116 64 121 66.5" stroke="${C.ink}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M110 61 Q116 58 121 60" stroke="${C.hair}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M110 61 Q116 58 121 60" stroke="${C.brow}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
     <path d="M117 88 Q121 89.5 124 86.5" stroke="${C.mouth}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
     <ellipse cx="114" cy="81" rx="4" ry="2.4" fill="${C.skinShade}" opacity=".35"/>
   </svg>`;
@@ -353,28 +368,31 @@ function back() {
     ${arms(true)}
     <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
     <path d="M100 118 L100 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
-    <circle cx="100" cy="200" r="19" fill="${C.tealDark}" stroke="${C.gold}" stroke-width="3"/>
-    <text x="100" y="206" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" fill="${C.gold}">SG</text>
+    <circle cx="100" cy="226" r="16" fill="${C.tealDark}" stroke="${C.gold}" stroke-width="2.6"/>
+    <text x="100" y="231" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="${C.gold}">SG</text>
     ${keychain(126, 244)}
     <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
     <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
     <ellipse cx="72" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
     <ellipse cx="128" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
     <rect x="128.5" y="69" width="5" height="11" rx="2.5" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
+    <path d="M70 58 C62 110 60 160 64 204 Q76 214 88 206 Q100 214 112 206 Q124 214 136 204 C140 160 138 110 130 58 Z" fill="${C.hair}"/>
     <ellipse cx="100" cy="68" rx="29" ry="33" fill="${C.hair}"/>
-    <path d="M76 82 Q86 50 100 32 M124 82 Q114 50 100 32 M88 92 Q94 56 100 32 M112 92 Q106 56 100 32" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
-    ${braid(100, 30, 100, 110, 100, 182, 13)}
-    <rect x="93" y="25" width="14" height="7" rx="2" fill="${C.gold}"/>
+    <path d="M76 82 Q84 50 100 36 M124 82 Q116 50 100 36 M88 96 Q92 60 100 36 M112 96 Q108 60 100 36" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
+    <path d="M80 110 Q76 160 80 200 M92 104 Q90 160 94 204 M108 104 Q110 160 106 204 M120 110 Q124 160 120 200" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
+    <path d="M86 120 Q84 160 87 196 M114 120 Q116 160 113 196" stroke="${C.hairLight}" stroke-width="1.3" fill="none" opacity=".8"/>
+    <rect x="74" y="45" width="12" height="4" rx="2" transform="rotate(-25 80 47)" fill="${C.gold}"/>
   </svg>`;
 }
 
 function portrait(expr, label) {
   return `<svg viewBox="50 16 100 100" role="img" aria-label="Agent Sifa, ${label}">
-    ${braid(104, 28, 150, 30, 140, 180, 13)}
+    ${hairBackFront()}
     <path d="M64 122 Q100 110 136 122 L136 130 L64 130 Z" fill="${C.teal}"/>
     <path d="M92 112 L108 112 L109 130 L91 130 Z" fill="${C.ink}"/>
     <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
     <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
+    ${hairFrontStrands()}
     ${headFront(expr)}
   </svg>`;
 }
@@ -392,7 +410,8 @@ const swatches = [
   ['Gold', C.gold, 'Stitching, cuffs, SG patch'],
   ['Ink black', C.ink, 'Top, boots, outlines'],
   ['Skin', C.skin, 'Fair, warm undertone'],
-  ['Hair', C.hair, 'Dark brown braided ponytail'],
+  ['Hair', C.hair, 'Honey blonde, loose waves'],
+  ['Eyes', C.iris, 'Blue-grey'],
   ['HUD cyan', C.hud, 'Watch screen, glow effects'],
   ['Cream', C.cream, 'Highlights, text on dark'],
 ];
