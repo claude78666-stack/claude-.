@@ -11,21 +11,21 @@
   :root {
     --bg: #F6F4EF;
     --surface: #FFFFFF;
-    --stage: #E9EFF0;
-    --stage-line: #D3DDDF;
+    --stage: #ECF0F1;
+    --stage-line: #DCE3E5;
     --text: #15191D;
     --muted: #5B6670;
     --border: #E2E0D9;
     --accent: #0E5E6F;
     --accent-2: #B98410;
-    --shadow: rgba(17, 20, 24, 0.18);
+    --shadow: rgba(17, 20, 24, 0.16);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0E1215;
       --surface: #161C20;
       --stage: #1C252A;
-      --stage-line: #27333A;
+      --stage-line: #24303A;
       --text: #ECEFF1;
       --muted: #9AA7B0;
       --border: #26313A;
@@ -38,7 +38,7 @@
     --bg: #0E1215;
     --surface: #161C20;
     --stage: #1C252A;
-    --stage-line: #27333A;
+    --stage-line: #24303A;
     --text: #ECEFF1;
     --muted: #9AA7B0;
     --border: #26313A;
@@ -56,7 +56,7 @@
   }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 16px 56px; }
 
-  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
   .eyebrow { font: 600 12px/1 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
   h1 { font: 700 clamp(34px, 7vw, 56px)/1 "Space Grotesk", sans-serif; margin: 0; letter-spacing: -.02em; }
   .tagline { margin: 10px 0 0; color: var(--muted); font-style: italic; }
@@ -65,39 +65,43 @@
     padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
     font: 600 13px/1.2 Inter, sans-serif;
   }
-  .badge svg { flex: none; }
 
   h2 { font: 700 20px/1.2 "Space Grotesk", sans-serif; margin: 40px 0 6px; }
   .sub { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
 
   .grid { display: grid; gap: 14px; }
-  .turn { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: stretch; }
+  @media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+  .turn { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
   .expr { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-  .pal  { grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); }
+  .pal  { grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); }
   .two  { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .hero-art svg { width: 100%; height: auto; display: block; }
   .stage {
     background:
       linear-gradient(var(--stage-line) 1px, transparent 1px) 0 0 / 100% 40px,
       var(--stage);
-    display: flex; justify-content: center; padding: 12px 8px 0;
+    display: flex; justify-content: center; padding: 14px 8px 0;
   }
-  .stage svg { width: 100%; height: auto; max-width: 240px; display: block; }
-  .expr .stage { padding: 10px; }
-  .expr .stage svg { max-width: 150px; }
+  .stage svg { width: 100%; height: auto; max-width: 250px; display: block; }
+  .expr .stage { padding: 0; background: var(--stage); }
+  .expr .stage svg { max-width: 190px; }
   .label { padding: 10px 14px 12px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
   .label b { font: 600 14px/1.3 Inter, sans-serif; }
   .label span { color: var(--muted); font-size: 12.5px; text-align: right; }
 
-  .sw { height: 72px; }
-  .sw-info { padding: 10px 14px 12px; }
+  .sw { height: 64px; }
+  .sw-info { padding: 10px 12px 12px; }
   .sw-info b { display: block; font-size: 14px; }
   .sw-info code { font: 500 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
   .sw-info p { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
 
   .panel { padding: 18px 20px; }
   .panel h3 { font: 700 16px/1.2 "Space Grotesk", sans-serif; margin: 0 0 12px; }
+  .panel h3 + dl, .panel h3 + ul { margin-top: 0; }
+  .panel h3:not(:first-child) { margin-top: 22px; }
   dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; }
   dt { color: var(--muted); font-size: 13px; }
   dd { margin: 0; font-size: 14px; }
@@ -109,10 +113,44 @@
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="gSkin" cx="46%" cy="40%" r="66%">
+      <stop offset="0" stop-color="#FDEBE0"/><stop offset=".7" stop-color="#F7D8C6"/><stop offset="1" stop-color="#ECBBA2"/>
+    </radialGradient>
+    <linearGradient id="gNeck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#DFA48A"/><stop offset=".45" stop-color="#F2CBB6"/><stop offset="1" stop-color="#F7D8C6"/>
+    </linearGradient>
+    <linearGradient id="gHair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6E9CB"/><stop offset=".5" stop-color="#EAD6AA"/><stop offset="1" stop-color="#CDB383"/>
+    </linearGradient>
+    <linearGradient id="gHairBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#DCC494"/><stop offset="1" stop-color="#B59B6B"/>
+    </linearGradient>
+    <radialGradient id="gIris" cx="50%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#BFD2C4"/><stop offset=".55" stop-color="#7F9A8E"/><stop offset="1" stop-color="#3E554D"/>
+    </radialGradient>
+    <linearGradient id="gTeal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16778C"/><stop offset="1" stop-color="#0A4552"/>
+    </linearGradient>
+    <linearGradient id="gInk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#252C33"/><stop offset="1" stop-color="#0C0F12"/>
+    </linearGradient>
+    <linearGradient id="gPants" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#14181C"/><stop offset=".5" stop-color="#27303A"/><stop offset="1" stop-color="#14181C"/>
+    </linearGradient>
+    <radialGradient id="gBg" cx="50%" cy="28%" r="85%">
+      <stop offset="0" stop-color="#FFF7E8"/><stop offset=".55" stop-color="#E9D8C0"/><stop offset="1" stop-color="#BFA98C"/>
+    </radialGradient>
+    <filter id="fSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <filter id="fGlow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+</svg>
+
 <div class="wrap">
   <header>
     <div>
-      <p class="eyebrow">Character sheet · Sifa Gaming mascot</p>
+      <p class="eyebrow">Character sheet · Sifa Gaming mascot · Korean webtoon style</p>
       <h1>Agent Sifa</h1>
       <p class="tagline">"Every level has a secret. Sifa finds it."</p>
     </div>
@@ -125,18 +163,41 @@
     </div>
   </header>
 
+  <div class="grid hero">
+    <div class="card hero-art" id="hero"></div>
+    <div class="card panel">
+      <h3>Profile</h3>
+      <dl>
+        <dt>Name</dt><dd>Sifa</dd>
+        <dt>Codename</dt><dd>Agent S</dd>
+        <dt>Age</dt><dd>Mid-20s</dd>
+        <dt>Role</dt><dd>Field agent of the Sifa Gaming division. She finds the secrets, hidden routes and winning strategy in every game.</dd>
+        <dt>Personality</dt><dd>Calm and confident on the surface, fiercely competitive underneath. Friendly to the audience.</dd>
+        <dt>Signature move</dt><dd>A cool, steady look into the camera, then a quick smirk.</dd>
+      </dl>
+      <h3>Look</h3>
+      <ul>
+        <li>Tall and slim with model proportions, about eight heads tall.</li>
+        <li>Shoulder-length platinum-blonde hair, soft side part, loose wisps.</li>
+        <li>A thin braid along her right temple, finished with a small gold clip.</li>
+        <li>Large grey-green eyes with a soft winged lash line.</li>
+        <li>Fair skin, light blush and soft rose lips.</li>
+      </ul>
+    </div>
+  </div>
+
   <h2>Turnaround</h2>
-  <p class="sub">Neutral pose for reference. Keep proportions, the gold accents and the SG patch consistent across every view.</p>
+  <p class="sub">Reference views. Keep the proportions, the gold accents and the SG patch consistent.</p>
   <div class="grid turn">
     <div class="card"><div class="stage" id="front"></div><div class="label"><b>Front</b><span>SG patch on her left chest</span></div></div>
-    <div class="card"><div class="stage" id="side"></div><div class="label"><b>Side</b><span>Earpiece on her right ear</span></div></div>
-    <div class="card"><div class="stage" id="back"></div><div class="label"><b>Back</b><span>SG emblem on the lower back</span></div></div>
+    <div class="card"><div class="stage" id="back"></div><div class="label"><b>Back</b><span>SG emblem on the back</span></div></div>
   </div>
 
   <h2>Expressions</h2>
   <p class="sub">Use these for thumbnails, overlays and reactions.</p>
   <div class="grid expr">
-    <div class="card"><div class="stage" id="e-smirk"></div><div class="label"><b>Smirk</b><span>Default, logo</span></div></div>
+    <div class="card"><div class="stage" id="e-calm"></div><div class="label"><b>Calm</b><span>Default, logo</span></div></div>
+    <div class="card"><div class="stage" id="e-smirk"></div><div class="label"><b>Smirk</b><span>Signature</span></div></div>
     <div class="card"><div class="stage" id="e-focus"></div><div class="label"><b>Focused</b><span>Clutch moments</span></div></div>
     <div class="card"><div class="stage" id="e-shock"></div><div class="label"><b>Shocked</b><span>"I found it!"</span></div></div>
     <div class="card"><div class="stage" id="e-laugh"></div><div class="label"><b>Victory laugh</b><span>Wins, outros</span></div></div>
@@ -146,274 +207,271 @@
   <p class="sub">Reuse these colours on the banner, thumbnails and stream overlays.</p>
   <div class="grid pal" id="palette"></div>
 
-  <div class="grid two" style="margin-top:40px">
-    <div class="card panel">
-      <h3>Profile</h3>
-      <dl>
-        <dt>Name</dt><dd>Sifa</dd>
-        <dt>Codename</dt><dd>Agent S</dd>
-        <dt>Role</dt><dd>Field agent of the Sifa Gaming division. She finds the secrets, hidden routes and winning strategy in every game.</dd>
-        <dt>Personality</dt><dd>Confident, witty, competitive, friendly to the audience. Treats every game like a mission.</dd>
-        <dt>Signature move</dt><dd>Points at the viewer with the controller like a sidearm.</dd>
-      </dl>
-    </div>
-    <div class="card panel">
-      <h3>Design rules</h3>
-      <ul>
-        <li>Long, loose honey-blonde waves past the shoulders, with a small gold hair clip.</li>
-        <li>Deep-teal tactical jacket with dashed gold stitching, worn open over a black high-neck top.</li>
-        <li>Gold SG patch on her left chest; large SG emblem on the back.</li>
-        <li>Teal earpiece on her right ear, HUD smartwatch on her left wrist.</li>
-        <li>Gold controller keychain hanging from the belt.</li>
-        <li>Black cargo pants and boots with a single gold band.</li>
-      </ul>
-    </div>
+  <div class="card panel" style="margin-top:40px">
+    <h3>Design rules</h3>
+    <ul>
+      <li>Open deep-teal tactical jacket with dashed gold stitching over a black high-neck top.</li>
+      <li>Gold SG patch on her left chest; large SG emblem on the back.</li>
+      <li>Teal earpiece on her right ear, HUD smartwatch on her left wrist.</li>
+      <li>Gold controller keychain on the belt. Slim black cargo pants and boots with one gold band.</li>
+      <li>Clean lineart, soft cel shading and warm window light, in the style of a Korean webtoon.</li>
+    </ul>
   </div>
 
-  <footer>Reference draft. Hand this sheet to an artist, or use it alongside the image prompt, so every version of Sifa stays on-model.</footer>
+  <footer>Reference draft. Hand this sheet to an artist, or use it with the image prompts in the README, so every version of Sifa stays on-model.</footer>
 </div>
 
 <script>
 const C = {
   teal: '#0E5E6F', tealDark: '#0A4552', gold: '#F2B632', ink: '#111418',
-  pants: '#1F252C', pantsBack: '#181D23', pocket: '#2A323B',
-  skin: '#F2CDB0', skinShade: '#DCA98A', hair: '#C99A5B', hairLine: '#A87A42', hairLight: '#E4C38C', brow: '#9C7444', iris: '#7E98A3',
-  cream: '#FFF3D6', hud: '#5FE3F0', mouth: '#9A4A44', tongue: '#D9706B'
+  skin: '#F7D8C6', skinLine: '#E2A88E', hair: '#EAD6AA', hairLine: '#B99A66', hairLight: '#FFF6E2',
+  brow: '#BFA27A', lash: '#2A1F1C', iris: '#7F9A8E', lip: '#D88783', lipLow: '#E59A92', lipLine: '#B45C5A',
+  pocket: '#2A323B', hud: '#5FE3F0', cream: '#FFF3D6'
 };
 
-function braid(x0, y0, cx, cy, x1, y1, n) {
-  let segs = '';
+// ---------- head parts (local coords: face centre 100,110, chin at y 172) ----------
+
+function smallBraid(x0, y0, cx, cy, x1, y1, n) {
+  let out = '';
   for (let i = n; i >= 0; i--) {
     const t = i / n, u = 1 - t;
-    const x = u*u*x0 + 2*u*t*cx + t*t*x1;
-    const y = u*u*y0 + 2*u*t*cy + t*t*y1;
-    const dx = 2*u*(cx - x0) + 2*t*(x1 - cx);
-    const dy = 2*u*(cy - y0) + 2*t*(y1 - cy);
-    const ang = Math.atan2(dy, dx) * 180 / Math.PI - 90 + (i % 2 ? 18 : -18);
-    const s = 1 - 0.35 * t;
-    segs += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(7*s).toFixed(1)}" ry="${(9*s).toFixed(1)}" transform="rotate(${ang.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${C.hair}" stroke="${C.hairLine}" stroke-width="1"/>`;
-    if (i === Math.round(n * 0.8) || i === Math.round(n * 0.9)) {
-      const a = Math.atan2(dy, dx) * 180 / Math.PI - 90;
-      segs += `<rect x="${(x - 5*s).toFixed(1)}" y="${(y - 2).toFixed(1)}" width="${(10*s).toFixed(1)}" height="4" rx="1.5" transform="rotate(${a.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${C.gold}"/>`;
-    }
+    const x = u*u*x0 + 2*u*t*cx + t*t*x1, y = u*u*y0 + 2*u*t*cy + t*t*y1;
+    const dx = 2*u*(cx - x0) + 2*t*(x1 - cx), dy = 2*u*(cy - y0) + 2*t*(y1 - cy);
+    const a = Math.atan2(dy, dx) * 180 / Math.PI - 90 + (i % 2 ? 22 : -22);
+    out += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="3.6" ry="4.8" transform="rotate(${a.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="url(#gHair)" stroke="${C.hairLine}" stroke-width=".7"/>`;
   }
-  return segs;
+  return out;
 }
 
-function hairBackFront() {
-  return `<path d="M70 58 C58 100 56 150 60 198 Q70 210 80 200 Q90 210 100 202 Q110 210 120 200 Q130 210 140 198 C144 150 142 100 130 58 Z" fill="${C.hair}"/>
-    <path d="M66 110 Q62 150 66 190 M134 110 Q138 150 134 190" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>`;
+function hairBack() {
+  return `<path d="M56 92 C50 140 48 190 54 228 Q64 238 74 228 Q82 240 92 230 Q100 236 108 230 Q118 240 126 228 Q136 238 146 228 C152 190 150 140 144 92 C142 46 124 22 100 22 C76 22 58 46 56 92 Z" fill="url(#gHairBack)"/>`;
 }
 
-function hairFrontStrands() {
-  return `<path d="M71 66 C64 100 62 140 66 182 Q70 190 75 178 C77 150 77 112 78 80 Z" fill="${C.hair}"/>
-    <path d="M129 66 C136 100 138 140 134 182 Q130 190 125 178 C123 150 123 112 122 80 Z" fill="${C.hair}"/>
-    <path d="M72 90 Q68 130 71 175 M128 90 Q132 130 129 175" stroke="${C.hairLight}" stroke-width="1.4" fill="none" opacity=".8"/>
-    <path d="M76 96 Q74 140 76 178 M124 96 Q126 140 124 178" stroke="${C.hairLine}" stroke-width="1" fill="none"/>`;
+function neck() {
+  return `<path d="M89 150 L89 192 Q100 198 111 192 L111 150 Z" fill="url(#gNeck)"/>`;
 }
 
-function eye(x, y, ry) {
-  return `<ellipse cx="${x}" cy="${y}" rx="3.4" ry="${ry}" fill="${C.iris}"/>
-    <ellipse cx="${x}" cy="${y}" rx="1.6" ry="${Math.min(ry, 1.8)}" fill="${C.ink}"/>
-    <circle cx="${x + 1.1}" cy="${y - 1.1}" r="1.1" fill="#fff"/>
-    <path d="M${x - 4.6} ${y - ry + 0.6} Q${x} ${y - ry - 2.4} ${x + 4.6} ${y - ry + 0.6}" stroke="${C.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
-}
-
-function face(expr) {
-  const brow = d => `<path d="${d}" stroke="${C.brow}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`;
-  const line = (d, w = 1.8) => `<path d="${d}" stroke="${C.mouth}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
-  let f = `<ellipse cx="85" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
-    <ellipse cx="115" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
-    <path d="M100 75 Q102.5 80 99 81.5" stroke="${C.skinShade}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
-  if (expr === 'smirk') {
-    f += eye(89, 72, 3.6) + eye(111, 72, 3.6);
-    f += brow('M82 62 Q89 58 95 61') + brow('M105 59 Q112 55 118 58');
-    f += line('M92 88 Q101 91 109 85');
-  } else if (expr === 'focus') {
-    f += eye(89, 73, 2.4) + eye(111, 73, 2.4);
-    f += brow('M82 62 L95 66') + brow('M105 66 L118 62');
-    f += line('M95 89 L106 88.5');
-  } else if (expr === 'shock') {
-    f += eye(89, 72, 4.8) + eye(111, 72, 4.8);
-    f += brow('M82 59 Q89 53 95 57') + brow('M105 57 Q111 53 118 59');
-    f += `<ellipse cx="100" cy="90" rx="4.2" ry="5.2" fill="${C.mouth}"/>`;
-  } else if (expr === 'laugh') {
-    f += `<path d="M85 73 Q89 68 93 73" stroke="${C.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M107 73 Q111 68 115 73" stroke="${C.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
-    f += brow('M82 61 Q89 58 95 60') + brow('M105 60 Q111 58 118 61');
-    f += `<path d="M90.5 85 Q100 98 109.5 85 Z" fill="${C.mouth}"/>
-          <path d="M95 91.5 Q100 95.5 105 91.5 Q100 89.5 95 91.5 Z" fill="${C.tongue}"/>`;
+function eye(cx, cy, dir, open, closed) {
+  if (closed) {
+    return `<g transform="translate(${cx} ${cy}) scale(${dir} 1)">
+      <path d="M-12.5 0 Q-1 -9 11.5 -1" stroke="${C.lash}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M-12.5 0 L-15.5 -2" stroke="${C.lash}" stroke-width="1.5" stroke-linecap="round"/>
+    </g>`;
   }
-  return f;
+  return `<g transform="translate(${cx} ${cy}) scale(${dir} ${open})">
+    <path d="M-12 1 Q-7 -8 1 -8 Q8 -7 11 -1 Q5 6 -2 6 Q-9 6 -12 1 Z" fill="#FBF6F2"/>
+    <circle cx="0" cy="-1" r="6.4" fill="url(#gIris)"/>
+    <circle cx="0" cy="-1" r="6.4" fill="none" stroke="#3A4E47" stroke-width=".8"/>
+    <circle cx="0" cy="-1" r="2.7" fill="#1C2321"/>
+    <path d="M-6.4 -3.6 Q0 -8.4 6.4 -3.6 L6.4 -1.8 Q0 -6 -6.4 -1.8 Z" fill="#000" opacity=".18"/>
+    <circle cx="${2 * dir}" cy="-3.4" r="1.8" fill="#fff"/>
+    <circle cx="${-1.8 * dir}" cy="1.6" r=".85" fill="#fff" opacity=".9"/>
+    <path d="M-13.5 1.5 Q-8 -10 1 -9.6 Q9 -9 12.2 -1.5" stroke="${C.lash}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M-13.5 1.5 L-16.5 -0.6" stroke="${C.lash}" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M-9.5 4.6 Q-2 8.2 8 3.4" stroke="#8E6A5E" stroke-width=".9" fill="none" opacity=".7"/>
+    <path d="M-11 -6 Q-4 -14 9 -9.5" stroke="#D69C86" stroke-width="1" fill="none" opacity=".75"/>
+  </g>`;
 }
 
-function headFront(expr) {
+const LIPS = {
+  calm: `<path d="M91 147 Q95.5 144 100 145.6 Q104.5 144 109 147 Q100 148.6 91 147 Z" fill="${C.lip}"/>
+         <path d="M92 147.4 Q100 154.5 108 147.4 Q100 149.2 92 147.4 Z" fill="${C.lipLow}"/>
+         <path d="M91 147 Q100 149 109 147" stroke="${C.lipLine}" stroke-width=".9" fill="none"/>
+         <ellipse cx="101" cy="150.6" rx="3" ry="1" fill="#fff" opacity=".45"/>`,
+  smirk: `<path d="M91.5 147.4 Q96 144.6 100 146 Q105 144 110 144.6 Q101 148.6 91.5 147.4 Z" fill="${C.lip}"/>
+          <path d="M92.5 147.8 Q100 154 108.5 146.4 Q100 149.2 92.5 147.8 Z" fill="${C.lipLow}"/>
+          <path d="M91.5 147.4 Q101 149 110.5 144.2" stroke="${C.lipLine}" stroke-width="1" fill="none" stroke-linecap="round"/>
+          <ellipse cx="101" cy="150.2" rx="2.8" ry=".9" fill="#fff" opacity=".45"/>`,
+  focus: `<path d="M92.5 147.4 Q96 145.4 100 146.4 Q104 145.4 107.5 147.4 Q100 148.4 92.5 147.4 Z" fill="${C.lip}"/>
+          <path d="M93.5 147.6 Q100 152 106.5 147.6 Q100 148.8 93.5 147.6 Z" fill="${C.lipLow}"/>
+          <path d="M92.5 147.6 Q100 148.4 107.5 147.6" stroke="${C.lipLine}" stroke-width="1" fill="none"/>`,
+  shock: `<ellipse cx="100" cy="149.5" rx="5" ry="6.2" fill="${C.lip}"/>
+          <ellipse cx="100" cy="150" rx="3.4" ry="4.6" fill="#7E3236"/>
+          <ellipse cx="100" cy="152.6" rx="2.4" ry="1.4" fill="#C9666A"/>`,
+  laugh: `<path d="M89 145 Q100 162 111 145 Q100 147.5 89 145 Z" fill="#7E3236"/>
+          <path d="M90.5 145.6 Q100 148.6 109.5 145.6 L108.6 147.8 Q100 150.4 91.4 147.8 Z" fill="#fff"/>
+          <path d="M94 155 Q100 158.4 106 155 Q100 152.4 94 155 Z" fill="#C9666A"/>
+          <path d="M89 145 Q100 147.5 111 145" stroke="${C.lipLine}" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+          <path d="M89 145 Q100 163 111 145" stroke="${C.lipLine}" stroke-width="1" fill="none"/>`
+};
+
+const BROWS = {
+  calm:  ['M68 96 Q79 90 93 94', 'M132 96 Q121 90 107 94'],
+  smirk: ['M68 96 Q79 90 93 94', 'M132 92 Q121 86 107 92'],
+  focus: ['M68 94 Q80 93 93 99', 'M132 94 Q120 93 107 99'],
+  shock: ['M68 90 Q79 83 93 88', 'M132 90 Q121 83 107 88'],
+  laugh: ['M68 95 Q79 91 93 94', 'M132 95 Q121 91 107 94']
+};
+
+function face(expr = 'calm') {
+  const open = { calm: 1, smirk: .92, focus: .68, shock: 1.15, laugh: 1 }[expr];
+  const closed = expr === 'laugh';
+  const blush = expr === 'laugh' ? .5 : .32;
+  const [bl, br] = BROWS[expr];
   return `
-    <ellipse cx="72" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
-    <ellipse cx="128" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
-    <rect x="66.5" y="69" width="5" height="11" rx="2.5" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
-    <circle cx="69" cy="72" r="1.4" fill="${C.gold}"/>
-    <ellipse cx="100" cy="70" rx="28" ry="32" fill="${C.skin}"/>
-    <path d="M71 76 C66 46 82 32 100 32 C120 32 135 46 129 76 C127 64 123 56 116 52 C104 58 88 56 80 52 C75 58 72 66 71 76 Z" fill="${C.hair}"/>
-    <path d="M84 41 Q100 34 117 41" stroke="${C.hairLine}" stroke-width="1.4" fill="none"/>
-    <path d="M90 37 Q101 33 112 37" stroke="${C.hairLight}" stroke-width="1.4" fill="none"/>
-    <rect x="114" y="45" width="12" height="4" rx="2" transform="rotate(25 120 47)" fill="${C.gold}"/>
-    ${face(expr)}`;
+    <path d="M66 84 C60 110 60 140 66 170 Q68 174 70 168 C66 140 66 112 70 90 Z" fill="url(#gHair)"/>
+    <path d="M63 104 C56 100 54 112 57 120 C59 126 62 128 65 126 Z" fill="url(#gSkin)" stroke="${C.skinLine}" stroke-width=".8"/>
+    <rect x="53.5" y="107" width="7" height="13" rx="3.5" fill="${C.teal}" stroke="${C.ink}" stroke-width=".8"/>
+    <circle cx="57" cy="110.5" r="1.3" fill="${C.gold}"/>
+    <path d="M62 92 C62 60 80 40 100 40 C120 40 138 60 138 92 C138 120 132 140 122 154 C114 165 107 171 100 172 C93 171 86 165 78 154 C68 140 62 120 62 92 Z" fill="url(#gSkin)"/>
+    <path d="M78 154 C86 165 93 171 100 172 C107 171 114 165 122 154" stroke="${C.skinLine}" stroke-width=".9" fill="none" opacity=".7"/>
+    <ellipse cx="76" cy="129" rx="9" ry="4.5" fill="#F2A39A" opacity="${blush}" filter="url(#fSoft)"/>
+    <ellipse cx="124" cy="129" rx="9" ry="4.5" fill="#F2A39A" opacity="${blush}" filter="url(#fSoft)"/>
+    <path d="M62 112 C68 96 80 92 94 86 C100 80 104 72 106 66 C112 78 124 88 136 96 C126 94 114 86 106 76 C102 86 94 94 80 98 C72 100 66 104 62 112 Z" fill="#DFA48A" opacity=".4" filter="url(#fSoft)"/>
+    ${eye(82, 112, 1, open, closed)}
+    ${eye(118, 112, -1, open, closed)}
+    <path d="${bl}" stroke="${C.brow}" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+    <path d="${br}" stroke="${C.brow}" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+    <path d="M102 120 Q104.5 131 101 135" stroke="#DDA48D" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M97 135.5 Q100 137.5 103 135.5" stroke="#D49A85" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+    <ellipse cx="100.5" cy="126" rx="1.2" ry="3" fill="#fff" opacity=".35"/>
+    ${LIPS[expr]}
+    <path d="M134 84 C142 110 142 150 134 196 Q130 204 126 196 C132 160 134 120 130 92 Z" fill="url(#gHair)"/>
+    <path d="M100 22 C76 22 58 42 58 74 C58 92 60 106 62 120 C64 104 68 94 74 86 C80 90 88 88 94 82 C100 76 104 70 106 62 C112 74 122 84 134 90 C137 100 138 110 138 120 C142 104 142 86 140 72 C136 40 120 22 100 22 Z" fill="url(#gHair)"/>
+    ${smallBraid(96, 30, 64, 38, 62, 100, 11)}
+    <rect x="57" y="95" width="10" height="4" rx="2" transform="rotate(-60 62 97)" fill="${C.gold}"/>
+    <path d="M100 24 C84 30 70 46 64 74 M104 26 C96 40 92 60 94 80 M106 28 C112 46 122 70 134 88 M110 26 C124 40 134 60 136 90 M133 110 Q136 150 131 190" stroke="#C4A672" stroke-width=".9" fill="none" opacity=".85"/>
+    <path d="M70 46 Q100 26 130 46" stroke="${C.hairLight}" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
+    <path d="M80 40 Q100 30 120 38" stroke="#fff" stroke-width="1.2" fill="none" opacity=".7" stroke-linecap="round"/>
+    <path d="M64 70 Q54 80 52 96 M138 76 Q148 90 150 108 M136 124 Q148 144 146 170 M104 24 Q112 14 124 16" stroke="#E6CF9F" stroke-width=".7" fill="none" opacity=".9"/>`;
 }
 
-function legsAndBoots(backView) {
+function headBackView() {
   return `
-    <path d="M80 248 L98 248 L97 372 L81 372 Z" fill="${C.pants}"/>
-    <path d="M102 248 L120 248 L119 372 L103 372 Z" fill="${C.pants}"/>
-    <rect x="75" y="292" width="7" height="22" rx="1.5" fill="${C.pocket}"/>
-    <rect x="118" y="292" width="7" height="22" rx="1.5" fill="${C.pocket}"/>
-    <rect x="77" y="368" width="22" height="24" rx="4" fill="${C.ink}"/>
-    <rect x="101" y="368" width="22" height="24" rx="4" fill="${C.ink}"/>
-    <rect x="77" y="372" width="22" height="3" fill="${C.gold}"/>
-    <rect x="101" y="372" width="22" height="3" fill="${C.gold}"/>`;
+    ${hairBack()}
+    <path d="M58 96 C56 44 76 22 100 22 C124 22 144 44 142 96 Z" fill="url(#gHair)"/>
+    <rect x="140" y="104" width="7" height="13" rx="3.5" fill="${C.teal}" stroke="${C.ink}" stroke-width=".8"/>
+    <path d="M100 28 Q80 80 70 200 M100 28 Q92 100 88 226 M100 28 Q108 100 112 226 M100 28 Q120 80 130 200" stroke="${C.hairLine}" stroke-width="1" fill="none" opacity=".8"/>
+    <path d="M68 58 Q100 32 132 58" stroke="${C.hairLight}" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>
+    ${smallBraid(138, 50, 140, 90, 116, 108, 10)}
+    <rect x="109" y="105" width="10" height="4" rx="2" transform="rotate(20 114 107)" fill="${C.gold}"/>
+    <path d="M54 120 Q46 160 52 210 M146 120 Q154 160 148 210" stroke="#E6CF9F" stroke-width=".7" fill="none" opacity=".9"/>`;
 }
 
-function arms(watchOnViewerLeft) {
-  const watchX = watchOnViewerLeft ? 46 : 140;
+function place(s, cx, cy, content) {
+  return `<g transform="translate(${(cx - 100 * s).toFixed(2)} ${(cy - 110 * s).toFixed(2)}) scale(${s})">${content}</g>`;
+}
+
+// ---------- full body (viewBox 0 0 240 720, centre x 120) ----------
+
+function legs() {
   return `
-    <path d="M66 124 Q52 130 50 170 L46 230 L60 232 L66 176 L70 140 Z" fill="${C.teal}"/>
-    <path d="M134 124 Q148 130 150 170 L154 230 L140 232 L134 176 L130 140 Z" fill="${C.teal}"/>
-    <path d="M58 140 L54 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
-    <path d="M142 140 L146 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
-    <rect x="45" y="226" width="16" height="5" rx="1.5" fill="${C.gold}"/>
-    <rect x="139" y="226" width="16" height="5" rx="1.5" fill="${C.gold}"/>
-    <circle cx="53" cy="240" r="8" fill="${C.skin}"/>
-    <circle cx="147" cy="240" r="8" fill="${C.skin}"/>
-    <rect x="${watchX}" y="217" width="15" height="8" rx="2" fill="${C.ink}"/>
-    <rect x="${watchX + 2.5}" y="218.8" width="10" height="4.4" rx="1" fill="${C.hud}"/>`;
+    <path d="M93 330 L120 330 L119 575 L104 575 Q98 450 93 330 Z" fill="url(#gPants)"/>
+    <path d="M120 330 L147 330 Q142 450 136 575 L121 575 Z" fill="url(#gPants)"/>
+    <path d="M120 344 L120 575" stroke="#0B0E11" stroke-width="1"/>
+    <rect x="92" y="392" width="9" height="30" rx="2" fill="${C.pocket}"/>
+    <rect x="139" y="392" width="9" height="30" rx="2" fill="${C.pocket}"/>
+    <path d="M102 562 L121 562 L121 622 Q121 632 111 632 L97 632 Q93 632 94 626 Z" fill="url(#gInk)"/>
+    <path d="M119 562 L138 562 L146 626 Q147 632 143 632 L129 632 Q119 632 119 622 Z" fill="url(#gInk)"/>
+    <rect x="101" y="569" width="20.5" height="4" fill="${C.gold}"/>
+    <rect x="119" y="569" width="20.5" height="4" fill="${C.gold}"/>`;
+}
+
+function armsBody(watchLeft) {
+  const wx = watchLeft ? 64 : 160;
+  return `
+    <path d="M86 146 Q74 150 72 180 L68 250 L66 326 L80 328 L84 252 L88 190 Z" fill="url(#gTeal)"/>
+    <path d="M154 146 Q166 150 168 180 L172 250 L174 326 L160 328 L156 252 L152 190 Z" fill="url(#gTeal)"/>
+    <path d="M78 160 L73 320 M162 160 L167 320" stroke="${C.gold}" stroke-width="1" stroke-dasharray="3 3" fill="none"/>
+    <rect x="65" y="321" width="16" height="6" rx="2" fill="${C.gold}"/>
+    <rect x="159" y="321" width="16" height="6" rx="2" fill="${C.gold}"/>
+    <ellipse cx="73" cy="341" rx="6.5" ry="11" fill="url(#gSkin)" stroke="${C.skinLine}" stroke-width=".8"/>
+    <ellipse cx="167" cy="341" rx="6.5" ry="11" fill="url(#gSkin)" stroke="${C.skinLine}" stroke-width=".8"/>
+    <rect x="${wx}" y="309" width="16" height="9" rx="2" fill="${C.ink}"/>
+    <rect x="${wx + 2.5}" y="311" width="11" height="5" rx="1" fill="${C.hud}"/>`;
 }
 
 function keychain(x, y) {
-  return `
-    <path d="M${x} ${y} L${x + 2} ${y + 14}" stroke="${C.gold}" stroke-width="1.3"/>
+  return `<path d="M${x} ${y} L${x + 2} ${y + 14}" stroke="${C.gold}" stroke-width="1.2"/>
     <rect x="${x - 7}" y="${y + 13}" width="18" height="10" rx="4.5" fill="${C.gold}"/>
-    <circle cx="${x - 2}" cy="${y + 18}" r="1.4" fill="${C.ink}"/>
-    <circle cx="${x + 6}" cy="${y + 18}" r="1.4" fill="${C.ink}"/>`;
+    <circle cx="${x - 2}" cy="${y + 18}" r="1.3" fill="${C.ink}"/>
+    <circle cx="${x + 6}" cy="${y + 18}" r="1.3" fill="${C.ink}"/>`;
 }
 
-function ground() {
-  return `<ellipse cx="100" cy="394" rx="46" ry="6" fill="var(--shadow)"/>`;
-}
+const S_BODY = 0.62;
 
-function front(expr = 'smirk') {
-  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, front view">
-    ${ground()}
-    ${hairBackFront()}
-    ${legsAndBoots()}
-    ${arms(false)}
-    <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
-    <path d="M92 112 L108 112 L110 250 L90 250 Z" fill="${C.ink}"/>
-    <path d="M92 116 L85 152" stroke="${C.tealDark}" stroke-width="3" stroke-linecap="round"/>
-    <path d="M108 116 L115 152" stroke="${C.tealDark}" stroke-width="3" stroke-linecap="round"/>
-    <path d="M88 120 L86 248 M112 120 L114 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
-    <rect x="89" y="236" width="22" height="8" fill="#2A2F35"/>
-    <rect x="96" y="235" width="8" height="10" rx="1.5" fill="${C.gold}"/>
-    <rect x="109.5" y="150" width="13" height="11" rx="2" fill="${C.gold}"/>
-    <text x="116" y="158.4" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="6.8" fill="${C.ink}">SG</text>
-    ${keychain(106, 244)}
-    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
-    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
-    ${hairFrontStrands()}
-    ${headFront(expr)}
+function frontView() {
+  return `<svg viewBox="20 18 200 630" role="img" aria-label="Agent Sifa, front view">
+    <ellipse cx="120" cy="634" rx="50" ry="7" fill="var(--shadow)"/>
+    ${place(S_BODY, 120, 80, hairBack())}
+    ${legs()}
+    ${armsBody(false)}
+    ${place(S_BODY, 120, 80, neck())}
+    <path d="M110 140 L130 140 L133 334 L107 334 Z" fill="url(#gInk)"/>
+    <rect x="110" y="122" width="20" height="20" rx="5" fill="url(#gInk)"/>
+    <rect x="106" y="298" width="28" height="7" fill="#2A2F35"/>
+    <rect x="116" y="297" width="8" height="9" rx="1.5" fill="${C.gold}"/>
+    <path d="M110 138 Q94 139 84 147 Q79 190 88 250 Q86 290 86 334 L112 334 L108 250 L106 196 L112 150 Z" fill="url(#gTeal)"/>
+    <path d="M130 138 Q146 139 156 147 Q161 190 152 250 Q154 290 154 334 L128 334 L132 250 L134 196 L128 150 Z" fill="url(#gTeal)"/>
+    <path d="M111 141 L103 154 L106 196 L111 152 Z M129 141 L137 154 L134 196 L129 152 Z" fill="${C.tealDark}"/>
+    <path d="M108 156 L105 196 L107 250 L110 330 M132 156 L135 196 L133 250 L130 330 M88 330 L110 330 M130 330 L152 330" stroke="${C.gold}" stroke-width="1" stroke-dasharray="3 3" fill="none"/>
+    <rect x="138" y="170" width="13" height="10" rx="2" fill="${C.gold}"/>
+    <text x="144.5" y="177.6" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="6" fill="${C.ink}">SG</text>
+    ${keychain(130, 304)}
+    ${place(S_BODY, 120, 80, face('calm'))}
   </svg>`;
 }
 
-function side() {
-  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, side view">
-    ${ground()}
-    <path d="M80 46 C62 90 58 140 64 186 Q74 196 84 186 Q92 192 98 182 C98 150 96 116 98 90 Z" fill="${C.hair}"/>
-    <path d="M70 100 Q66 140 70 180 M80 100 Q78 140 82 182" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
-    <path d="M90 248 L106 248 L102 372 L88 372 Z" fill="${C.pantsBack}"/>
-    <rect x="84" y="368" width="24" height="24" rx="4" fill="#0B0D10"/>
-    <path d="M96 248 L114 248 L116 372 L100 372 Z" fill="${C.pants}"/>
-    <rect x="99" y="294" width="9" height="22" rx="1.5" fill="${C.pocket}"/>
-    <rect x="98" y="368" width="30" height="24" rx="5" fill="${C.ink}"/>
-    <rect x="98" y="372" width="30" height="3" fill="${C.gold}"/>
-    <path d="M84 122 Q100 114 118 122 L122 250 L84 250 Z" fill="${C.teal}"/>
-    <path d="M112 116 L120 120 L123 250 L114 250 Z" fill="${C.ink}"/>
-    <path d="M112 122 L113 248 M85 246 L121 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
-    ${keychain(112, 246)}
-    <path d="M94 124 Q108 124 110 160 L110 230 L98 232 L96 170 Z" fill="${C.teal}"/>
-    <path d="M103 134 L104 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
-    <rect x="96" y="226" width="15" height="5" rx="1.5" fill="${C.gold}"/>
-    <circle cx="104" cy="240" r="8" fill="${C.skin}"/>
-    <rect x="98" y="96" width="14" height="10" fill="${C.skinShade}"/>
-    <rect x="96" y="102" width="20" height="14" rx="3" fill="${C.ink}"/>
-    <ellipse cx="100" cy="70" rx="26" ry="31" fill="${C.skin}"/>
-    <path d="M123 64 L131 78 Q131 81 124 81 Z" fill="${C.skin}"/>
-    <path d="M74 70 C72 42 92 34 106 36 C120 38 128 50 127 60 C118 52 104 50 98 56 C94 62 92 76 88 92 C80 90 75 82 74 70 Z" fill="${C.hair}"/>
-    <path d="M82 46 Q96 38 112 41" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
-    <ellipse cx="96" cy="74" rx="4.5" ry="6.5" fill="${C.skinShade}"/>
-    <rect x="92.5" y="69" width="6" height="11" rx="3" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
-    <circle cx="95.5" cy="72" r="1.4" fill="${C.gold}"/>
-    <path d="M84 44 Q98 36 114 42" stroke="${C.hairLight}" stroke-width="1.4" fill="none"/>
-    <ellipse cx="116" cy="71" rx="2.6" ry="3.4" fill="${C.iris}"/><ellipse cx="116.6" cy="71" rx="1.3" ry="1.6" fill="${C.ink}"/>
-    <circle cx="117" cy="70" r=".9" fill="#fff"/>
-    <path d="M111 66.5 Q116 64 121 66.5" stroke="${C.ink}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M110 61 Q116 58 121 60" stroke="${C.brow}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <path d="M117 88 Q121 89.5 124 86.5" stroke="${C.mouth}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-    <ellipse cx="114" cy="81" rx="4" ry="2.4" fill="${C.skinShade}" opacity=".35"/>
+function backView() {
+  return `<svg viewBox="20 18 200 630" role="img" aria-label="Agent Sifa, back view">
+    <ellipse cx="120" cy="634" rx="50" ry="7" fill="var(--shadow)"/>
+    ${legs()}
+    ${armsBody(true)}
+    <path d="M84 147 Q120 134 156 147 Q161 190 152 250 Q154 290 154 334 L86 334 Q86 290 88 250 Q79 190 84 147 Z" fill="url(#gTeal)"/>
+    <path d="M120 150 L120 330 M88 330 L152 330" stroke="${C.gold}" stroke-width="1" stroke-dasharray="3 3" fill="none"/>
+    <circle cx="120" cy="232" r="19" fill="${C.tealDark}" stroke="${C.gold}" stroke-width="2.6"/>
+    <text x="120" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" fill="${C.gold}">SG</text>
+    ${keychain(102, 312)}
+    ${place(S_BODY, 120, 80, headBackView())}
   </svg>`;
 }
 
-function back() {
-  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, back view">
-    ${ground()}
-    ${legsAndBoots(true)}
-    ${arms(true)}
-    <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
-    <path d="M100 118 L100 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
-    <circle cx="100" cy="226" r="16" fill="${C.tealDark}" stroke="${C.gold}" stroke-width="2.6"/>
-    <text x="100" y="231" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="${C.gold}">SG</text>
-    ${keychain(126, 244)}
-    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
-    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
-    <ellipse cx="72" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
-    <ellipse cx="128" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
-    <rect x="128.5" y="69" width="5" height="11" rx="2.5" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
-    <path d="M70 58 C62 110 60 160 64 204 Q76 214 88 206 Q100 214 112 206 Q124 214 136 204 C140 160 138 110 130 58 Z" fill="${C.hair}"/>
-    <ellipse cx="100" cy="68" rx="29" ry="33" fill="${C.hair}"/>
-    <path d="M76 82 Q84 50 100 36 M124 82 Q116 50 100 36 M88 96 Q92 60 100 36 M112 96 Q108 60 100 36" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
-    <path d="M80 110 Q76 160 80 200 M92 104 Q90 160 94 204 M108 104 Q110 160 106 204 M120 110 Q124 160 120 200" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
-    <path d="M86 120 Q84 160 87 196 M114 120 Q116 160 113 196" stroke="${C.hairLight}" stroke-width="1.3" fill="none" opacity=".8"/>
-    <rect x="74" y="45" width="12" height="4" rx="2" transform="rotate(-25 80 47)" fill="${C.gold}"/>
+// ---------- hero portrait (viewBox 0 0 400 460) ----------
+
+function heroView() {
+  const s = 1.9;
+  return `<svg viewBox="0 0 400 460" role="img" aria-label="Agent Sifa portrait">
+    <rect width="400" height="460" fill="url(#gBg)"/>
+    <path d="M130 460 L130 120 A70 70 0 0 1 270 120 L270 460 Z" fill="#FFFCF4" opacity=".75" filter="url(#fGlow)"/>
+    <ellipse cx="200" cy="200" rx="150" ry="160" fill="#FFF3DC" opacity=".35" filter="url(#fGlow)"/>
+    ${place(s, 200, 170, hairBack())}
+    ${place(s, 200, 170, neck())}
+    <path d="M168 312 L232 312 L240 460 L160 460 Z" fill="url(#gInk)"/>
+    <rect x="171" y="296" width="58" height="44" rx="12" fill="url(#gInk)"/>
+    <path d="M182 330 Q120 334 72 358 Q46 372 36 460 L176 460 L168 380 Z" fill="url(#gTeal)"/>
+    <path d="M218 330 Q280 334 328 358 Q354 372 364 460 L224 460 L232 380 Z" fill="url(#gTeal)"/>
+    <path d="M182 330 L160 352 L172 460 L180 460 L168 380 Z M218 330 L240 352 L228 460 L220 460 L232 380 Z" fill="${C.tealDark}"/>
+    <path d="M166 384 L174 460 M234 384 L226 460 M90 356 Q60 380 54 460 M310 356 Q340 380 346 460" stroke="${C.gold}" stroke-width="1.6" stroke-dasharray="5 5" fill="none"/>
+    <rect x="256" y="388" width="32" height="24" rx="4" fill="${C.gold}"/>
+    <text x="272" y="405.5" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="14" fill="${C.ink}">SG</text>
+    ${place(s, 200, 170, face('calm'))}
   </svg>`;
 }
 
 function portrait(expr, label) {
-  return `<svg viewBox="50 16 100 100" role="img" aria-label="Agent Sifa, ${label}">
-    ${hairBackFront()}
-    <path d="M64 122 Q100 110 136 122 L136 130 L64 130 Z" fill="${C.teal}"/>
-    <path d="M92 112 L108 112 L109 130 L91 130 Z" fill="${C.ink}"/>
-    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
-    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
-    ${hairFrontStrands()}
-    ${headFront(expr)}
+  return `<svg viewBox="40 28 120 168" role="img" aria-label="Agent Sifa, ${label}">
+    ${hairBack()}
+    ${neck()}
+    <rect x="86" y="178" width="28" height="22" rx="6" fill="url(#gInk)"/>
+    ${face(expr)}
   </svg>`;
 }
 
-document.getElementById('front').innerHTML = front();
-document.getElementById('side').innerHTML = side();
-document.getElementById('back').innerHTML = back();
-document.getElementById('e-smirk').innerHTML = portrait('smirk', 'smirk');
-document.getElementById('e-focus').innerHTML = portrait('focus', 'focused');
-document.getElementById('e-shock').innerHTML = portrait('shock', 'shocked');
-document.getElementById('e-laugh').innerHTML = portrait('laugh', 'victory laugh');
+document.getElementById('hero').innerHTML = heroView();
+document.getElementById('front').innerHTML = frontView();
+document.getElementById('back').innerHTML = backView();
+[['calm', 'calm'], ['smirk', 'smirk'], ['focus', 'focused'], ['shock', 'shocked'], ['laugh', 'victory laugh']]
+  .forEach(([k, l]) => { document.getElementById('e-' + k).innerHTML = portrait(k, l); });
 
 const swatches = [
   ['Deep teal', C.teal, 'Jacket, main brand colour'],
   ['Gold', C.gold, 'Stitching, cuffs, SG patch'],
   ['Ink black', C.ink, 'Top, boots, outlines'],
   ['Skin', C.skin, 'Fair, warm undertone'],
-  ['Hair', C.hair, 'Honey blonde, loose waves'],
-  ['Eyes', C.iris, 'Blue-grey'],
-  ['HUD cyan', C.hud, 'Watch screen, glow effects'],
-  ['Cream', C.cream, 'Highlights, text on dark'],
+  ['Hair', C.hair, 'Platinum blonde'],
+  ['Eyes', C.iris, 'Grey-green'],
+  ['Lips', C.lip, 'Soft rose'],
+  ['HUD cyan', C.hud, 'Watch screen, glow'],
 ];
 document.getElementById('palette').innerHTML = swatches.map(([name, hex, use]) => `
   <div class="card">

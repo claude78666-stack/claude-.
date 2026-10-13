@@ -1,15 +1,23 @@
 # Sifa Gaming: Agent Sifa
 
-Mascot for the Sifa Gaming YouTube channel.
+Mascot for the Sifa Gaming YouTube channel, drawn in a Korean webtoon (manhwa) style.
 
-- `agent-sifa-character-sheet.html`: character sheet (turnaround, expressions, palette, profile, design rules). Open it in a browser.
+- `agent-sifa-character-sheet.html`: character sheet (portrait, front and back views, five expressions, palette, profile, design rules). Open it in a browser.
 - `agent-sifa-character-sheet.png`: screenshot of the sheet.
 
 Tagline: *"Every level has a secret. Sifa finds it."*
 
-## Image prompt (realistic, for Nano Banana)
+## Image prompts for Nano Banana
 
-> Photorealistic full-body portrait of a beautiful, confident young woman as "Agent Sifa", mascot of the YouTube gaming channel Sifa Gaming. Fair skin with a warm undertone and natural texture, striking blue-grey eyes, long, loose, voluminous honey-blonde waves falling past her shoulders with a small gold hair clip, soft natural makeup with a rosy lip, a calm, confident gaze and a slight smile. She wears an open deep-teal tactical jacket with fine gold stitching over a black high-neck top, a small embroidered gold "SG" patch on her left chest, black cargo pants and black leather boots with a gold band. A teal wireless earpiece on her right ear, a smartwatch with a glowing cyan display on her left wrist, a small gold game-controller keychain on her belt. She holds a game controller in one hand and points at the camera with the other. Shot on an 85mm lens, cinematic studio lighting with teal and gold rim light, dark gaming-room background with soft neon bokeh, sharp focus, high detail, 4K.
+Upload `agent-sifa-character-sheet.png` together with a prompt so the model keeps her outfit and colours on-model.
+
+### Korean webtoon style (recommended for the channel logo and thumbnails)
+
+> Korean webtoon (manhwa) style illustration of "Agent Sifa", mascot of the YouTube gaming channel Sifa Gaming. A beautiful, confident woman in her mid-20s with tall, slim model proportions. Fair skin with a warm undertone, large grey-green eyes with a soft winged lash line, light blush, soft rose lips, a calm, steady gaze. Shoulder-length platinum-blonde hair with a soft side part, loose wisps and a thin braid along her right temple finished with a small gold clip. She wears an open deep-teal tactical jacket with dashed gold stitching over a black high-neck top, a small gold "SG" patch on her left chest, slim black cargo pants and black boots with a gold band. A teal earpiece on her right ear, a smartwatch with a glowing cyan display on her left wrist, a small gold game-controller keychain on her belt. Clean lineart, soft cel shading with gentle gradients, warm window backlight with a teal and gold rim light, high detail, professional key art.
+
+### Realistic
+
+> Photorealistic portrait of a beautiful, confident woman in her mid-20s as "Agent Sifa", mascot of the YouTube gaming channel Sifa Gaming. Fair skin with a warm undertone and natural texture, large grey-green eyes, shoulder-length platinum-blonde hair with a soft side part, loose wisps and a thin braid along her right temple finished with a small gold clip, soft natural makeup with rose-tinted lips, calm, confident expression. She wears an open deep-teal tactical jacket with fine gold stitching over a black high-neck top, a small embroidered gold "SG" patch on her left chest. A teal wireless earpiece on her right ear. Shot on an 85mm lens, soft warm window light from behind with a subtle teal and gold rim light, shallow depth of field, sharp focus, high detail, 4K.
 
 ## Palette
 
@@ -18,8 +26,8 @@ Tagline: *"Every level has a secret. Sifa finds it."*
 | Deep teal | `#0E5E6F` | Jacket, main brand colour |
 | Gold | `#F2B632` | Stitching, cuffs, SG patch |
 | Ink black | `#111418` | Top, boots, outlines |
-| Skin | `#F2CDB0` | Fair, warm undertone |
-| Hair | `#C99A5B` | Honey blonde, loose waves |
-| Eyes | `#7E98A3` | Blue-grey |
-| HUD cyan | `#5FE3F0` | Watch screen, glow effects |
-| Cream | `#FFF3D6` | Highlights, text on dark |
+| Skin | `#F7D8C6` | Fair, warm undertone |
+| Hair | `#EAD6AA` | Platinum blonde |
+| Eyes | `#7F9A8E` | Grey-green |
+| Lips | `#D88783` | Soft rose |
+| HUD cyan | `#5FE3F0` | Watch screen, glow |
