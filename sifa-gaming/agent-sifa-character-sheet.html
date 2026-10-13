@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Sifa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F4EF;
+    --surface: #FFFFFF;
+    --stage: #E9EFF0;
+    --stage-line: #D3DDDF;
+    --text: #15191D;
+    --muted: #5B6670;
+    --border: #E2E0D9;
+    --accent: #0E5E6F;
+    --accent-2: #B98410;
+    --shadow: rgba(17, 20, 24, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1215;
+      --surface: #161C20;
+      --stage: #1C252A;
+      --stage-line: #27333A;
+      --text: #ECEFF1;
+      --muted: #9AA7B0;
+      --border: #26313A;
+      --accent: #4FB3C6;
+      --accent-2: #F2B632;
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1215;
+    --surface: #161C20;
+    --stage: #1C252A;
+    --stage-line: #27333A;
+    --text: #ECEFF1;
+    --muted: #9AA7B0;
+    --border: #26313A;
+    --accent: #4FB3C6;
+    --accent-2: #F2B632;
+    --shadow: rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 16px 56px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+  .eyebrow { font: 600 12px/1 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+  h1 { font: 700 clamp(34px, 7vw, 56px)/1 "Space Grotesk", sans-serif; margin: 0; letter-spacing: -.02em; }
+  .tagline { margin: 10px 0 0; color: var(--muted); font-style: italic; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+    font: 600 13px/1.2 Inter, sans-serif;
+  }
+  .badge svg { flex: none; }
+
+  h2 { font: 700 20px/1.2 "Space Grotesk", sans-serif; margin: 40px 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+
+  .grid { display: grid; gap: 14px; }
+  .turn { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .expr { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .pal  { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+  .two  { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .stage {
+    background:
+      linear-gradient(var(--stage-line) 1px, transparent 1px) 0 0 / 100% 40px,
+      var(--stage);
+    display: flex; justify-content: center; padding: 12px 8px 0;
+  }
+  .stage svg { width: 100%; height: auto; max-width: 240px; display: block; }
+  .expr .stage { padding: 10px; }
+  .expr .stage svg { max-width: 150px; }
+  .label { padding: 10px 14px 12px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .label b { font: 600 14px/1.3 Inter, sans-serif; }
+  .label span { color: var(--muted); font-size: 12.5px; text-align: right; }
+
+  .sw { height: 72px; }
+  .sw-info { padding: 10px 14px 12px; }
+  .sw-info b { display: block; font-size: 14px; }
+  .sw-info code { font: 500 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+  .sw-info p { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
+
+  .panel { padding: 18px 20px; }
+  .panel h3 { font: 700 16px/1.2 "Space Grotesk", sans-serif; margin: 0 0 12px; }
+  dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; }
+  dt { color: var(--muted); font-size: 13px; }
+  dd { margin: 0; font-size: 14px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 0 0 6px; font-size: 14px; }
+  li::marker { color: var(--accent-2); }
+
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <p class="eyebrow">Character sheet · Sifa Gaming mascot</p>
+      <h1>Agent Sifa</h1>
+      <p class="tagline">"Every level has a secret. Sifa finds it."</p>
+    </div>
+    <div class="badge">
+      <svg width="34" height="28" viewBox="0 0 34 28" aria-hidden="true">
+        <rect x="1" y="1" width="32" height="26" rx="5" fill="#F2B632"/>
+        <text x="17" y="19.5" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="13" fill="#111418">SG</text>
+      </svg>
+      Codename: Agent S
+    </div>
+  </header>
+
+  <h2>Turnaround</h2>
+  <p class="sub">Neutral pose for reference. Keep proportions, the gold cuffs and the SG patch consistent across every view.</p>
+  <div class="grid turn">
+    <div class="card"><div class="stage" id="front"></div><div class="label"><b>Front</b><span>SG patch on her left chest</span></div></div>
+    <div class="card"><div class="stage" id="side"></div><div class="label"><b>Side</b><span>Earpiece on her right ear</span></div></div>
+    <div class="card"><div class="stage" id="back"></div><div class="label"><b>Back</b><span>SG emblem between the shoulders</span></div></div>
+  </div>
+
+  <h2>Expressions</h2>
+  <p class="sub">Use these for thumbnails, overlays and reactions.</p>
+  <div class="grid expr">
+    <div class="card"><div class="stage" id="e-smirk"></div><div class="label"><b>Smirk</b><span>Default, logo</span></div></div>
+    <div class="card"><div class="stage" id="e-focus"></div><div class="label"><b>Focused</b><span>Clutch moments</span></div></div>
+    <div class="card"><div class="stage" id="e-shock"></div><div class="label"><b>Shocked</b><span>"I found it!"</span></div></div>
+    <div class="card"><div class="stage" id="e-laugh"></div><div class="label"><b>Victory laugh</b><span>Wins, outros</span></div></div>
+  </div>
+
+  <h2>Palette</h2>
+  <p class="sub">Reuse these colours on the banner, thumbnails and stream overlays.</p>
+  <div class="grid pal" id="palette"></div>
+
+  <div class="grid two" style="margin-top:40px">
+    <div class="card panel">
+      <h3>Profile</h3>
+      <dl>
+        <dt>Name</dt><dd>Sifa</dd>
+        <dt>Codename</dt><dd>Agent S</dd>
+        <dt>Role</dt><dd>Field agent of the Sifa Gaming division. She finds the secrets, hidden routes and winning strategy in every game.</dd>
+        <dt>Personality</dt><dd>Confident, witty, competitive, friendly to the audience. Treats every game like a mission.</dd>
+        <dt>Signature move</dt><dd>Points at the viewer with the controller like a sidearm.</dd>
+      </dl>
+    </div>
+    <div class="card panel">
+      <h3>Design rules</h3>
+      <ul>
+        <li>Long braids in a high ponytail with gold cuffs near the ends.</li>
+        <li>Deep-teal tactical jacket with dashed gold stitching, worn open over a black high-neck top.</li>
+        <li>Gold SG patch on her left chest; large SG emblem on the back.</li>
+        <li>Teal earpiece on her right ear, HUD smartwatch on her left wrist.</li>
+        <li>Gold controller keychain hanging from the belt.</li>
+        <li>Black cargo pants and boots with a single gold band.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Reference draft. Hand this sheet to an artist, or use it alongside the image prompt, so every version of Sifa stays on-model.</footer>
+</div>
+
+<script>
+const C = {
+  teal: '#0E5E6F', tealDark: '#0A4552', gold: '#F2B632', ink: '#111418',
+  pants: '#1F252C', pantsBack: '#181D23', pocket: '#2A323B',
+  skin: '#A86B4A', skinShade: '#8E583B', hair: '#1B1311', hairLine: '#3A2A24',
+  cream: '#FFF3D6', hud: '#5FE3F0', mouth: '#5A2A22', tongue: '#C0504D'
+};
+
+function braid(x0, y0, cx, cy, x1, y1, n) {
+  let segs = '';
+  for (let i = n; i >= 0; i--) {
+    const t = i / n, u = 1 - t;
+    const x = u*u*x0 + 2*u*t*cx + t*t*x1;
+    const y = u*u*y0 + 2*u*t*cy + t*t*y1;
+    const dx = 2*u*(cx - x0) + 2*t*(x1 - cx);
+    const dy = 2*u*(cy - y0) + 2*t*(y1 - cy);
+    const ang = Math.atan2(dy, dx) * 180 / Math.PI - 90 + (i % 2 ? 18 : -18);
+    const s = 1 - 0.35 * t;
+    segs += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(7*s).toFixed(1)}" ry="${(9*s).toFixed(1)}" transform="rotate(${ang.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${C.hair}" stroke="${C.hairLine}" stroke-width="1"/>`;
+    if (i === Math.round(n * 0.8) || i === Math.round(n * 0.9)) {
+      const a = Math.atan2(dy, dx) * 180 / Math.PI - 90;
+      segs += `<rect x="${(x - 5*s).toFixed(1)}" y="${(y - 2).toFixed(1)}" width="${(10*s).toFixed(1)}" height="4" rx="1.5" transform="rotate(${a.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" fill="${C.gold}"/>`;
+    }
+  }
+  return segs;
+}
+
+function eye(x, y, ry) {
+  return `<ellipse cx="${x}" cy="${y}" rx="3.4" ry="${ry}" fill="${C.ink}"/>
+    <circle cx="${x + 1.1}" cy="${y - 1.1}" r="1.1" fill="#fff"/>
+    <path d="M${x - 4.6} ${y - ry + 0.6} Q${x} ${y - ry - 2.4} ${x + 4.6} ${y - ry + 0.6}" stroke="${C.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
+}
+
+function face(expr) {
+  const brow = d => `<path d="${d}" stroke="${C.hair}" stroke-width="2.3" fill="none" stroke-linecap="round"/>`;
+  const line = (d, w = 1.8) => `<path d="${d}" stroke="${C.mouth}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
+  let f = `<ellipse cx="85" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
+    <ellipse cx="115" cy="82" rx="4.5" ry="2.6" fill="${C.skinShade}" opacity=".35"/>
+    <path d="M100 75 Q102.5 80 99 81.5" stroke="${C.skinShade}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  if (expr === 'smirk') {
+    f += eye(89, 72, 3.6) + eye(111, 72, 3.6);
+    f += brow('M82 62 Q89 58 95 61') + brow('M105 59 Q112 55 118 58');
+    f += line('M92 88 Q101 91 109 85');
+  } else if (expr === 'focus') {
+    f += eye(89, 73, 2.4) + eye(111, 73, 2.4);
+    f += brow('M82 62 L95 66') + brow('M105 66 L118 62');
+    f += line('M95 89 L106 88.5');
+  } else if (expr === 'shock') {
+    f += eye(89, 72, 4.8) + eye(111, 72, 4.8);
+    f += brow('M82 59 Q89 53 95 57') + brow('M105 57 Q111 53 118 59');
+    f += `<ellipse cx="100" cy="90" rx="4.2" ry="5.2" fill="${C.mouth}"/>`;
+  } else if (expr === 'laugh') {
+    f += `<path d="M85 73 Q89 68 93 73" stroke="${C.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M107 73 Q111 68 115 73" stroke="${C.ink}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+    f += brow('M82 61 Q89 58 95 60') + brow('M105 60 Q111 58 118 61');
+    f += `<path d="M90.5 85 Q100 98 109.5 85 Z" fill="${C.mouth}"/>
+          <path d="M95 91.5 Q100 95.5 105 91.5 Q100 89.5 95 91.5 Z" fill="${C.tongue}"/>`;
+  }
+  return f;
+}
+
+function headFront(expr) {
+  return `
+    <ellipse cx="72" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
+    <ellipse cx="128" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
+    <rect x="66.5" y="69" width="5" height="11" rx="2.5" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
+    <circle cx="69" cy="72" r="1.4" fill="${C.gold}"/>
+    <ellipse cx="100" cy="70" rx="28" ry="32" fill="${C.skin}"/>
+    <path d="M71 76 C66 46 82 32 100 32 C120 32 135 46 129 76 C127 64 123 56 116 52 C104 58 88 56 80 52 C75 58 72 66 71 76 Z" fill="${C.hair}"/>
+    <path d="M84 41 Q100 34 117 41" stroke="${C.hairLine}" stroke-width="1.4" fill="none"/>
+    <path d="M90 37 Q101 33 112 37" stroke="${C.hairLine}" stroke-width="1.2" fill="none"/>
+    <rect x="93" y="25" width="14" height="7" rx="2" fill="${C.gold}"/>
+    ${face(expr)}`;
+}
+
+function legsAndBoots(backView) {
+  return `
+    <path d="M80 248 L98 248 L97 372 L81 372 Z" fill="${C.pants}"/>
+    <path d="M102 248 L120 248 L119 372 L103 372 Z" fill="${C.pants}"/>
+    <rect x="75" y="292" width="7" height="22" rx="1.5" fill="${C.pocket}"/>
+    <rect x="118" y="292" width="7" height="22" rx="1.5" fill="${C.pocket}"/>
+    <rect x="77" y="368" width="22" height="24" rx="4" fill="${C.ink}"/>
+    <rect x="101" y="368" width="22" height="24" rx="4" fill="${C.ink}"/>
+    <rect x="77" y="372" width="22" height="3" fill="${C.gold}"/>
+    <rect x="101" y="372" width="22" height="3" fill="${C.gold}"/>`;
+}
+
+function arms(watchOnViewerLeft) {
+  const watchX = watchOnViewerLeft ? 46 : 140;
+  return `
+    <path d="M66 124 Q52 130 50 170 L46 230 L60 232 L66 176 L70 140 Z" fill="${C.teal}"/>
+    <path d="M134 124 Q148 130 150 170 L154 230 L140 232 L134 176 L130 140 Z" fill="${C.teal}"/>
+    <path d="M58 140 L54 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
+    <path d="M142 140 L146 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
+    <rect x="45" y="226" width="16" height="5" rx="1.5" fill="${C.gold}"/>
+    <rect x="139" y="226" width="16" height="5" rx="1.5" fill="${C.gold}"/>
+    <circle cx="53" cy="240" r="8" fill="${C.skin}"/>
+    <circle cx="147" cy="240" r="8" fill="${C.skin}"/>
+    <rect x="${watchX}" y="217" width="15" height="8" rx="2" fill="${C.ink}"/>
+    <rect x="${watchX + 2.5}" y="218.8" width="10" height="4.4" rx="1" fill="${C.hud}"/>`;
+}
+
+function keychain(x, y) {
+  return `
+    <path d="M${x} ${y} L${x + 2} ${y + 14}" stroke="${C.gold}" stroke-width="1.3"/>
+    <rect x="${x - 7}" y="${y + 13}" width="18" height="10" rx="4.5" fill="${C.gold}"/>
+    <circle cx="${x - 2}" cy="${y + 18}" r="1.4" fill="${C.ink}"/>
+    <circle cx="${x + 6}" cy="${y + 18}" r="1.4" fill="${C.ink}"/>`;
+}
+
+function ground() {
+  return `<ellipse cx="100" cy="394" rx="46" ry="6" fill="var(--shadow)"/>`;
+}
+
+function front(expr = 'smirk') {
+  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, front view">
+    ${ground()}
+    ${braid(104, 28, 150, 30, 140, 180, 13)}
+    ${legsAndBoots()}
+    ${arms(false)}
+    <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
+    <path d="M92 112 L108 112 L110 250 L90 250 Z" fill="${C.ink}"/>
+    <path d="M92 116 L85 152" stroke="${C.tealDark}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M108 116 L115 152" stroke="${C.tealDark}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M88 120 L86 248 M112 120 L114 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+    <rect x="89" y="236" width="22" height="8" fill="#2A2F35"/>
+    <rect x="96" y="235" width="8" height="10" rx="1.5" fill="${C.gold}"/>
+    <rect x="114" y="138" width="15" height="12" rx="2" fill="${C.gold}"/>
+    <text x="121.5" y="147.5" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="7.5" fill="${C.ink}">SG</text>
+    ${keychain(106, 244)}
+    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
+    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
+    ${headFront(expr)}
+  </svg>`;
+}
+
+function side() {
+  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, side view">
+    ${ground()}
+    ${braid(92, 30, 52, 50, 66, 180, 19)}
+    <path d="M90 248 L106 248 L102 372 L88 372 Z" fill="${C.pantsBack}"/>
+    <rect x="84" y="368" width="24" height="24" rx="4" fill="#0B0D10"/>
+    <path d="M96 248 L114 248 L116 372 L100 372 Z" fill="${C.pants}"/>
+    <rect x="99" y="294" width="9" height="22" rx="1.5" fill="${C.pocket}"/>
+    <rect x="98" y="368" width="30" height="24" rx="5" fill="${C.ink}"/>
+    <rect x="98" y="372" width="30" height="3" fill="${C.gold}"/>
+    <path d="M84 122 Q100 114 118 122 L122 250 L84 250 Z" fill="${C.teal}"/>
+    <path d="M112 116 L120 120 L123 250 L114 250 Z" fill="${C.ink}"/>
+    <path d="M112 122 L113 248 M85 246 L121 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+    ${keychain(112, 246)}
+    <path d="M94 124 Q108 124 110 160 L110 230 L98 232 L96 170 Z" fill="${C.teal}"/>
+    <path d="M103 134 L104 226" stroke="${C.gold}" stroke-width="1.1" stroke-dasharray="3 3" fill="none"/>
+    <rect x="96" y="226" width="15" height="5" rx="1.5" fill="${C.gold}"/>
+    <circle cx="104" cy="240" r="8" fill="${C.skin}"/>
+    <rect x="98" y="96" width="14" height="10" fill="${C.skinShade}"/>
+    <rect x="96" y="102" width="20" height="14" rx="3" fill="${C.ink}"/>
+    <ellipse cx="100" cy="70" rx="26" ry="31" fill="${C.skin}"/>
+    <path d="M123 64 L131 78 Q131 81 124 81 Z" fill="${C.skin}"/>
+    <path d="M74 70 C72 42 92 34 106 36 C120 38 128 50 127 60 C118 52 104 50 98 56 C94 62 92 76 88 92 C80 90 75 82 74 70 Z" fill="${C.hair}"/>
+    <path d="M82 46 Q96 38 112 41" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
+    <ellipse cx="96" cy="74" rx="4.5" ry="6.5" fill="${C.skinShade}"/>
+    <rect x="92.5" y="69" width="6" height="11" rx="3" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
+    <circle cx="95.5" cy="72" r="1.4" fill="${C.gold}"/>
+    <rect x="89" y="27" width="14" height="7" rx="2" transform="rotate(-20 96 30)" fill="${C.gold}"/>
+    <ellipse cx="116" cy="71" rx="2.6" ry="3.4" fill="${C.ink}"/>
+    <circle cx="117" cy="70" r=".9" fill="#fff"/>
+    <path d="M111 66.5 Q116 64 121 66.5" stroke="${C.ink}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M110 61 Q116 58 121 60" stroke="${C.hair}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M117 88 Q121 89.5 124 86.5" stroke="${C.mouth}" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+    <ellipse cx="114" cy="81" rx="4" ry="2.4" fill="${C.skinShade}" opacity=".35"/>
+  </svg>`;
+}
+
+function back() {
+  return `<svg viewBox="20 10 160 395" role="img" aria-label="Agent Sifa, back view">
+    ${ground()}
+    ${legsAndBoots(true)}
+    ${arms(true)}
+    <path d="M64 122 Q100 110 136 122 L132 250 L68 250 Z" fill="${C.teal}"/>
+    <path d="M100 118 L100 248 M70 246 L130 246" stroke="${C.gold}" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>
+    <circle cx="100" cy="200" r="19" fill="${C.tealDark}" stroke="${C.gold}" stroke-width="3"/>
+    <text x="100" y="206" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" fill="${C.gold}">SG</text>
+    ${keychain(126, 244)}
+    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
+    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
+    <ellipse cx="72" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
+    <ellipse cx="128" cy="74" rx="4.5" ry="6.5" fill="${C.skin}"/>
+    <rect x="128.5" y="69" width="5" height="11" rx="2.5" fill="${C.teal}" stroke="${C.ink}" stroke-width="1"/>
+    <ellipse cx="100" cy="68" rx="29" ry="33" fill="${C.hair}"/>
+    <path d="M76 82 Q86 50 100 32 M124 82 Q114 50 100 32 M88 92 Q94 56 100 32 M112 92 Q106 56 100 32" stroke="${C.hairLine}" stroke-width="1.3" fill="none"/>
+    ${braid(100, 30, 100, 110, 100, 182, 13)}
+    <rect x="93" y="25" width="14" height="7" rx="2" fill="${C.gold}"/>
+  </svg>`;
+}
+
+function portrait(expr, label) {
+  return `<svg viewBox="50 16 100 100" role="img" aria-label="Agent Sifa, ${label}">
+    ${braid(104, 28, 150, 30, 140, 180, 13)}
+    <path d="M64 122 Q100 110 136 122 L136 130 L64 130 Z" fill="${C.teal}"/>
+    <path d="M92 112 L108 112 L109 130 L91 130 Z" fill="${C.ink}"/>
+    <rect x="93" y="96" width="14" height="10" fill="${C.skinShade}"/>
+    <rect x="91" y="102" width="18" height="14" rx="3" fill="${C.ink}"/>
+    ${headFront(expr)}
+  </svg>`;
+}
+
+document.getElementById('front').innerHTML = front();
+document.getElementById('side').innerHTML = side();
+document.getElementById('back').innerHTML = back();
+document.getElementById('e-smirk').innerHTML = portrait('smirk', 'smirk');
+document.getElementById('e-focus').innerHTML = portrait('focus', 'focused');
+document.getElementById('e-shock').innerHTML = portrait('shock', 'shocked');
+document.getElementById('e-laugh').innerHTML = portrait('laugh', 'victory laugh');
+
+const swatches = [
+  ['Deep teal', C.teal, 'Jacket, main brand colour'],
+  ['Gold', C.gold, 'Stitching, cuffs, SG patch'],
+  ['Ink black', C.ink, 'Top, boots, outlines'],
+  ['Skin', C.skin, 'Warm brown base'],
+  ['Hair', C.hair, 'Braids and ponytail'],
+  ['HUD cyan', C.hud, 'Watch screen, glow effects'],
+  ['Cream', C.cream, 'Highlights, text on dark'],
+];
+document.getElementById('palette').innerHTML = swatches.map(([name, hex, use]) => `
+  <div class="card">
+    <div class="sw" style="background:${hex}"></div>
+    <div class="sw-info"><b>${name}</b><code>${hex}</code><p>${use}</p></div>
+  </div>`).join('');
+</script>
+</body>
+</html>
