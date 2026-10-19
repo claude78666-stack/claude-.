@@ -29,6 +29,7 @@ FONT = "/usr/share/fonts/opentype/inter/Inter-{}.otf"
 PURPLE, CYAN, EMBER = (170, 80, 255), (40, 220, 255), (255, 120, 40)
 STING, LEAD, TAIL = 1.4, 1.3, 0.9  # title sting length, narration start, hold after narration
 FACE = 520                          # facecam size
+TEMPO = 0.94                        # narration speed
 WAV2LIP = Path(os.environ.get("WAV2LIP", "/tmp/Wav2Lip"))
 
 script = json.load(open(HERE / "script.json"))
@@ -207,7 +208,9 @@ def lipsync(section, voice):
 
 def render_section(num, section):
     sid = section["id"]
-    voice = HERE / "voice" / f"{sid}.wav"
+    voice = BUILD / f"vo_{sid}.wav"  # TTS reads fast; slow it a touch to a natural presenter pace
+    run(["ffmpeg", "-v", "error", "-y", "-i", str(HERE / "voice" / f"{sid}.wav"), "-af", f"atempo={TEMPO}",
+         str(voice)])
     dur = wav_seconds(voice)
     total = LEAD + dur + TAIL
     face = lipsync(section, voice)

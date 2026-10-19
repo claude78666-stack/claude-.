@@ -27,6 +27,17 @@
       "text": "Where does it fit in the story? E-Day is a prequel, set on the planet Sera fourteen years before the very first Gears of War. The Pendulum Wars have just ended, and humanity thinks it's finally getting some peace. Then Emergence Day happens: the Locust Horde bursts up out of the ground and attacks every human city at once. The whole game takes place in one huge industrial city called Kalona, over the first desperate days of the invasion. Fans have heard about E-Day for years. Now you finally get to live through it."
     },
     {
+      "id": "02b_lore",
+      "heading": "Quick lore primer",
+      "cards": [
+        "The Pendulum Wars",
+        "COG vs the UIR",
+        "Imulsion: Sera's power source",
+        "The Locust: living in the Hollows"
+      ],
+      "text": "Quick lore primer, in case you're new. Before the Locust ever showed up, humans on Sera spent decades fighting each other in the Pendulum Wars, a long conflict between the Coalition of Ordered Governments, the COG, and the Union of Independent Republics, mostly over a glowing fuel called Imulsion that powered their whole world. Marcus and Dom were soldiers in that war. What nobody knew was that underneath their feet, deep in a vast network of tunnels called the Hollows, the Locust Horde had been waiting. E-Day is the moment they finally strike."
+    },
+    {
       "id": "03_squad",
       "heading": "Meet Bravo Squad",
       "cards": [
@@ -141,6 +152,18 @@
         "Criticised: pacing, side content"
       ],
       "text": "So what are critics saying? Mostly really good things. It's in the high eighties on Metacritic, and over ninety percent of critics on OpenCritic recommend it. Game Informer gave it nine and a half, IGN a nine, and GamesRadar called it the best cover shooter since the Xbox 360 days. The praise is for the combat, the visuals and Marcus and Dom. The criticism is about pacing in the open areas and repetitive side content, and PC Gamer and The Guardian were more lukewarm."
+    },
+    {
+      "id": "12b_tips",
+      "heading": "Tips before you start",
+      "cards": [
+        "Stay in cover, always",
+        "Master the Active Reload",
+        "Grenade the Emergence Holes",
+        "Use your new jump and slide",
+        "Bring a friend"
+      ],
+      "text": "Before you jump in, a few quick tips from me. One: stay in cover. This is still Gears, and standing in the open is the fastest way to get downed. Two: practice the Active Reload until it's muscle memory, the damage boost really adds up. Three: when you see an Emergence Hole, grenade it straight away, or the fight will never end. Four: use the new jump and slide to reposition, because flanking is so much easier now. And five: if you can, bring a friend. Co-op makes the whole campaign better."
     },
     {
       "id": "13_verdict",
