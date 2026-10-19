@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Cuts the full Sifa intro: Veo shot 1 (walk and sit) + shots 2-5 (she talks to camera) -> sifa_intro_full_1080p.mp4
+"""Cuts the full Sifa intro: Veo shot 1 (walk and sit) + shots 2-4 (she talks to camera) -> sifa_intro_full_1080p.mp4
 
 Run: python3 build_full_intro.py [out.mp4]
-Needs ai/shot1_walk_sit_veo.mp4 and ai/shot{2..5}_*_veo.mp4 (from ai/gen_veo.py), music.wav (make_music.py)
-and ffmpeg. Keeps Veo's own dialogue audio, ducks the music under it, and adds the two lower thirds.
+Needs ai/shot1_walk_sit_veo.mp4 and ai/shot{2..4}_*_veo.mp4 (from ai/gen_veo.py), voice.wav, music.wav
+(make_music.py) and ffmpeg. Her voice is always voice.wav, so it stays the same in every video; the Veo
+clips' own audio is dropped except shot 1's room tone. Ducks the music under the voice and adds the lower thirds.
 """
 import subprocess
 import sys
@@ -23,14 +24,14 @@ SHOTS = [  # (file, seconds to keep)
     ("ai/shot1_walk_sit_veo.mp4", 4.0),
     ("ai/shot2_hello_veo.mp4", 8.0),
     ("ai/shot3_prequel_veo.mp4", 8.0),
-    ("ai/shot4_verdict_veo.mp4", 8.0),
-    ("ai/shot5_lets_go_veo.mp4", 8.0),
+    ("ai/shot4_lets_go_veo.mp4", 8.0),
 ]
+VOICE_AT = 4.3  # voice.wav starts just after she sits; "Let's get started!" lands at 4.3 + 18.2 = 22.5 s
 TOTAL = sum(d for _, d in SHOTS)
 # lower thirds: (kicker, title, accent, start, end)
 LOWER_THIRDS = [
-    ("", "SIFA", PURPLE, 4.8, 10.8, "The First SI Agent"),
-    ("TODAY", "GEARS OF WAR: E-DAY  -  Honest Walkthrough", CYAN, 12.4, 19.6, ""),
+    ("", "SIFA", PURPLE, 4.5, 7.4, "The First SI Agent"),
+    ("TODAY", "GEARS OF WAR: E-DAY  -  Honest Walkthrough", CYAN, 7.6, 15.0, ""),
 ]
 
 
@@ -69,18 +70,21 @@ run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(TMP 
      "-c", "copy", str(TMP / "joined.mov")])
 
 # 2. lower thirds, music ducked under the dialogue, fade out, loudness to -14 LUFS
-inputs = ["-i", str(TMP / "joined.mov"), "-i", str(HERE / "music.wav")]
+inputs = ["-i", str(TMP / "joined.mov"), "-i", str(HERE / "music.wav"), "-i", str(HERE / "voice.wav")]
 chain, last = [], "[0:v]"
 for n, (kicker, title, accent, t0, t1, sub) in enumerate(LOWER_THIRDS):
     png = TMP / f"lt{n}.png"
     lower_third(png, kicker, title, accent, sub)
     inputs += ["-loop", "1", "-t", str(TOTAL), "-i", str(png)]
-    k = n + 2
+    k = n + 3
     chain.append(f"[{k}:v]format=rgba,fade=t=in:st={t0}:d=0.4:alpha=1,fade=t=out:st={t1 - 0.4}:d=0.4:alpha=1[lt{n}]")
     chain.append(f"{last}[lt{n}]overlay=0:0:enable='between(t,{t0},{t1})'[v{n}]")
     last = f"[v{n}]"
 chain.append(f"{last}fade=t=in:st=0:d=0.5,fade=t=out:st={TOTAL - 0.8}:d=0.8[vout]")
-chain.append("[0:a]asplit=2[dlg][key]")
+ms = int(VOICE_AT * 1000)
+chain.append(f"[0:a]atrim=0:{SHOTS[0][1]},afade=t=out:st={SHOTS[0][1] - 0.5}:d=0.5,volume=0.6,apad[room]")
+chain.append(f"[2:a]aresample=48000,aformat=channel_layouts=stereo,adelay={ms}|{ms},apad,asplit=2[vox][key]")
+chain.append(f"[room][vox]amix=inputs=2:normalize=0:duration=first,atrim=0:{TOTAL}[dlg]")
 chain.append(f"[1:a]atrim=0:{TOTAL},volume=0.55[mus]")
 chain.append("[mus][key]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=350[ducked]")
 chain.append(f"[dlg][ducked]amix=inputs=2:normalize=0,afade=t=out:st={TOTAL - 1.0}:d=1.0,"
