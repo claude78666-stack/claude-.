@@ -6,7 +6,7 @@ Needs, per section in script.json: voice/<id>.wav (make_voice.py). Optional: gam
 the scene background instead of the drawn skyline, so real gameplay can be dropped in later.
 Sifa's facecam is lip-synced to the narration with Wav2Lip (WAV2LIP env var = path to a Wav2Lip checkout
 with checkpoints/wav2lip_gan.pth). The intro is ../sifa_intro_full_1080p.mp4 if it exists, else
-../sifa_intro_ai_1080p.mp4.
+../sifa_intro_ai_1080p.mp4. It ends on the "SIFA SI" sign-off, ../sifa_si_outro.mp4 (make_outro.py).
 """
 import json
 import math
@@ -208,6 +208,9 @@ def lipsync(section, voice):
 
 def render_section(num, section):
     sid = section["id"]
+    out = BUILD / f"section_{sid}.mp4"
+    if out.exists() and out.stat().st_mtime > (HERE / "voice" / f"{sid}.wav").stat().st_mtime:
+        return out  # delete build/section_<id>.mp4 to force a re-render
     voice = BUILD / f"vo_{sid}.wav"  # TTS reads fast; slow it a touch to a natural presenter pace
     run(["ffmpeg", "-v", "error", "-y", "-i", str(HERE / "voice" / f"{sid}.wav"), "-af", f"atempo={TEMPO}",
          str(voice)])
@@ -273,7 +276,6 @@ def render_section(num, section):
         f"[{voice_in}:a]aresample=48000,aformat=channel_layouts=stereo,adelay={int(LEAD * 1000)}|{int(LEAD * 1000)},"
         f"apad,atrim=0:{total}[aout]",
     ]
-    out = BUILD / f"section_{sid}.mp4"
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", ";".join(chain),
          "-map", "[vout]", "-map", "[aout]", "-t", f"{total:.3f}", "-r", str(FPS),
          "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-c:a", "pcm_s16le", str(out)])
@@ -319,7 +321,8 @@ def main():
         return
     intro = INTRO_DIR / "sifa_intro_full_1080p.mp4"
     intro = intro if intro.exists() else INTRO_DIR / "sifa_intro_ai_1080p.mp4"
-    parts = [normalise(intro, BUILD / "intro.mp4"), *parts, end_card()]
+    outro = normalise(INTRO_DIR / "sifa_si_outro.mp4", BUILD / "outro.mp4")  # "SIFA SI" sign-off (make_outro.py)
+    parts = [normalise(intro, BUILD / "intro.mp4"), *parts, end_card(), outro]
     (BUILD / "parts.txt").write_text("".join(f"file '{p}'\n" for p in parts))
     run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(BUILD / "parts.txt"),
          "-c", "copy", str(BUILD / "joined.mov")])
