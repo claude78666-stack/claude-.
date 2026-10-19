@@ -63,17 +63,50 @@ def seconds(sid):
         return LEAD + w.getnframes() / w.getframerate() / TEMPO + TAIL
 
 
+_dark = {}
+
+
+def dark_spans(name):
+    """Fades to black and dark title cards in a trailer (mostly-black frames), padded a little."""
+    if name not in _dark:
+        log = subprocess.run(["ffmpeg", "-nostats", "-i", str(SRC / f"{name}.mp4"), "-an", "-vf",
+                              "scale=480:-1,blackdetect=d=0.15:pix_th=0.12:pic_th=0.80", "-f", "null", "-"],
+                             capture_output=True, text=True).stderr
+        _dark[name] = [(float(a) - 0.2, float(b) + 0.2) for a, b in
+                       re.findall(r"black_start:([0-9.]+) black_end:([0-9.]+)", log)]
+    return _dark[name]
+
+
+def clean_pieces(name, start, length, min_piece=0.8):
+    """The shot as pieces that skip any dark span, extended forward so it still lasts `length`."""
+    pieces, t, need = [], start, length
+    for _ in range(50):
+        if need <= 0.05:
+            break
+        hit = next(((a, b) for a, b in dark_spans(name) if a < t + need and b > t), None)
+        if hit is None:
+            pieces.append((t, need))
+            break
+        if hit[0] - t >= min_piece:
+            pieces.append((t, hit[0] - t))
+            need -= hit[0] - t
+        t = max(t, hit[1])
+    return pieces or [(start, length)]
+
+
 def build(sid, shots, total, overlay):
     parts, t, i = [], 0.0, 0
     while t < total - 0.05:
         src, start, length = shots[i % len(shots)]
         length = min(length, total - t)
-        part = TMP / f"{sid}_{len(parts):02d}.mp4"
-        run(["ffmpeg", "-v", "error", "-y", "-ss", str(start), "-t", f"{length:.3f}",
-             "-i", str(SRC / f"{plan['sources'][src]}.mp4"), "-an",
-             "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1,format=yuv420p",
-             "-c:v", "libx264", "-crf", "16", "-preset", "veryfast", str(part)])
-        parts.append(part)
+        name = plan["sources"][src]
+        for p_start, p_len in clean_pieces(name, start, length):
+            part = TMP / f"{sid}_{len(parts):02d}.mp4"
+            run(["ffmpeg", "-v", "error", "-y", "-ss", f"{p_start:.3f}", "-t", f"{p_len:.3f}",
+                 "-i", str(SRC / f"{name}.mp4"), "-an",
+                 "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},setsar=1,format=yuv420p",
+                 "-c:v", "libx264", "-crf", "16", "-preset", "veryfast", str(part)])
+            parts.append(part)
         t += length
         i += 1
     (TMP / f"{sid}.txt").write_text("".join(f"file '{p}'\n" for p in parts))

@@ -30,6 +30,7 @@ BUILD.mkdir(parents=True, exist_ok=True)
 W, H, FPS, LEAD, TAIL = v1.W, v1.H, v1.FPS, v1.LEAD, v1.TAIL
 PURPLE, CYAN, RED, YELLOW = (170, 80, 255), (40, 220, 255), (230, 40, 40), (255, 214, 0)
 OUT = HERE / "sifa_eday_explainer_v2_1080p.mp4"
+MASTER = BUILD / "sifa_eday_explainer_v2_master.mp4"   # full quality, not in git
 CUT_H = 470                     # cut-out Sifa height on screen
 CUT_SRC = HERE / "sifa_cutout.png"
 SUBSCRIBE_IN = {"05_movement", "12b_tips"}
@@ -48,6 +49,24 @@ def ease_back(x):
 
 
 # ---------------------------------------------------------------- Sifa cut-out
+def clean_matte(a):
+    """Keep only Sifa (largest blob: no specks or chair bits), tighten the hair fringe a little, and fade her
+    out over the bottom so there's no hard crop line across her arms."""
+    from scipy import ndimage
+    m = np.asarray(a).astype(float) / 255
+    lab, n = ndimage.label(m > 0.35)
+    if n > 1:
+        sizes = ndimage.sum(np.ones_like(m), lab, range(1, n + 1))
+        keep = ndimage.binary_dilation(lab == 1 + int(np.argmax(sizes)), iterations=3)
+        m = m * keep
+    m = ndimage.grey_erosion(m, size=(3, 3))
+    m = ndimage.gaussian_filter(m, 1.2)
+    h = m.shape[0]
+    fade = np.clip((h - 1 - np.arange(h)) / 120.0, 0, 1) ** 1.5
+    m = m * fade[:, None]
+    return Image.fromarray((np.clip(m, 0, 1) * 255).astype(np.uint8), "L")
+
+
 def cutout_assets():
     """RGB still for Wav2Lip, the alpha mask, and the glow/shadow layer (all static: only her mouth moves)."""
     rgba = Image.open(CUT_SRC).convert("RGBA")
@@ -55,8 +74,8 @@ def cutout_assets():
     bg = Image.new("RGB", rgba.size, (20, 16, 30))
     bg.paste(rgba, mask=rgba.split()[3])
     Image.open(ROOT / "ai" / "shot1_last_1080.png").convert("RGB").crop((680, 150, 1380, 790)).save(rgb)
-    rgba.split()[3].save(alpha)
-    a = rgba.split()[3]
+    a = clean_matte(rgba.split()[3])
+    a.save(alpha)
     layer = Image.new("RGBA", rgba.size, (0, 0, 0, 0))
     shadow = Image.new("RGBA", rgba.size, (0, 0, 0, 0))
     shadow.putalpha(a.filter(ImageFilter.GaussianBlur(16)).point(lambda v: int(v * 0.55)))
@@ -354,8 +373,8 @@ def render_section(num, section, face_src, alpha_png):
         f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},"
         f"zoompan=z='1+{punch}':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s={W}x{H}:fps={FPS},format=yuva420p[bg]",
         f"[1:v]fps={FPS},tpad=start_duration={LEAD}:start_mode=clone:stop_mode=clone:stop_duration={TAIL + 1},"
-        f"scale={cw}:{CUT_H},format=rgba[f]",
-        f"[2:v]scale={cw}:{CUT_H},format=gray[m]",
+        f"scale={cw}:{CUT_H}:flags=lanczos,unsharp=5:5:0.7:5:5:0,format=rgba[f]",
+        f"[2:v]scale={cw}:{CUT_H}:flags=lanczos,format=gray[m]",
         "[f][m]alphamerge[fa]",
         f"[3:v]scale={cw}:{CUT_H},format=rgba[gl]",
         # a gentle breathing drift so the still never looks frozen
@@ -468,8 +487,12 @@ def main():
              "[mus][key]sidechaincompress=threshold=0.025:ratio=10:attack=15:release=400[duck];"
              "[mix][duck]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.79:level=0:attack=2:release=60[a]")
     run(["ffmpeg", "-v", "error", "-y", "-i", str(BUILD / "joined.mov"), "-i", str(music), "-filter_complex", chain,
-         "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-b:v", "1250k", "-preset", "slow", "-maxrate", "1500k",
-         "-bufsize", "3000k", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-c:a", "aac", "-b:a", "128k", str(OUT)])
+         "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p",
+         "-movflags", "+faststart", "-c:a", "aac", "-b:a", "192k", str(MASTER)])
+    # the copy kept in git has to stay under GitHub's 100 MB file limit
+    run(["ffmpeg", "-v", "error", "-y", "-i", str(MASTER), "-c:v", "libx264", "-b:v", "1250k", "-preset", "slow",
+         "-maxrate", "1500k", "-bufsize", "3000k", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+         "-c:a", "aac", "-b:a", "128k", str(OUT)])
     print("wrote", OUT, f"{total / 60:.1f} min")
 
 
