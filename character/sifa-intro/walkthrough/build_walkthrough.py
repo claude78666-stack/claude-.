@@ -67,7 +67,7 @@ def normalise(src, out, start=None, end=None, overlay=None):
         cmd += ["-loop", "1", "-i", str(BUILD / "watermark.png"), "-loop", "1", "-i", str(overlay)]
         graph = (f"[0:v]{vf}[g];[g][1:v]overlay=0:0:shortest=1[w];"
                  "[2:v]format=rgba,fade=t=in:st=0.5:d=0.4:alpha=1,fade=t=out:st=5:d=0.5:alpha=1[c];"
-                 "[w][c]overlay=0:0:enable='lt(t,5.6)',format=yuv420p[v]")
+                 "[w][c]overlay=0:0:shortest=1:enable='lt(t,5.6)',format=yuv420p[v]")
         cmd += ["-filter_complex", graph, "-map", "[v]", "-map", "0:a?"]
     else:
         cmd += ["-vf", vf + ",format=yuv420p"]
