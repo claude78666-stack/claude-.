@@ -36,7 +36,7 @@ CLIPS = {   # the five gestures plan_gestures.py schedules; each lasts ~1.5 s an
 
 def main():
     # HF_TOKEN (a Hugging Face read token in the environment settings) gives the free ZeroGPU quota
-    client = Client("mcp-tools/wan-2-2-first-last-frame", hf_token=os.environ.get("HF_TOKEN"))
+    client = Client("mcp-tools/wan-2-2-first-last-frame", token=os.environ.get("HF_TOKEN"))
     for name in sys.argv[1:] or CLIPS:
         out = OUT / f"{name}.mp4"
         if out.exists():
