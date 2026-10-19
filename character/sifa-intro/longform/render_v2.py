@@ -367,7 +367,8 @@ def render_section(num, section, face_src, alpha_png):
     face = lipsync(sid, voice, face_src)
     live = face.name.startswith("face_live_")
     if live:   # moving Sifa: a matte for every frame, cut from the lip-synced video itself
-        alpha_png = sifa_motion.mask_video(face, BUILD / f"mask_{sid}.mkv", clean_matte)
+        alpha_png = sifa_motion.mask_video(face, BUILD / f"mask_{sid}.mkv", clean_matte,
+                                             Image.open(alpha_png))
 
     punch = "+".join(f"0.06*exp(-pow(on/{FPS}-{t0 + 0.05:.2f},2)/0.03)" for t0 in facts) or "0"
     cw = int(700 * CUT_H / 640)

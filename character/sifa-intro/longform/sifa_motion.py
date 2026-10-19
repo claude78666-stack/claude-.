@@ -22,6 +22,7 @@ SEG_MODEL = BUILD / "selfie_multiclass_256x256.tflite"
 SEG_URL = ("https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/"
            "float32/latest/selfie_multiclass_256x256.tflite")
 FPS = 24
+HEAD_Y = 300   # neck line in cut_rgb.png: above it the head moves, below it the body stays put
 
 
 def run(cmd):
@@ -50,10 +51,17 @@ def frames(path):
     p.wait()
 
 
-def mask_video(src, out, clean):
-    """Per-frame matte of Sifa (hair, face, body, clothes), cleaned like the still one, as lossless gray video."""
+def mask_video(src, out, clean, still):
+    """Per-frame matte of Sifa as lossless gray video. Only her head moves in the LivePortrait loop, so the body
+    keeps the clean still matte (`still`, no chair) and the per-frame matte is used around the head only, and
+    only inside a slightly widened copy of the still outline, so the purple chair back never comes along."""
     if out.exists():
         return out
+    from scipy import ndimage
+    ref = np.asarray(still).astype(float) / 255
+    near = ndimage.gaussian_filter(ndimage.grey_dilation(ref, size=(25, 25)), 3)
+    h = ref.shape[0]
+    head = np.clip((HEAD_Y + 20 - np.arange(h)) / 40.0, 0, 1)[:, None]   # 1 above the neck, 0 below
     import mediapipe as mp
     from mediapipe.tasks.python import vision, BaseOptions
     if not SEG_MODEL.exists():
@@ -67,7 +75,9 @@ def mask_video(src, out, clean):
             p = sum(conf[k].numpy_view() for k in (1, 2, 3, 4)) + 0.6 * conf[5].numpy_view()
             p = np.clip((np.squeeze(p) - 0.45) / 0.25, 0, 1)
             from PIL import Image
-            m = np.asarray(clean(Image.fromarray((p * 255).astype(np.uint8), "L")))
+            live = np.asarray(clean(Image.fromarray((p * 255).astype(np.uint8), "L"))).astype(float) / 255
+            m = head * np.minimum(live, near) + (1 - head) * ref
+            m = (np.clip(m, 0, 1) * 255).astype(np.uint8)
             if enc is None:
                 h, w = m.shape
                 enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "gray",
