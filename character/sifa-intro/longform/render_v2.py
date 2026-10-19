@@ -386,9 +386,12 @@ def render_section(num, section, face_src, alpha_png):
           [f"[2:v]scale={cw}:{CUT_H}:flags=lanczos,format=gray[m]",
            f"[3:v]scale={cw}:{CUT_H},format=rgba[gl]"]),
         "[f][m]alphamerge[fa]",
-        # the still gets a gentle breathing drift so it never looks frozen; the live one moves by itself
-        *([f"[bg][gl]overlay=x={fx + 10}:y={fy + 6}:shortest=0[s1]",
-           f"[s1][fa]overlay=x={fx}:y={fy}:shortest=0[s2]"] if live else
+        # the still gets a gentle drift so it never looks frozen; the live one (head and face already move)
+        # also breathes: chest and shoulders rise a little every ~4.5 s, with a slow sway, feet of the frame fixed
+        *([f"[fa]scale=w={cw}:h='{CUT_H}*(1+0.009*sin(2*PI*t/4.5))':eval=frame[fb]",
+           f"[gl]scale=w={cw}:h='{CUT_H}*(1+0.009*sin(2*PI*t/4.5))':eval=frame[gb]",
+           f"[bg][gb]overlay=x='{fx + 10}+3*sin(t*0.45)':y='H-h+6':shortest=0[s1]",
+           f"[s1][fb]overlay=x='{fx}+3*sin(t*0.45)':y='H-h':shortest=0[s2]"] if live else
           [f"[bg][gl]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s1]",
            f"[s1][fa]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s2]"]),
         f"[s2][4:v]overlay=0:0:format=auto,fade=t=in:st=0:d=0.2,fade=t=out:st={total - 0.2}:d=0.2,format=yuv420p[v]",
