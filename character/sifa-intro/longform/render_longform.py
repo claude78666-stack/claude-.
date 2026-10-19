@@ -319,8 +319,9 @@ def main():
         parts.append(render_section(num, s))
     if wanted:
         return
-    intro = INTRO_DIR / "sifa_intro_full_1080p.mp4"
-    intro = intro if intro.exists() else INTRO_DIR / "sifa_intro_ai_1080p.mp4"
+    # first intro that exists: Veo talking shots, lip-synced intro, original edit
+    intro = next(INTRO_DIR / n for n in ("sifa_intro_full_1080p.mp4", "sifa_intro_talking_1080p.mp4",
+                                         "sifa_intro_ai_1080p.mp4") if (INTRO_DIR / n).exists())
     outro = normalise(INTRO_DIR / "sifa_si_outro.mp4", BUILD / "outro.mp4")  # "SIFA SI" sign-off (make_outro.py)
     parts = [normalise(intro, BUILD / "intro.mp4"), *parts, end_card(), outro]
     (BUILD / "parts.txt").write_text("".join(f"file '{p}'\n" for p in parts))

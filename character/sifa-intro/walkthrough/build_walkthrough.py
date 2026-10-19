@@ -81,8 +81,9 @@ clips = sorted(p for p in (HERE / "clips").glob("*") if p.suffix.lower() in (".m
 if not clips:
     sys.exit("No gameplay in clips/ yet. Record your own E-Day gameplay and drop the files there.")
 watermark_png(BUILD / "watermark.png")
-intro = INTRO_DIR / "sifa_intro_full_1080p.mp4"
-intro = intro if intro.exists() else INTRO_DIR / "sifa_intro_ai_1080p.mp4"
+# first intro that exists: Veo talking shots, lip-synced intro, original edit
+intro = next(INTRO_DIR / n for n in ("sifa_intro_full_1080p.mp4", "sifa_intro_talking_1080p.mp4",
+                                     "sifa_intro_ai_1080p.mp4") if (INTRO_DIR / n).exists())
 parts = [normalise(intro, BUILD / "intro.mp4")]
 for i, clip in enumerate(clips, 1):
     title = re.sub(r"^\d+[\s._-]*", "", clip.stem) or f"Part {i}"
