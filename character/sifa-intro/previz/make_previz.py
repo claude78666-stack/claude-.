@@ -32,7 +32,7 @@ D_LEN = 5.0
 A0, B0, C0, D0 = 0.0, A_LEN, A_LEN + B_LEN, A_LEN + B_LEN + C_LEN
 TOTAL = D0 + D_LEN
 VOICE_IN_B, LOOK_IN_B = 1.4, 8.6  # voice.wav and "let's take a look" inside the room shot
-MONTAGE = [("GD", 84, 2.0), ("GR", 72, 1.9), ("MP", 36, 1.9), ("GD", 180, 2.0), ("LT", 64, 2.0)]
+MONTAGE = [("GD", 84, 2.0), ("GR", 72, 1.9), ("MP", 36, 1.9), ("GD", 180, 2.0), ("GD", 300, 2.0)]
 
 
 def run(cmd):
