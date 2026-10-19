@@ -229,7 +229,7 @@ def render_section(num, section):
     if gameplay.exists():
         inputs = ["-stream_loop", "-1", "-i", str(gameplay)]
         chain = [f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={FPS},"
-                 "eq=brightness=-0.12:saturation=0.9,format=gbrp[bg]"]
+                 "eq=brightness=-0.02:saturation=1.05,format=gbrp[bg]"]
     else:
         inputs = ["-loop", "1", "-i", str(bg)]
         chain = [f"[0:v]fps={FPS},crop={W}:{H}:x='60+55*sin(t/11)':y='34+30*cos(t/13)',format=gbrp[bg]"]
@@ -263,11 +263,14 @@ def render_section(num, section):
         f"[s4][hd]overlay=x='if(lt(t,{STING - 0.2}),-1200,min(110,110-600*({STING + 0.15}-t)))':y=150[s5]",
     ]
     last = "[s5]"
+    # one fact at a time, as a banner low on the left, so the game visuals stay in view
     for i, t0 in enumerate(times):
         k = first_card + i
-        chain.append(f"[{k}:v]format=rgba,fade=t=in:st={t0}:d=0.35:alpha=1[c{i}]")
+        t1 = min(times[i + 1] if i + 1 < len(times) else total, t0 + 6.0, total - 0.3)
+        chain.append(f"[{k}:v]format=rgba,fade=t=in:st={t0}:d=0.35:alpha=1,"
+                     f"fade=t=out:st={t1 - 0.3:.2f}:d=0.3:alpha=1[c{i}]")
         chain.append(f"{last}[c{i}]overlay=x='if(lt(t,{t0}),-1100,min(110,110-1800*({t0 + 0.35}-t)))':"
-                     f"y={340 + i * 118}[v{i}]")
+                     f"y=880:enable='between(t,{t0},{t1:.2f})'[v{i}]")
         last = f"[v{i}]"
     chain += [
         f"[8:v]format=rgba,fade=t=out:st={STING - 0.35}:d=0.35:alpha=1[st]",
