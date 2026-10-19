@@ -32,6 +32,8 @@ D_LEN = 5.0
 A0, B0, C0, D0 = 0.0, A_LEN, A_LEN + B_LEN, A_LEN + B_LEN + C_LEN
 TOTAL = D0 + D_LEN
 VOICE_IN_B, LOOK_IN_B = 1.4, 8.6  # voice.wav and "let's take a look" inside the room shot
+CUT = 520         # cut-out Sifa size over the gameplay
+PUNCH_AT = 10.0   # seconds into the gameplay part for the punch-in and the SLIDE! callout
 MONTAGE = [("GD", 84, 2.0), ("GR", 72, 1.9), ("MP", 36, 1.9), ("GD", 180, 2.0), ("GD", 300, 2.0)]
 
 
@@ -94,7 +96,7 @@ cap_font = ImageFont.truetype(FONT.format("Black"), 64)
 def draw_caption(d, t):
     for page in PAGES:
         if page[0][1] <= t < page[-1][2] + 0.15:
-            cx = 1150 if C0 <= t < D0 else W // 2  # stay clear of the facecam in the gameplay part
+            cx = 1180 if C0 <= t < D0 else W // 2  # stay clear of the facecam in the gameplay part
             texts = [w[0].upper() for w in page]
             widths = [d.textlength(x + " ", font=cap_font) for x in texts]
             x = cx - sum(widths) / 2
@@ -143,12 +145,58 @@ def frame(i):
         d.rectangle([x, 740, x + 10, 870], fill=(*PURPLE, 255))
         d.text((x + 34, 795), "SIFA", font=lt_big, fill=(255, 255, 255, 255), anchor="ls")
         d.text((x + 34, 840), "THE FIRST SI AGENT", font=lt_small, fill=(*CYAN, 255), anchor="lm")
+    if C0 - 0.35 <= t < C0 + 1.1:  # slanted panel sweeps in, holds the chapter title, sweeps out
+        k = t - C0 + 0.35
+        if k < 0.35:
+            off = -W - 500 + (W + 500) * ease_back(k / 0.35)
+        elif k < 0.95:
+            off = 0
+        else:
+            off = (W + 600) * ((k - 0.95) / 0.5) ** 2
+        for n, col in enumerate((PURPLE, RED)):
+            x0 = off - n * 60
+            d.polygon([(x0 - 300, 0), (x0 + W + 300, 0), (x0 + W, H), (x0 - 600, H)], fill=(*col, 255))
+        if 0.3 < k < 1.0:
+            d.text((W // 2 + off, H // 2 - 95), "06", font=title_small, fill=(*YELLOW, 255), anchor="mm")
+            d.text((W // 2 + off, H // 2 + 10), "ALL-NEW MOVEMENT", font=title_big, fill=(255, 255, 255, 255),
+                   anchor="mm", stroke_width=6, stroke_fill=(0, 0, 0, 255))
+    if C0 + 0.8 <= t < D0:  # name tag above the cut-out
+        d.rounded_rectangle([40, H - 470, 230, H - 428], 10, fill=(8, 6, 18, 210))
+        d.ellipse([56, H - 457, 70, H - 443], fill=(255, 60, 60, 255))
+        d.text((82, H - 449), "SIFA  LIVE", font=chap_font, fill=(255, 255, 255, 255), anchor="lm")
+    if C0 + PUNCH_AT - 0.4 <= t < C0 + PUNCH_AT + 2.0:  # callout ring + sticker on the slide
+        k = ease_back((t - C0 - PUNCH_AT + 0.4) / 0.3)
+        cx, cy, r = 760, 640, int(150 * k)
+        if r > 4:
+            d.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(*YELLOW, 255), width=9)
+        sticker = Image.new("RGBA", (360, 130), (0, 0, 0, 0))
+        sd = ImageDraw.Draw(sticker)
+        sd.rounded_rectangle([0, 0, 359, 129], 24, fill=(*YELLOW, 255))
+        sd.text((180, 65), "SLIDE!", font=title_small, fill=(10, 10, 10, 255), anchor="mm")
+        sticker = sticker.rotate(-8, expand=True, resample=Image.BICUBIC)
+        sk = max(0.05, ease_back((t - C0 - PUNCH_AT) / 0.3))
+        sticker = sticker.resize((max(1, int(sticker.width * sk)), max(1, int(sticker.height * sk))))
+        img.alpha_composite(sticker, (cx + 120, cy - 260))
+        d.line([(cx + 170, cy - 140), (cx + 90, cy - 90)], fill=(*YELLOW, 255), width=10)
+    if C0 + 12.6 <= t < C0 + 15.6:  # subscribe reminder: slides in, gets "clicked"
+        k = ease_back((t - C0 - 12.6) / 0.35)
+        clicked = t >= C0 + 13.8
+        x = int(W + 20 - 470 * k)
+        d.rounded_rectangle([x, 150, x + 420, 230], 40, fill=((90, 90, 100, 245) if clicked else (*RED, 255)))
+        d.text((x + 210, 190), "SUBSCRIBED" if clicked else "SUBSCRIBE", font=badge_font,
+               fill=(255, 255, 255, 255), anchor="mm")
+        if C0 + 13.3 <= t < C0 + 14.3:  # cursor moves in and clicks
+            ck = min(1, (t - C0 - 13.3) / 0.5)
+            px, py = int(x + 330 + 160 * (1 - ck)), int(210 + 120 * (1 - ck))
+            d.polygon([(px, py), (px, py + 44), (px + 12, py + 33), (px + 22, py + 52), (px + 30, py + 48),
+                       (px + 20, py + 30), (px + 36, py + 30)], fill=(255, 255, 255, 255), outline=(0, 0, 0, 255))
     if C0 <= t < D0:  # chapter tag, progress bar and the feature badge in the gameplay part
-        d.rounded_rectangle([60, 40, 520, 96], 12, fill=(8, 6, 18, 200))
-        d.text((84, 68), "06  ALL-NEW MOVEMENT", font=chap_font, fill=(255, 255, 255, 255), anchor="lm")
+        if t >= C0 + 1.1:
+            d.rounded_rectangle([60, 40, 520, 96], 12, fill=(8, 6, 18, 200))
+            d.text((84, 68), "06  ALL-NEW MOVEMENT", font=chap_font, fill=(255, 255, 255, 255), anchor="lm")
         d.rectangle([0, 0, int(W * (t - C0) / C_LEN), 8], fill=(*YELLOW, 255))
-        if C0 + 6.0 <= t < C0 + 12.5:
-            k = ease_back((t - C0 - 6.0) / 0.35)
+        if C0 + 4.0 <= t < C0 + 9.0:
+            k = ease_back((t - C0 - 4.0) / 0.35)
             badge = Image.new("RGBA", (980, 120), (0, 0, 0, 0))
             bd = ImageDraw.Draw(badge)
             bd.rounded_rectangle([0, 0, 979, 119], 26, fill=(*CYAN, 240))
@@ -165,6 +213,28 @@ def render_gfx():
         p = GFX / f"{i:05d}.png"
         if not p.exists():
             frame(i).save(p)
+
+
+def glow_frames():
+    """Neon purple rim glow and a soft shadow around the cut-out, so she sits on the gameplay like a streamer."""
+    from PIL import ImageFilter
+    out = B / "face_glow"
+    out.mkdir(exist_ok=True)
+    for src in sorted((B / "face").glob("face_*.png")):
+        dst = out / src.name
+        if dst.exists():
+            continue
+        im = Image.open(src).convert("RGBA")
+        a = im.split()[3]
+        glow = Image.new("RGBA", im.size, (*PURPLE, 0))
+        glow.putalpha(a.filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(10)).point(lambda v: int(v * 0.85)))
+        shadow = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        shadow.putalpha(a.filter(ImageFilter.GaussianBlur(18)).point(lambda v: int(v * 0.6)))
+        frame_ = Image.new("RGBA", im.size, (0, 0, 0, 0))
+        frame_.alpha_composite(shadow, (14, 10))
+        frame_.alpha_composite(glow)
+        frame_.alpha_composite(im)
+        frame_.save(dst)
 
 
 def base_video():
@@ -185,16 +255,15 @@ def base_video():
                 f"x='if(gte(on,{push0}),1420-iw/zoom/2,iw/2-iw/zoom/2)':y='if(gte(on,{push0}),430-ih/zoom/2,ih/2-ih/zoom/2)'"
                 f":d=1:s={W}x{H}:fps={FPS},format=yuv420p", "-frames:v", str(n_b), "-c:v", "libx264", "-crf", "17", str(p)])
     parts.append(p)
-    # gameplay with the facecam bottom left
-    fa = LONG / "build"
+    # gameplay with the cut-out Sifa bottom left (no room behind her) and a punch-in on the action
+    glow_frames()
     p = B / "c.mp4"
+    punch = f"1+0.10*exp(-pow(on/{FPS}-{PUNCH_AT},2)/0.15)"
     run(["ffmpeg", "-v", "error", "-y", "-ss", "84", "-t", str(C_LEN), "-i", str(OV["GD"]),
-         "-stream_loop", "-1", "-framerate", str(FPS // 2), "-pattern_type", "glob", "-i", str(B / "face" / "face_*.png"),
-         "-loop", "1", "-i", str(fa / "face_mask.png"), "-loop", "1", "-i", str(fa / "face_frame.png"),
-         "-loop", "1", "-i", str(fa / "face_tag.png"),
-         "-filter_complex", f"[0:v]{vf}[g];[1:v]fps={FPS},scale=360:360,format=rgba[fc];[2:v]format=gray[m];[fc][m]alphamerge[f];"
-                            f"[g][f]overlay=60:{H - 430}:shortest=1[s1];[s1][3:v]overlay=48:{H - 442}[s2];"
-                            f"[s2][4:v]overlay=76:{H - 494},format=yuv420p[v]",
+         "-stream_loop", "-1", "-framerate", str(FPS // 2), "-pattern_type", "glob", "-i", str(B / "face_glow" / "*.png"),
+         "-filter_complex", f"[0:v]{vf},zoompan=z='{punch}':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s={W}x{H}:fps={FPS}[g];"
+                            f"[1:v]fps={FPS},scale={CUT}:{CUT},format=rgba[f];"
+                            f"[g][f]overlay=10:{H - CUT + 60}:shortest=1,format=yuv420p[v]",
          "-map", "[v]", "-t", str(C_LEN), "-an", "-c:v", "libx264", "-crf", "17", str(p)])
     parts.append(p)
     p = B / "d.mp4"

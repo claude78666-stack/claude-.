@@ -312,7 +312,7 @@ else:
     talk_gesture("R", 2.8, "point"); rest("R", 4.3)
     yes_pump(4.8, 1.4); rest("R", 6.7)
     talk_gesture("R", 7.0, "both"); rest("R", 8.6); rest("L", 8.6)
-    cam_loc, cam_target, lens = (0.0, -1.55, 1.22), (0.0, 0.0, 1.08), 45
+    cam_loc, cam_target, lens = (0.0, -1.5, 1.2), (0.0, 0.0, 1.12), 40
 
 for o in bpy.data.objects:
     if o.animation_data and o.animation_data.action:
@@ -351,6 +351,20 @@ def area(name, loc, rot, color, energy, size):
 area("Key", (-0.9, -1.8, 1.9), (D(55), 0, D(-25)), (1, 0.92, 0.88), 140, 1.2)
 area("RimPurple", (-1.2, 1.0, 2.2), (D(-50), D(-30), 0), (0.7, 0.3, 1), 220, 1.0)
 area("FillCyan", (1.6, -0.6, 1.4), (D(70), 0, D(80)), (0.2, 0.8, 1), 90, 1.0)
+if SHOT == "face":  # cut-out: only Sifa, no room, transparent background, for overlaying on gameplay
+    keep = set()
+    def mark(o):
+        keep.add(o.name)
+        for c in o.children:
+            mark(c)
+    mark(pelvis)
+    for o in bpy.data.objects:
+        if o.type in ("MESH", "CURVE", "FONT") and o.name not in keep:
+            o.hide_render = True
+    scene.render.film_transparent = True
+    scene.render.image_settings.color_mode = "RGBA"
+    scene.render.resolution_x, scene.render.resolution_y = 720, 720
+
 import os
 if os.environ.get("FRAMES"):  # test stills only, e.g. FRAMES=1,60,120
     for fr in map(int, os.environ["FRAMES"].split(",")):
