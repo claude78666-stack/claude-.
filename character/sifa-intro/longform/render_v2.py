@@ -5,7 +5,7 @@ Run: WAV2LIP=/path/to/Wav2Lip python3 render_v2.py [section_id ...]
 Builds on render_longform.py (same script, narration and gameplay cuts) and changes the presentation:
   - cold open: fast gameplay montage, slam-in title and Sifa's hook line, before the talking intro
   - Sifa is cut out of her room (sifa_cutout.png, no wallpaper) and sits over the gameplay bottom left,
-    waist-up, lip-synced, with a neon rim glow, like a streamer
+    waist-up, lip-synced, with a faint soft shadow, like a streamer
   - every section opens with a slanted chapter wipe; a chapter tag and progress bar stay on screen
   - facts pop in as badges with a punch-in zoom on the gameplay and a pop sound
   - word-by-word yellow captions follow her voice, pauses included
@@ -78,11 +78,9 @@ def cutout_assets():
     a.save(alpha)
     layer = Image.new("RGBA", rgba.size, (0, 0, 0, 0))
     shadow = Image.new("RGBA", rgba.size, (0, 0, 0, 0))
-    shadow.putalpha(a.filter(ImageFilter.GaussianBlur(16)).point(lambda v: int(v * 0.55)))
-    glow = Image.new("RGBA", rgba.size, (*PURPLE, 0))
-    glow.putalpha(a.filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(9)).point(lambda v: int(v * 0.9)))
-    layer.alpha_composite(shadow, (12, 8))
-    layer.alpha_composite(glow)
+    # no coloured glow, just a faint soft shadow so she sits on the footage naturally
+    shadow.putalpha(a.filter(ImageFilter.GaussianBlur(18)).point(lambda v: int(v * 0.35)))
+    layer.alpha_composite(shadow, (10, 6))
     layer.save(BUILD / "cut_glow.png")
     return rgb, alpha
 
