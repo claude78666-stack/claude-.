@@ -47,3 +47,18 @@ inspection by a reviewer that did not build it → findings log with a dispositi
 ## Review rounds
 
 Up to 2 inspection rounds; unresolved findings are reported to the user, not forced.
+
+## Findings log
+
+### Round 1 (independent reviewer, on the first full render)
+
+| # | Severity | Criterion | Finding | Disposition |
+|---|---|---|---|---|
+| 1 | blocking | 7 | Audio clipped at section seams / whooshes (true peak +1.0 dBTP) | Fixed: `alimiter` after loudnorm (limit 0.79) |
+| 2 | blocking | 5 | Captions drifted up to ~1.5 s (proportional timing) | Fixed: words aligned to the voice with local faster-whisper (`small.en`), numbers expanded to words before matching |
+| 3 | minor | 6 | Subscribe pill sat on the game's ammo HUD | Fixed: moved down to y 270–350 |
+| 4 | minor | 2 | Slam-in title ran off both edges for ~0.15 s | Fixed: start scale 1.06 instead of 1.6 |
+| 5 | minor | 4 | Some badges early/late vs the words | Fixed: badges pop on the aligned time of their keyword |
+| 6 | minor | 1/5 | Trailer title cards, ESRB card and black fades show through in a few cuts | Open: needs re-cutting `cuts.json`, reported to the user |
+| 7 | minor | 9 | No footage credit in the cold open | Fixed: credit added |
+| 8 | note | 3 | Chapters numbered 01–15 while ids say 02b/13 | No change: numbering is intended |

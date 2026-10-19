@@ -11,7 +11,10 @@ Builds on render_longform.py (same script, narration and gameplay cuts) and chan
   - word-by-word yellow captions follow her voice, pauses included
   - subscribe reminders that get "clicked"
 """
+import difflib
+import json
 import math
+import re
 import subprocess
 import sys
 import wave
@@ -98,8 +101,91 @@ def speech_segments(path, gap=0.22):
     return segs
 
 
+def _norm(w):
+    return re.sub(r"[^a-z0-9]", "", w.lower())
+
+
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen " \
+       "seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+
+
+def spoken(tok):
+    """Whisper writes numbers as digits ("9", ".5", "90", "%", "80s", "360"); the script spells them out."""
+    t = tok.lower().rstrip(",.!?;:")
+    if t == ".5":
+        return ["and", "a", "half"]
+    t = t.lstrip(".")
+    if t == "%":
+        return ["percent"]
+    plural = t.endswith("s") and t[:-1].isdigit()
+    t = t.rstrip("s") if plural else t
+    if not t.isdigit():
+        return [tok]
+    n, out = int(t), []
+    if n >= 1000:                          # years: "2026" is said "twenty twenty-six"
+        return spoken(str(n // 100)) + spoken(f"{n % 100}{'s' if plural else ''}")
+    if n >= 100:
+        out, n = [ONES[n // 100]], n % 100   # "360" is said "three sixty"
+    if n >= 20:
+        out += [TENS[n // 10]] + ([ONES[n % 10]] if n % 10 else [])
+    elif n or not out:
+        out.append(ONES[n])
+    if plural:
+        out[-1] = out[-1][:-1] + "ies" if out[-1].endswith("y") else out[-1] + "s"
+    return out
+
+
+def whisper_words(voice):
+    """Word timestamps of what she actually says (faster-whisper, local, cached next to the build)."""
+    cache = BUILD / f"align_{Path(voice).stem}.json"
+    if cache.exists():
+        return json.loads(cache.read_text())
+    from faster_whisper import WhisperModel
+    audio = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(voice), "-ac", "1", "-ar", "16000",
+                                          "-f", "s16le", "-"], capture_output=True, check=True).stdout, "<i2")
+    model = WhisperModel("small.en", device="cpu", compute_type="int8")
+    segs, _ = model.transcribe(audio.astype(np.float32) / 32768, word_timestamps=True)
+    words = [(w.word.strip(), w.start, w.end) for seg in segs for w in seg.words]
+    cache.write_text(json.dumps(words))
+    return words
+
+
 def word_times(text, voice, offset):
-    """Spread the words over the spoken time only (pauses skipped), weighted by word length."""
+    """Script words timed by forced alignment to the transcript; words whisper heard differently
+    (numbers, names) are spread between their aligned neighbours."""
+    words = text.split()
+    heard = []
+    for w, a, b in whisper_words(voice):
+        parts = spoken(w)
+        step = (b - a) / len(parts)
+        heard += [(p, a + step * k, a + step * (k + 1)) for k, p in enumerate(parts)]
+    sm = difflib.SequenceMatcher(None, [_norm(w) for w in words], [_norm(h[0]) for h in heard], autojunk=False)
+    t = [None] * len(words)
+    for a, b, n in sm.get_matching_blocks():
+        for k in range(n):
+            t[a + k] = (heard[b + k][1], heard[b + k][2])
+    if not any(t):
+        return word_times_even(text, voice, offset)
+    end = heard[-1][2]
+    i = 0
+    while i < len(words):
+        if t[i] is None:
+            j = i
+            while j < len(words) and t[j] is None:
+                j += 1
+            a = t[i - 1][1] if i else 0.0
+            b = t[j][0] if j < len(words) else end
+            step = (b - a) / (j - i)
+            for k in range(i, j):
+                t[k] = (a + step * (k - i), a + step * (k - i + 1))
+            i = j
+        i += 1
+    return [(w, offset + a, offset + b) for w, (a, b) in zip(words, t)]
+
+
+def word_times_even(text, voice, offset):
+    """Fallback: spread the words over the spoken time only (pauses skipped), weighted by word length."""
     segs = speech_segments(voice)
     total = sum(b - a for a, b in segs)
     words = text.split()
@@ -195,12 +281,12 @@ def section_gfx(num, section, total, fact_times, cap_pages):
             k = ease_back((t - sub_at) / 0.35)
             clicked = t >= sub_at + 1.2
             x = int(W + 20 - 470 * k)
-            d.rounded_rectangle([x, 140, x + 420, 220], 40, fill=((90, 90, 100, 245) if clicked else (*RED, 255)))
-            d.text((x + 210, 180), "SUBSCRIBED" if clicked else "SUBSCRIBE", font=F_BADGE,
+            d.rounded_rectangle([x, 270, x + 420, 350], 40, fill=((90, 90, 100, 245) if clicked else (*RED, 255)))
+            d.text((x + 210, 310), "SUBSCRIBED" if clicked else "SUBSCRIBE", font=F_BADGE,
                    fill=(255, 255, 255, 255), anchor="mm")
             if sub_at + 0.7 <= t < sub_at + 1.7:
                 ck = min(1, (t - sub_at - 0.7) / 0.5)
-                px, py = int(x + 330 + 160 * (1 - ck)), int(200 + 120 * (1 - ck))
+                px, py = int(x + 330 + 160 * (1 - ck)), int(330 + 120 * (1 - ck))
                 d.polygon([(px, py), (px, py + 44), (px + 12, py + 33), (px + 22, py + 52), (px + 30, py + 48),
                            (px + 20, py + 30), (px + 36, py + 30)], fill=(255, 255, 255, 255), outline=(0, 0, 0, 255))
         draw_caption(d, t, cap_pages)
@@ -228,6 +314,23 @@ def sfx():
 
 
 # ---------------------------------------------------------------- one section
+def card_times(section, timed, dur):
+    """Each badge pops in when its keyword is spoken (aligned word times), in order, at least 1.2 s apart."""
+    norm = [_norm(w) for w, _, _ in timed]
+    times, last, pos = [], LEAD, 0
+    for i, card in enumerate(section["cards"]):
+        keys = [_norm(w) for w in card.split() if len(_norm(w)) > 3]
+        hit = next((k for k in range(pos, len(norm)) for key in keys if norm[k].startswith(key)), None)
+        if hit is None:
+            t = LEAD + 0.5 + (i + 0.5) * (dur - 1.5) / len(section["cards"])
+        else:
+            t, pos = timed[hit][1], hit + 1
+        t = min(max(t, last + 1.2), LEAD + dur - 0.5)
+        times.append(round(t, 2))
+        last = t
+    return times
+
+
 def render_section(num, section, face_src, alpha_png):
     sid = section["id"]
     out = BUILD / f"section_{sid}.mp4"
@@ -238,8 +341,9 @@ def render_section(num, section, face_src, alpha_png):
         run(["ffmpeg", "-v", "error", "-y", "-i", str(HERE / "voice" / f"{sid}.wav"), "-af", f"atempo={v1.TEMPO}", str(voice)])
     dur = v1.wav_seconds(voice)
     total = LEAD + dur + TAIL
-    facts = v1.card_times(section, dur)
-    caps = pages(word_times(section["text"], voice, LEAD))
+    timed = word_times(section["text"], voice, LEAD)
+    facts = card_times(section, timed, dur)
+    caps = pages(timed)
     gfx = section_gfx(num, section, total, facts, caps)
     face = lipsync(sid, voice, face_src)
 
@@ -314,9 +418,11 @@ def cold_open():
             half = ld.textlength(sub, font=F_SMALL) / 2 + 30
             ld.rectangle([900 - half, 215, 900 + half, 290], fill=(*RED, 255))
             ld.text((900, 252), sub, font=F_SMALL, fill=(255, 255, 255, 255), anchor="mm")
-            s = 1.6 - 0.6 * k
+            s = 1.06 - 0.06 * k
             layer = layer.resize((int(1800 * s), int(330 * s)))
             img.alpha_composite(layer, (int(W / 2 - layer.width / 2), int(420 - layer.height / 2)))
+        d.text((W - 70, H - 36), "Footage: Xbox / The Coalition", anchor="rm", font=font("Medium", 20),
+               fill=(255, 255, 255, 160))
         draw_caption(d, t, caps, cx=W // 2, y=930)
         img.save(gdir / f"{i:05d}.png", compress_level=1)
     cuts = np.cumsum([s[2] for s in shots])[:-1]
@@ -360,10 +466,10 @@ def main():
     ms = int(head * 1000)
     chain = (f"[0:a]asplit=2[mix][key];[1:a]volume=0.3,adelay={ms}|{ms},apad[mus];"
              "[mus][key]sidechaincompress=threshold=0.025:ratio=10:attack=15:release=400[duck];"
-             "[mix][duck]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
+             "[mix][duck]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.79:level=0:attack=2:release=60[a]")
     run(["ffmpeg", "-v", "error", "-y", "-i", str(BUILD / "joined.mov"), "-i", str(music), "-filter_complex", chain,
-         "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-crf", "27", "-preset", "slow", "-maxrate", "1500k",
-         "-bufsize", "3000k", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-c:a", "aac", "-b:a", "160k", str(OUT)])
+         "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-b:v", "1250k", "-preset", "slow", "-maxrate", "1500k",
+         "-bufsize", "3000k", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-c:a", "aac", "-b:a", "128k", str(OUT)])
     print("wrote", OUT, f"{total / 60:.1f} min")
 
 
