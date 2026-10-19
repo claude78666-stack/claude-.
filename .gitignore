@@ -9,3 +9,4 @@ character/sifa-intro/longform/official_video/
 character/sifa-intro/walkthrough/*_hq.mp4
 character/sifa-intro/walkthrough/build_ep*.log
 character/sifa-intro/previz/build/
+__pycache__/
