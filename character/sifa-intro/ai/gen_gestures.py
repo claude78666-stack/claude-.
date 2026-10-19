@@ -20,15 +20,16 @@ FRAME = ("https://raw.githubusercontent.com/claude78666-stack/claude-./ccr-30384
 LOOK = ("Photorealistic video. A young woman with long wavy blonde hair, black hoodie and headphones around her neck "
         "sits in a gaming chair and talks to the camera like a streamer. ")
 STEADY = " Gentle natural head movement and blinking, friendly expression. Static camera, no zoom, steady lighting."
-CLIPS = {
-    "rest":   "She keeps both hands relaxed on the armrests and talks calmly, small nods.",
-    "palm":   "While speaking she lifts her right hand slightly from the armrest, makes a small relaxed open-palm "
-              "gesture, then lowers it back to rest.",
-    "point":  "She briefly points with her right hand toward the side of the screen as if showing something, "
-              "then rests her hand again.",
-    "both":   "She lifts both hands a little and makes a short, natural explaining gesture, then puts them back on "
-              "the armrests.",
-    "nod":    "She nods and gives a small happy shrug of her shoulders, hands staying on the armrests.",
+CLIPS = {   # the five gestures plan_gestures.py schedules; each lasts ~1.5 s and returns to rest
+    "yes":   "On a strong point she raises her right hand to chest height, fingers loosely curled, and bobs it "
+             "up and down twice in a confident 'yes' rhythm while nodding, then lowers it back to the armrest.",
+    "palm":  "While speaking she lifts her right hand slightly from the armrest, makes a small relaxed open-palm "
+             "gesture, then lowers it back to rest.",
+    "point": "She briefly points with her right hand toward the side of the screen as if showing something, "
+             "then rests her hand again.",
+    "both":  "She lifts both hands a little and makes a short, open, natural explaining gesture, then puts them "
+             "back on the armrests.",
+    "count": "She raises her right hand and counts on her fingers as she talks, then lowers it to the armrest.",
 }
 
 

@@ -1,0 +1,167 @@
+{
+ "01_what": [
+  [
+   14.96,
+   "palm",
+   "Games"
+  ],
+  [
+   30.46,
+   "count",
+   "one,"
+  ]
+ ],
+ "02_when": [
+  [
+   11.6,
+   "palm",
+   "and"
+  ],
+  [
+   32.2,
+   "yes",
+   "finally"
+  ]
+ ],
+ "02b_lore": [
+  [
+   13.8,
+   "palm",
+   "and"
+  ],
+  [
+   35.06,
+   "yes",
+   "finally"
+  ]
+ ],
+ "03_squad": [
+  [
+   8.54,
+   "palm",
+   "and"
+  ],
+  [
+   26.94,
+   "both",
+   "all"
+  ]
+ ],
+ "04_campaign": [
+  [
+   10.72,
+   "palm",
+   "and"
+  ],
+  [
+   33.84,
+   "point",
+   "this"
+  ]
+ ],
+ "05_movement": [
+  [
+   7.9,
+   "palm",
+   "but"
+  ],
+  [
+   23.68,
+   "both",
+   "all"
+  ]
+ ],
+ "06_combat": [
+  [
+   6.9,
+   "palm",
+   "now"
+  ],
+  [
+   28.16,
+   "both",
+   "whole"
+  ]
+ ],
+ "07_enemies": [
+  [
+   7.96,
+   "palm",
+   "and"
+  ]
+ ],
+ "08_coop": [
+  [
+   4.14,
+   "point",
+   "this"
+  ],
+  [
+   19.24,
+   "yes",
+   "love"
+  ]
+ ],
+ "09_multiplayer": [
+  [
+   2.78,
+   "count",
+   "four"
+  ]
+ ],
+ "10_horde": [
+  [
+   8.12,
+   "count",
+   "three"
+  ],
+  [
+   25.02,
+   "yes",
+   "love"
+  ]
+ ],
+ "11_tech": [
+  [
+   10.6,
+   "palm",
+   "and"
+  ],
+  [
+   25.87,
+   "count",
+   "five"
+  ]
+ ],
+ "12_reception": [
+  [
+   11.46,
+   "palm",
+   "and"
+  ]
+ ],
+ "12b_tips": [
+  [
+   4.1,
+   "count",
+   "One:"
+  ],
+  [
+   22.52,
+   "count",
+   "Four:"
+  ]
+ ],
+ "13_verdict": [
+  [
+   14.64,
+   "palm",
+   "had."
+  ],
+  [
+   32.16,
+   "point",
+   "see"
+  ]
+ ]
+}
