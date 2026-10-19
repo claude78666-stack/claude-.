@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Short photoreal gesture clips of seated Sifa -> ai/gestures/<name>.mp4
 
-Run: python3 gen_gestures.py [name ...]
+Run: HF_TOKEN=... python3 gen_gestures.py [name ...]
 Wan 2.2 first-last-frame (free Hugging Face ZeroGPU Space, mcp-tools/wan-2-2-first-last-frame): every clip starts
 and ends on the same rest pose (sifa_seat_crop.png), so the clips chain into one seamless facecam loop with only
 small, occasional hand movement. Never Runway. render_v2.py lip-syncs and cuts her out of these clips.
 """
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -34,7 +35,8 @@ CLIPS = {   # the five gestures plan_gestures.py schedules; each lasts ~1.5 s an
 
 
 def main():
-    client = Client("mcp-tools/wan-2-2-first-last-frame")
+    # HF_TOKEN (a Hugging Face read token in the environment settings) gives the free ZeroGPU quota
+    client = Client("mcp-tools/wan-2-2-first-last-frame", hf_token=os.environ.get("HF_TOKEN"))
     for name in sys.argv[1:] or CLIPS:
         out = OUT / f"{name}.mp4"
         if out.exists():
