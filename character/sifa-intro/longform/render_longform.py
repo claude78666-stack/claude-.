@@ -28,7 +28,7 @@ W, H, FPS = 1920, 1080, 24
 FONT = "/usr/share/fonts/opentype/inter/Inter-{}.otf"
 PURPLE, CYAN, EMBER = (170, 80, 255), (40, 220, 255), (255, 120, 40)
 STING, LEAD, TAIL = 1.4, 1.3, 0.9  # title sting length, narration start, hold after narration
-FACE = 520                          # facecam size
+FACE = 360                          # facecam size (bottom left)
 TEMPO = 0.94                        # narration speed
 WAV2LIP = Path(os.environ.get("WAV2LIP", "/tmp/Wav2Lip"))
 
@@ -244,7 +244,7 @@ def render_section(num, section):
     voice_in = first_card + len(section["cards"])
     inputs += ["-i", str(voice)]
 
-    fx, fy = W - FACE - 90, H - FACE - 110
+    fx, fy = 60, H - FACE - 70
     chain += [
         "[1:v]format=gbrp[emb]",
         "[bg][emb]blend=all_mode=screen,format=yuva420p[s0]",
@@ -263,14 +263,15 @@ def render_section(num, section):
         f"[s4][hd]overlay=x='if(lt(t,{STING - 0.2}),-1200,min(110,110-600*({STING + 0.15}-t)))':y=150[s5]",
     ]
     last = "[s5]"
-    # one fact at a time, as a banner low on the left, so the game visuals stay in view
+    # one fact at a time, as a banner beside the facecam, so the game visuals stay in view
+    cx = fx + FACE + 50
     for i, t0 in enumerate(times):
         k = first_card + i
         t1 = min(times[i + 1] if i + 1 < len(times) else total, t0 + 6.0, total - 0.3)
         chain.append(f"[{k}:v]format=rgba,fade=t=in:st={t0}:d=0.35:alpha=1,"
                      f"fade=t=out:st={t1 - 0.3:.2f}:d=0.3:alpha=1[c{i}]")
-        chain.append(f"{last}[c{i}]overlay=x='if(lt(t,{t0}),-1100,min(110,110-1800*({t0 + 0.35}-t)))':"
-                     f"y=880:enable='between(t,{t0},{t1:.2f})'[v{i}]")
+        chain.append(f"{last}[c{i}]overlay=x='min({cx},{cx}-80+230*(t-{t0}))':"
+                     f"y={H - 92 - 90}:enable='between(t,{t0},{t1:.2f})'[v{i}]")
         last = f"[v{i}]"
     chain += [
         f"[8:v]format=rgba,fade=t=out:st={STING - 0.35}:d=0.35:alpha=1[st]",
