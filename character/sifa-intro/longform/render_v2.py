@@ -24,6 +24,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 import render_longform as v1
+import sifa_motion
 
 HERE, BUILD, ROOT = v1.HERE, v1.BUILD / "v2", v1.INTRO_DIR
 BUILD.mkdir(parents=True, exist_ok=True)
@@ -86,11 +87,12 @@ def cutout_assets():
 
 
 def lipsync(sid, voice, face_src):
-    out = BUILD / f"face_{sid}.mp4"
+    moving = Path(face_src).suffix == ".mp4"
+    out = BUILD / f"face_{'live_' if moving else ''}{sid}.mp4"
     if not out.exists():
         run([sys.executable, "inference.py", "--checkpoint_path", "checkpoints/wav2lip_gan.pth",
              "--face", str(face_src), "--audio", str(voice), "--outfile", str(out),
-             "--static", "True", "--fps", str(FPS), "--pads", "0", "15", "0", "0"],
+             "--static", str(not moving), "--fps", str(FPS), "--pads", "0", "15", "0", "0"],
             cwd=v1.WAV2LIP, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return out
 
@@ -363,6 +365,9 @@ def render_section(num, section, face_src, alpha_png):
     caps = pages(timed)
     gfx = section_gfx(num, section, total, facts, caps)
     face = lipsync(sid, voice, face_src)
+    live = face.name.startswith("face_live_")
+    if live:   # moving Sifa: a matte for every frame, cut from the lip-synced video itself
+        alpha_png = sifa_motion.mask_video(face, BUILD / f"mask_{sid}.mkv", clean_matte)
 
     punch = "+".join(f"0.06*exp(-pow(on/{FPS}-{t0 + 0.05:.2f},2)/0.03)" for t0 in facts) or "0"
     cw = int(700 * CUT_H / 640)
@@ -372,12 +377,20 @@ def render_section(num, section, face_src, alpha_png):
         f"zoompan=z='1+{punch}':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s={W}x{H}:fps={FPS},format=yuva420p[bg]",
         f"[1:v]fps={FPS},tpad=start_duration={LEAD}:start_mode=clone:stop_mode=clone:stop_duration={TAIL + 1},"
         f"scale={cw}:{CUT_H}:flags=lanczos,unsharp=5:5:0.7:5:5:0,format=rgba[f]",
-        f"[2:v]scale={cw}:{CUT_H}:flags=lanczos,format=gray[m]",
+        *([f"[2:v]fps={FPS},tpad=start_duration={LEAD}:start_mode=clone:stop_mode=clone:stop_duration={TAIL + 1},"
+           f"scale={cw}:{CUT_H}:flags=lanczos,format=gray,split[m][ms]",
+           # faint soft shadow that follows her
+           f"[ms]gblur=sigma=14,lut=y=val*0.35[msa]",
+           f"color=black:s={cw}x{CUT_H}:r={FPS},format=gray[blk]",
+           "[blk][msa]alphamerge,format=rgba[gl]"] if live else
+          [f"[2:v]scale={cw}:{CUT_H}:flags=lanczos,format=gray[m]",
+           f"[3:v]scale={cw}:{CUT_H},format=rgba[gl]"]),
         "[f][m]alphamerge[fa]",
-        f"[3:v]scale={cw}:{CUT_H},format=rgba[gl]",
-        # a gentle breathing drift so the still never looks frozen
-        f"[bg][gl]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s1]",
-        f"[s1][fa]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s2]",
+        # the still gets a gentle breathing drift so it never looks frozen; the live one moves by itself
+        *([f"[bg][gl]overlay=x={fx + 10}:y={fy + 6}:shortest=0[s1]",
+           f"[s1][fa]overlay=x={fx}:y={fy}:shortest=0[s2]"] if live else
+          [f"[bg][gl]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s1]",
+           f"[s1][fa]overlay=x='{fx}+4*sin(t*0.9)':y='{fy}+3*sin(t*0.6)':shortest=0[s2]"]),
         f"[s2][4:v]overlay=0:0:format=auto,fade=t=in:st=0:d=0.2,fade=t=out:st={total - 0.2}:d=0.2,format=yuv420p[v]",
     ])
     ms = lambda s: int(s * 1000)
@@ -389,9 +402,12 @@ def render_section(num, section, face_src, alpha_png):
         sfx_in += ["-i", str(BUILD / "pop.wav")]
         mix.append(f"[{7 + k}:a]volume=0.35,aformat=channel_layouts=stereo,adelay={ms(t0)}|{ms(t0)},apad[p{k}]")
         labels.append(f"[p{k}]")
-    mix.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0,atrim=0:{total}[a]")
+    # voice + whoosh + pops can sum past full scale; limit here so nothing is clipped into the PCM
+    mix.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0,atrim=0:{total},"
+               "alimiter=limit=0.7:level=0:attack=2:release=60[a]")
     run(["ffmpeg", "-v", "error", "-y", "-stream_loop", "-1", "-i", str(HERE / "gameplay" / f"{sid}.mp4"),
-         "-i", str(face), "-loop", "1", "-i", str(alpha_png), "-loop", "1", "-i", str(BUILD / "cut_glow.png"),
+         "-i", str(face), *([] if live else ["-loop", "1"]), "-i", str(alpha_png),
+         "-loop", "1", "-i", str(BUILD / "cut_glow.png"),
          "-framerate", str(FPS), "-i", str(gfx / "%05d.png"), "-i", str(voice), *sfx_in,
          "-filter_complex", graph + ";" + ";".join(mix), "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}",
          "-c:v", "libx264", "-crf", "18", "-preset", "medium", "-c:a", "pcm_s16le", str(out)])
@@ -451,7 +467,8 @@ def cold_open():
         ms = int((c - 0.3) * 1000)
         mix.append(f"[{3 + k}:a]volume=0.45,aformat=channel_layouts=stereo,adelay={ms}|{ms},apad[w{k}]")
         labels.append(f"[w{k}]")
-    mix.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0,atrim=0:{length}[a]")
+    mix.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0,atrim=0:{length},"
+               "alimiter=limit=0.7:level=0:attack=2:release=60[a]")
     run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex",
          "[0:v][1:v]overlay=0:0:format=auto,format=yuv420p[v];" + ";".join(mix),
          "-map", "[v]", "-map", "[a]", "-t", str(length), "-c:v", "libx264", "-crf", "17", "-c:a", "pcm_s16le", str(out)])
@@ -462,6 +479,8 @@ def main():
     wanted = set(sys.argv[1:])
     sfx()
     face_src, alpha_png = cutout_assets()
+    if sifa_motion.LOOP.exists():
+        face_src = sifa_motion.LOOP
     parts = []
     for num, s in enumerate(v1.SECTIONS, 1):
         if wanted and s["id"] not in wanted:
@@ -483,7 +502,7 @@ def main():
     ms = int(head * 1000)
     chain = (f"[0:a]asplit=2[mix][key];[1:a]volume=0.3,adelay={ms}|{ms},apad[mus];"
              "[mus][key]sidechaincompress=threshold=0.025:ratio=10:attack=15:release=400[duck];"
-             "[mix][duck]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.79:level=0:attack=2:release=60[a]")
+             "[mix][duck]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.75:level=0:attack=2:release=60[a]")
     run(["ffmpeg", "-v", "error", "-y", "-i", str(BUILD / "joined.mov"), "-i", str(music), "-filter_complex", chain,
          "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p",
          "-movflags", "+faststart", "-c:a", "aac", "-b:a", "192k", str(MASTER)])
