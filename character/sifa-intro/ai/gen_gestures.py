@@ -42,7 +42,7 @@ def main():
         if out.exists():
             continue
         res = client.predict(start_image_pil=handle_file(FRAME), end_image_pil=handle_file(FRAME),
-                             prompt=LOOK + CLIPS[name] + STEADY, duration_seconds=4, steps=8,
+                             prompt=LOOK + CLIPS[name] + STEADY, duration_seconds=float(os.environ.get("CLIP_S", 4)), steps=int(os.environ.get("STEPS", 8)),
                              randomize_seed=False, seed=7, api_name="/generate_video")
         video = res[0] if isinstance(res, (list, tuple)) else res
         video = video.get("video", video) if isinstance(video, dict) else video
