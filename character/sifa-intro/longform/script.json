@@ -1,0 +1,179 @@
+{
+  "title": "Gears of War: E-Day - Everything You Need to Know",
+  "voice_note": "Narration is read by the same Gemini TTS voice as ../voice.wav. Each section becomes one TTS clip and one explainer scene.",
+  "sections": [
+    {
+      "id": "01_what",
+      "heading": "What is E-Day?",
+      "cards": [
+        "The Coalition + People Can Fly",
+        "Unreal Engine 5",
+        "Xbox Series X|S and PC",
+        "Out October 6, 2026",
+        "Day one on Game Pass"
+      ],
+      "text": "So first things first: what is Gears of War: E-Day? It's the sixth main Gears game, made by The Coalition together with People Can Fly, the studio that helped build the original trilogy. It was revealed at the Xbox Games Showcase in June 2024, and it finally launched on October sixth, 2026, on Xbox Series X and S and on PC. It's built from the ground up in Unreal Engine 5, and the best part: it was on Game Pass from day one, with Play Anywhere, so your progress carries between console and PC."
+    },
+    {
+      "id": "02_when",
+      "heading": "When and where?",
+      "cards": [
+        "Planet Sera",
+        "The Pendulum Wars just ended",
+        "Emergence Day",
+        "14 years before Gears of War 1",
+        "The city of Kalona"
+      ],
+      "text": "Where does it fit in the story? E-Day is a prequel, set on the planet Sera fourteen years before the very first Gears of War. The Pendulum Wars have just ended, and humanity thinks it's finally getting some peace. Then Emergence Day happens: the Locust Horde bursts up out of the ground and attacks every human city at once. The whole game takes place in one huge industrial city called Kalona, over the first desperate days of the invasion. Fans have heard about E-Day for years. Now you finally get to live through it."
+    },
+    {
+      "id": "02b_lore",
+      "heading": "Quick lore primer",
+      "cards": [
+        "The Pendulum Wars",
+        "COG vs the UIR",
+        "Imulsion: Sera's power source",
+        "The Locust: living in the Hollows"
+      ],
+      "text": "Quick lore primer, in case you're new. Before the Locust ever showed up, humans on Sera spent decades fighting each other in the Pendulum Wars, a long conflict between the Coalition of Ordered Governments, the COG, and the Union of Independent Republics, mostly over a glowing fuel called Imulsion that powered their whole world. Marcus and Dom were soldiers in that war. What nobody knew was that underneath their feet, deep in a vast network of tunnels called the Hollows, the Locust Horde had been waiting. E-Day is the moment they finally strike."
+    },
+    {
+      "id": "03_squad",
+      "heading": "Meet Bravo Squad",
+      "cards": [
+        "Marcus Fenix - John DiMaggio",
+        "Dom Santiago - Carlos Ferro",
+        "Mags Carter",
+        "Lucas Reyes",
+        "All four playable from the start"
+      ],
+      "text": "Let's meet the team: Bravo Squad. At the center are Marcus Fenix, voiced again by John DiMaggio, and Dom Santiago, voiced by Carlos Ferro. But these aren't the broken soldiers from the trilogy. They're younger veterans trying to live normal lives, and you get to see their brotherhood before everything falls apart. Joining them are two new characters, Mags Carter and Lucas Reyes, and all four are playable right from the start. You'll also meet familiar faces like a young Anya, Colonel Trench and Tai Kaliso."
+    },
+    {
+      "id": "04_campaign",
+      "heading": "The campaign",
+      "cards": [
+        "About 14 hours",
+        "Longest Coalition campaign",
+        "Linear missions + open districts",
+        "Most lore-rich Gears yet",
+        "Brotherhood, loss and sacrifice"
+      ],
+      "text": "The campaign is big. The Coalition says it runs around fourteen hours, their longest ever, with more collectibles than any Gears game before, and they call it the most lore rich game in the series. It's still a story-driven, mostly linear shooter, but it mixes tight combat sequences with larger open districts to explore. The developers describe the tone in three words: brotherhood, brutality and pathos. So expect it loud and violent, but also emotional, because we already know this war doesn't end well."
+    },
+    {
+      "id": "05_movement",
+      "heading": "All-new movement",
+      "cards": [
+        "Jump across gaps",
+        "Slide out of a sprint",
+        "Climb structures and vehicles",
+        "Low cover and crawling",
+        "Vault and jump on Y"
+      ],
+      "text": "Now the part that surprised me most: movement. It still has that heavy roadie run into cover feeling, but the whole system was rebuilt. For the first time you can properly jump across gaps and clamber up higher walls. You can slide out of a sprint straight into cover, climb up structures and even vehicles, and crawl between low cover close to the ground. Reviewers all say the same thing: it still feels like Gears, but way more fluid, with a lot more ways to flank."
+    },
+    {
+      "id": "06_combat",
+      "heading": "Weapons and combat",
+      "cards": [
+        "Active Reload returns",
+        "Gutpuncher grenade launcher",
+        "Incinerator shotgun",
+        "The Chainsaw Lancer's origin",
+        "New gore and executions"
+      ],
+      "text": "Combat is still built on cover, with some fresh tools. Active Reload is back, and some weapons now reload shell by shell, which makes shotgun fights more tense. New guns include the Gutpuncher grenade launcher and the Incinerator shotgun, and since this is a prequel, you get to see the origin of the iconic chainsaw Lancer. And yes, it's gory: enemies take localized damage and can lose limbs depending on where you shoot, plus there's a whole new set of executions."
+    },
+    {
+      "id": "07_enemies",
+      "heading": "The Locust",
+      "cards": [
+        "Drones and Boomers",
+        "Wretches",
+        "Corpsers and Reavers",
+        "New creatures from the Hollows",
+        "Destroy Emergence Holes"
+      ],
+      "text": "You'll need that firepower, because the Locust are back in force: Drones, Boomers, Wretches, Corpsers and Reavers, plus brand new creatures from the Hollows. My favorite returning idea is Emergence Holes. Enemies keep pouring out of them mid-fight, and you can seal them with explosives, like a well aimed grenade. So every fight becomes a choice: hold your cover, or push forward and close the hole before you get swarmed."
+    },
+    {
+      "id": "08_coop",
+      "heading": "Never fight alone",
+      "cards": [
+        "4-player online co-op",
+        "2-player split-screen",
+        "Campaign theme: Never Fight Alone"
+      ],
+      "text": "Gears has always been a co-op series, and the motto for this one is: never fight alone. You can play the entire campaign with up to four players online, one for each member of Bravo Squad, and on console there's still two player split-screen on the couch, which is rare these days. If you have friends who love Gears, this is the way to play."
+    },
+    {
+      "id": "09_multiplayer",
+      "heading": "Multiplayer",
+      "cards": [
+        "4v4 team modes",
+        "Team Deathmatch",
+        "Conquest",
+        "Up to 120 fps on Series X",
+        "Loadouts unlock as you level"
+      ],
+      "text": "Competitive multiplayer is four versus four, with modes like Team Deathmatch and Conquest, and on Xbox Series X it runs at up to one hundred and twenty frames per second, so shotgun duels feel super responsive. The new movement carries over too. The main complaint from reviewers is that loadouts are locked behind leveling, so new players can feel outgunned at first."
+    },
+    {
+      "id": "10_horde",
+      "heading": "Horde Siege",
+      "cards": [
+        "Up to 12 players",
+        "Three squads of four",
+        "Dynamic objectives and extraction",
+        "Assault, Breacher, Marksman, Medic"
+      ],
+      "text": "Then there's Horde, now called Horde Siege, and it's bigger than ever. Up to twelve players, in three squads of four, defend together against waves of Locust, with dynamic objectives, defenses to build and an extraction at the end. You pick from four classes: Assault, Breacher, Marksman and Medic. Some players miss classic Horde, but if you love chaotic co-op with a big group, this will eat your weekends."
+    },
+    {
+      "id": "11_tech",
+      "heading": "Looks and sound",
+      "cards": [
+        "Built from an empty hard drive",
+        "Lumen ray tracing + Nanite",
+        "60 fps campaign on Series X",
+        "About 25 hours of music",
+        "Metallica on the main menu"
+      ],
+      "text": "And it is gorgeous. The team says they started from an empty hard drive, with no reused assets. It uses ray-traced Lumen lighting and Nanite geometry, and Kalona is the biggest, most detailed location they've ever built, with real-time destruction everywhere. The campaign runs at sixty frames per second on Series X. The music is by Adam Lastiwka, around twenty five hours of it, and one main menu theme is an instrumental of Metallica's For Whom the Bell Tolls."
+    },
+    {
+      "id": "12_reception",
+      "heading": "What critics say",
+      "cards": [
+        "Metacritic: high 80s",
+        "OpenCritic: 92% recommend",
+        "Praised: combat, visuals, Marcus and Dom",
+        "Criticised: pacing, side content"
+      ],
+      "text": "So what are critics saying? Mostly really good things. It's in the high eighties on Metacritic, and over ninety percent of critics on OpenCritic recommend it. Game Informer gave it nine and a half, IGN a nine, and GamesRadar called it the best cover shooter since the Xbox 360 days. The praise is for the combat, the visuals and Marcus and Dom. The criticism is about pacing in the open areas and repetitive side content, and PC Gamer and The Guardian were more lukewarm."
+    },
+    {
+      "id": "12b_tips",
+      "heading": "Tips before you start",
+      "cards": [
+        "Stay in cover, always",
+        "Master the Active Reload",
+        "Grenade the Emergence Holes",
+        "Use your new jump and slide",
+        "Bring a friend"
+      ],
+      "text": "Before you jump in, a few quick tips from me. One: stay in cover. This is still Gears, and standing in the open is the fastest way to get downed. Two: practice the Active Reload until it's muscle memory, the damage boost really adds up. Three: when you see an Emergence Hole, grenade it straight away, or the fight will never end. Four: use the new jump and slide to reposition, because flanking is so much easier now. And five: if you can, bring a friend. Co-op makes the whole campaign better."
+    },
+    {
+      "id": "13_verdict",
+      "heading": "Sifa's verdict",
+      "cards": [
+        "Best for: Gears fans and co-op squads",
+        "Try it on Game Pass",
+        "Next: the full campaign playthrough"
+      ],
+      "text": "So here's my honest verdict so far. If you're a Gears fan, E-Day looks like the game you've been waiting for: the brotherhood, the brutal cover combat, that sense of dread, plus the freshest movement the series has ever had. If you're new, it's a great place to start, right at the beginning of the story, and easy to try on Game Pass. Just know it's long, it's violent, and the open areas can drag. Next time, I'll play the campaign with you, so subscribe and turn on notifications. I'm Sifa, thanks for watching, and see you on Emergence Day!"
+    }
+  ]
+}
