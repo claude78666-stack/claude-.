@@ -94,7 +94,8 @@ def lipsync(sid, voice, face_src):
     if not out.exists():
         run([sys.executable, "inference.py", "--checkpoint_path", "checkpoints/wav2lip_gan.pth",
              "--face", str(face_src), "--audio", str(voice), "--outfile", str(out),
-             "--static", str(not moving), "--fps", str(FPS), "--pads", "0", "15", "0", "0"],
+             # Wav2Lip parses --static with type=bool, so any value (even "False") means static: only pass it for stills
+             *([] if moving else ["--static", "True"]), "--fps", str(FPS), "--pads", "0", "15", "0", "0"],
             cwd=v1.WAV2LIP, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return out
 
