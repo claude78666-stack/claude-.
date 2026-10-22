@@ -37,6 +37,14 @@ def make_loop(src):
     return LOOP
 
 
+def normalise_fps(src, out):
+    """Any clip -> constant FPS copy (Flow exports 24 fps already; this guards other sources)."""
+    if not out.exists():
+        run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-an", "-vf", f"fps={FPS}", "-c:v", "libx264",
+             "-crf", "10", "-pix_fmt", "yuv420p", str(out)])
+    return out
+
+
 def frames(path):
     probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
                             "stream=width,height", "-of", "csv=p=0", str(path)], capture_output=True, text=True)
@@ -51,15 +59,18 @@ def frames(path):
     p.wait()
 
 
-def mask_video(src, out, clean, still):
+def mask_video(src, out, clean, still, gesture=None):
     """Per-frame matte of Sifa as lossless gray video. Only her head moves in the LivePortrait loop, so the body
     keeps the clean still matte (`still`, no chair) and the per-frame matte is used around the head only, and
-    only inside a slightly widened copy of the still outline, so the purple chair back never comes along."""
+    only inside a slightly widened copy of the still outline, so the purple chair back never comes along.
+    `gesture` (per-frame weight 0-1, from sifa_gestures.face_track) switches the whole body to the per-frame
+    matte while her hands move, inside a much wider outline, so raised hands and arms are kept too."""
     if out.exists():
         return out
     from scipy import ndimage
     ref = np.asarray(still).astype(float) / 255
     near = ndimage.gaussian_filter(ndimage.grey_dilation(ref, size=(25, 25)), 3)
+    wide = ndimage.gaussian_filter(ndimage.grey_dilation(ref, size=(181, 181)), 8)
     h = ref.shape[0]
     head = np.clip((HEAD_Y + 20 - np.arange(h)) / 40.0, 0, 1)[:, None]   # 1 above the neck, 0 below
     import mediapipe as mp
@@ -70,13 +81,16 @@ def mask_video(src, out, clean, still):
                                         output_confidence_masks=True)
     enc = None
     with vision.ImageSegmenter.create_from_options(opts) as seg:
-        for f in frames(src):
+        for i, f in enumerate(frames(src)):
             conf = seg.segment(mp.Image(image_format=mp.ImageFormat.SRGB, data=np.ascontiguousarray(f))).confidence_masks
             p = sum(conf[k].numpy_view() for k in (1, 2, 3, 4)) + 0.6 * conf[5].numpy_view()
             p = np.clip((np.squeeze(p) - 0.45) / 0.25, 0, 1)
             from PIL import Image
             live = np.asarray(clean(Image.fromarray((p * 255).astype(np.uint8), "L"))).astype(float) / 255
             m = head * np.minimum(live, near) + (1 - head) * ref
+            g = gesture[i] if gesture is not None and i < len(gesture) else 0
+            if g > 0:
+                m = (1 - g) * m + g * np.minimum(live, np.maximum(head * near, wide * (1 - head)))
             m = (np.clip(m, 0, 1) * 255).astype(np.uint8)
             if enc is None:
                 h, w = m.shape

@@ -24,6 +24,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 import render_longform as v1
+import sifa_gestures
 import sifa_motion
 
 HERE, BUILD, ROOT = v1.HERE, v1.BUILD / "v2", v1.INTRO_DIR
@@ -88,7 +89,8 @@ def cutout_assets():
 
 def lipsync(sid, voice, face_src):
     moving = Path(face_src).suffix == ".mp4"
-    out = BUILD / f"face_{'live_' if moving else ''}{sid}.mp4"
+    kind = "gest_" if Path(face_src).name.startswith("track_") else "live_" if moving else ""
+    out = BUILD / f"face_{kind}{sid}.mp4"
     if not out.exists():
         run([sys.executable, "inference.py", "--checkpoint_path", "checkpoints/wav2lip_gan.pth",
              "--face", str(face_src), "--audio", str(voice), "--outfile", str(out),
@@ -364,11 +366,15 @@ def render_section(num, section, face_src, alpha_png):
     facts = card_times(section, timed, dur)
     caps = pages(timed)
     gfx = section_gfx(num, section, total, facts, caps)
+    gesture = None
+    if Path(face_src) == sifa_motion.LOOP:   # hand gestures from the Flow clips, at the times gestures.json plans
+        track, gesture = sifa_gestures.face_track(sid, dur, LEAD)
+        face_src = track or face_src
     face = lipsync(sid, voice, face_src)
-    live = face.name.startswith("face_live_")
+    live = face.name.startswith(("face_live_", "face_gest_"))
     if live:   # moving Sifa: a matte for every frame, cut from the lip-synced video itself
-        alpha_png = sifa_motion.mask_video(face, BUILD / f"mask_{sid}.mkv", clean_matte,
-                                             Image.open(alpha_png))
+        alpha_png = sifa_motion.mask_video(face, BUILD / f"mask_{'gest_' if gesture else ''}{sid}.mkv", clean_matte,
+                                             Image.open(alpha_png), gesture)
 
     punch = "+".join(f"0.06*exp(-pow(on/{FPS}-{t0 + 0.05:.2f},2)/0.03)" for t0 in facts) or "0"
     cw = int(700 * CUT_H / 640)
