@@ -7,6 +7,18 @@
       "skillPath": "skills/brainstorming/SKILL.md",
       "computedHash": "b344a85378eb5e5da192bceb0f9c0c15a4820a3ee8b5ad867e3a70ef3c691e3d"
     },
+    "claude-automation-recommender": {
+      "source": "anthropics/claude-plugins-official",
+      "sourceType": "github",
+      "skillPath": "plugins/claude-code-setup/skills/claude-automation-recommender/SKILL.md",
+      "computedHash": "d8d53f9b67da49216256ed79ed38057ef1ee760bd499cf413107ae7504aedafd"
+    },
+    "company-values": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/company-values/SKILL.md",
+      "computedHash": "0223f48acc39f82066414e36881d3ec36e2cb0e1dde2d8c7aaa34516f003eab8"
+    },
     "diagnosing-superpowers": {
       "source": "obra/superpowers",
       "sourceType": "github",
@@ -25,6 +37,12 @@
       "skillPath": "skills/executing-plans/SKILL.md",
       "computedHash": "f695ccea105b04a4827dc3bcabb8ee88c4fc868ce853c00193ea30aaa352e1b5"
     },
+    "find-community": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-community/SKILL.md",
+      "computedHash": "f27dc6b34d2bd6a73dd837bb0d764d28ff2eeae7aee7ce2569ec16c3d2ee8a40"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
@@ -37,11 +55,77 @@
       "skillPath": "skills/finishing-a-development-branch/SKILL.md",
       "computedHash": "4f571e7befb8b0946d9d7770232c818812412e9ab1dfb811f847edfba1fc6275"
     },
+    "first-customers": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/first-customers/SKILL.md",
+      "computedHash": "7db285b341170d96270a32857742e3740f6e183ee54ab9c868dbfde95a1df9a7"
+    },
+    "grow-sustainably": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/grow-sustainably/SKILL.md",
+      "computedHash": "a579e4ba6b287c3769252bfb1bb2a319185599c6d424c260c8518ccefd782054"
+    },
+    "hyperframes": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes/SKILL.md",
+      "computedHash": "0e604f3e7415f0cc531516ea15dab512f3355021cbf8da57d7f67de222a4eba5"
+    },
+    "hyperframes-cli": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-cli/SKILL.md",
+      "computedHash": "78746fe462b8dfdbac29496738be90d7512c4f1339b7b6010a717d855e79dd09"
+    },
+    "hyperframes-registry": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-registry/SKILL.md",
+      "computedHash": "bbbb2bcb11fb43c9dd7e7f927a5617affee0458864fe4b3582e644d70aa1e10f"
+    },
     "impeccable": {
       "source": "pbakaus/impeccable",
       "sourceType": "github",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
       "computedHash": "c671292d4973a711bc857fc619f015f533ca9b49afc78c25c23d5b0811194bbf"
+    },
+    "marketing-plan": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/marketing-plan/SKILL.md",
+      "computedHash": "817943ab2ccccb10b9143a39a997a14068df187dcaf2f4ff6f3d8299863ce08d"
+    },
+    "media-use": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/media-use/SKILL.md",
+      "computedHash": "2946da8cb2fe7f8b6c480c71470f25ebc3a6c346b47c15a4c5a4430aec5c9bdd"
+    },
+    "minimalist-review": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/minimalist-review/SKILL.md",
+      "computedHash": "8193e5aee0f784a03221095e6199210834a5b421b3ae0e50d1865684d83f7aea"
+    },
+    "mvp": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/mvp/SKILL.md",
+      "computedHash": "09dc96e5b62885f6102b2319c1ed6b8815005e81467fa42afb6102fafdfa9e0b"
+    },
+    "pricing": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pricing/SKILL.md",
+      "computedHash": "d342b6affca02dfd73adc335db4e0472c7727cad0530ebf882534b15b3f7b672"
+    },
+    "processize": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/processize/SKILL.md",
+      "computedHash": "f309e8e469ebe1c8541fd396a196d7e5ceef44df72118c42937ad23655de2385"
     },
     "receiving-code-review": {
       "source": "obra/superpowers",
@@ -121,6 +205,12 @@
       "skillPath": "skills/remotion-studio/SKILL.md",
       "computedHash": "d65d0933b789017f33aea95d1f450e4b0873a7102a09e104729862fb1146b775"
     },
+    "remotion-to-hyperframes": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/remotion-to-hyperframes/SKILL.md",
+      "computedHash": "5651c249d1567f51c24ad5ed98729be4050ec0609e57e7a6a79606614082935e"
+    },
     "remotion-upgrade": {
       "source": "remotion-dev/skills",
       "sourceType": "github",
@@ -162,6 +252,12 @@
       "sourceType": "github",
       "skillPath": "skills/using-superpowers/SKILL.md",
       "computedHash": "ef8670c2a2d8e2f6ed52d6f3219759903300ca13afc5ec2e25826a735112562b"
+    },
+    "validate-idea": {
+      "source": "slavingia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/validate-idea/SKILL.md",
+      "computedHash": "6c35390ae0793d0a46285c0e2c2f9cce651f71cc7a4e845467f7f07a147cc052"
     },
     "verification-before-completion": {
       "source": "obra/superpowers",
