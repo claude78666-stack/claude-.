@@ -7,6 +7,18 @@
       "skillPath": "skills/brainstorming/SKILL.md",
       "computedHash": "b344a85378eb5e5da192bceb0f9c0c15a4820a3ee8b5ad867e3a70ef3c691e3d"
     },
+    "brand-voice": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/brand-voice/SKILL.md",
+      "computedHash": "d2a2d29814a36bb98e4e9f2ef6dc724e2152e935f3d32019f3e2e554ff91ddef"
+    },
+    "ci-security-scanning-with-strix": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/ci-security-scanning-with-strix/SKILL.md",
+      "computedHash": "cc83f0220a742c563b0728bbbfcdf547463a1ae8e60b8ed4e68d487072fe70cf"
+    },
     "claude-automation-recommender": {
       "source": "anthropics/claude-plugins-official",
       "sourceType": "github",
@@ -18,6 +30,18 @@
       "sourceType": "github",
       "skillPath": "skills/company-values/SKILL.md",
       "computedHash": "0223f48acc39f82066414e36881d3ec36e2cb0e1dde2d8c7aaa34516f003eab8"
+    },
+    "content-engine": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/content-engine/SKILL.md",
+      "computedHash": "75bd75aff09c8ca965600df5c58a9e00d72a2c57166976ca45449c726d32e825"
+    },
+    "deep-research": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/deep-research/SKILL.md",
+      "computedHash": "fcdb9ab4aaa1633a5d29672e194ec61e0e169ff0fc815e376fcba98753e070e8"
     },
     "diagnosing-superpowers": {
       "source": "obra/superpowers",
@@ -43,6 +67,12 @@
       "skillPath": "skills/find-community/SKILL.md",
       "computedHash": "f27dc6b34d2bd6a73dd837bb0d764d28ff2eeae7aee7ce2569ec16c3d2ee8a40"
     },
+    "find-security-vulnerabilities-in-code": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/find-security-vulnerabilities-in-code/SKILL.md",
+      "computedHash": "551afea3693d77172cc83278bd6185cfb232be75e5c683506fd00b9630691272"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
@@ -60,6 +90,12 @@
       "sourceType": "github",
       "skillPath": "skills/first-customers/SKILL.md",
       "computedHash": "7db285b341170d96270a32857742e3740f6e183ee54ab9c868dbfde95a1df9a7"
+    },
+    "fix-security-vulnerabilities-with-strix": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/fix-security-vulnerabilities-with-strix/SKILL.md",
+      "computedHash": "f5fcf1365bbaa650b246c9a0e6338db2e40ecc46fba60ff64fd2f6311eed901c"
     },
     "grow-sustainably": {
       "source": "slavingia/skills",
@@ -90,6 +126,18 @@
       "sourceType": "github",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
       "computedHash": "c671292d4973a711bc857fc619f015f533ca9b49afc78c25c23d5b0811194bbf"
+    },
+    "market-research": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/market-research/SKILL.md",
+      "computedHash": "dd5734185f2126d79332ab51830886944aa9efe01ecc4a067abd802fff5bd661"
+    },
+    "marketing-campaign": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/marketing-campaign/SKILL.md",
+      "computedHash": "235c4ee2050594e7de2835dc810c38dafc7d044f71b6cee261f6b0e13e988ce8"
     },
     "marketing-plan": {
       "source": "slavingia/skills",
@@ -223,6 +271,12 @@
       "skillPath": "skills/requesting-code-review/SKILL.md",
       "computedHash": "b095ac8c980339436b41de9989328f3f288f2e2a70452df28452bbeb6531d604"
     },
+    "seo": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/seo/SKILL.md",
+      "computedHash": "342da0c7fa6235cdc08789e67bac0e8ff770e8aeaa106f32895c17201501b1b0"
+    },
     "subagent-driven-development": {
       "source": "obra/superpowers",
       "sourceType": "github",
@@ -264,6 +318,18 @@
       "sourceType": "github",
       "skillPath": "skills/verification-before-completion/SKILL.md",
       "computedHash": "b529822bdac4b197b180fe12225cff86b930b65910435103c10622df7f041651"
+    },
+    "video-editing": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/video-editing/SKILL.md",
+      "computedHash": "021c5b9207697949a1a40c936617793e3db0cb03904f3c3388e153337c290da1"
+    },
+    "web-app-penetration-testing": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/web-app-penetration-testing/SKILL.md",
+      "computedHash": "734aaa972fd526b3962ff3ff29ef701c2eae6191f27c8dc479f9c37f9445de69"
     },
     "writing-plans": {
       "source": "obra/superpowers",
