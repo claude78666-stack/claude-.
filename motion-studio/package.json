@@ -1,0 +1,33 @@
+{
+  "name": "motion-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Code-to-video motion studio: Remotion + GSAP + anime.js + three.js/React Three Fiber + Rive + Satori + FFmpeg",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "title-card": "node scripts/title-card.mjs",
+    "render": "npm run title-card && remotion render src/index.ts Showcase out/showcase.mp4",
+    "still": "npm run title-card && remotion still src/index.ts Showcase out/showcase.png --frame=200",
+    "resize": "node scripts/resize.mjs out/showcase.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@remotion/cli": "4.0.541",
+    "@remotion/three": "4.0.541",
+    "@rive-app/canvas-advanced": "2.31.5",
+    "animejs": "4.5.0",
+    "gsap": "3.15.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.541",
+    "satori": "0.63.2",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/three": "0.187.0",
+    "typescript": "5.9.3"
+  }
+}
