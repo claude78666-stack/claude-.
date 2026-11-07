@@ -56,3 +56,11 @@ Remotion renders each frame separately, sometimes out of order, so every animati
 - **Rive**: the runtime is MIT. The Rive editor you design `.riv` files in has free and paid plans. `public/vehicles.riv` is Rive's public sample file.
 - **Inter** font (`public/Inter-Black.otf`) is under the SIL Open Font License.
 - Everything else here is MIT or similarly permissive.
+
+## Axolotl short (30s example)
+
+`npm run render:axolotl` renders `out/axolotl-short.mp4`: a 30-second vertical animal-facts short.
+
+- Scenes: `src/axolotl/AxolotlShort.tsx`; the axolotl itself is a hand-drawn SVG in `src/axolotl/Axolotl.tsx`.
+- Narration: `public/axolotl/line1-6.wav`, made with the free, local [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) voice. Scene lengths follow `lines.json`, so re-recording a line re-times the video automatically.
+- Music, whoosh and pop are synthesized in code, so there are no licensing worries.

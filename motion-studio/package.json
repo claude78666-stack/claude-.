@@ -10,6 +10,7 @@
     "render": "npm run title-card && remotion render src/index.ts Showcase out/showcase.mp4",
     "still": "npm run title-card && remotion still src/index.ts Showcase out/showcase.png --frame=200",
     "resize": "node scripts/resize.mjs out/showcase.mp4",
+    "render:axolotl": "remotion render src/index.ts AxolotlShort out/axolotl-short.mp4",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
